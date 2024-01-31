@@ -1,13 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import TableOne from "@/components/Tables/TableOne";
-
-import { Metadata } from "next";
 import Link from "next/link";
-export const metadata: Metadata = {
-  title: "Projects",
-  description: "This is Tables page",
-  // other metadata
-};
+
 
 const TablesPage = () => {
   return (
