@@ -67,7 +67,7 @@ const Header = (props: {
         </div>
 
         <div className="hidden sm:block">
-        <h1 className=" text-2xl font-satoshi font-bold">Hi , Ka Yan</h1>
+        <h1 className=" text-2xl font-satoshi font-bold">Company Name</h1>
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">
