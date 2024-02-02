@@ -35,7 +35,7 @@ const ECommerce: React.FC = () => {
             <path d="M8 7.5A6.1 6.1 0 0 0 12 18a6 6 0 0 0 4-10.5" />
           </svg>
         </CardDataStats>
-        <CardDataStats title="In-Processing" total="4500" rate="4.35%" levelUp>
+        <CardDataStats title="In-Processing" total="2000" rate="4.35%" levelUp>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -58,7 +58,7 @@ const ECommerce: React.FC = () => {
             <line x1="16.24" x2="19.07" y1="7.76" y2="4.93" />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Completed" total="8000" rate="2.59%" levelUp>
+        <CardDataStats title="Completed" total="1000" rate="2.59%" levelUp>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
