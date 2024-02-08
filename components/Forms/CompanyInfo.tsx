@@ -87,58 +87,63 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company Name (English):</FormLabel>
-                  <FormControl>
-                    <Input placeholder="company name (English)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="chiname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company Name (Chinese):</FormLabel>
-                  <FormControl>
-                    <Input placeholder="company name (Chinese)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="incorporated"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Incorporated Date:</FormLabel>
-                  <FormControl>
-                    <Input placeholder="incorporated" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="annual"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Annual Return Date:</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Annual Return Date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name (English):</FormLabel>
+                    <FormControl>
+                      <Input placeholder="company name (English)" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="chiname"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name (Chinese):</FormLabel>
+                    <FormControl>
+                      <Input placeholder="company name (Chinese)" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <FormField
+                control={form.control}
+                name="incorporated"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Incorporated Date:</FormLabel>
+                    <FormControl>
+                      <Input placeholder="incorporated" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="annual"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Annual Return Date:</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Annual Return Date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="address"
@@ -223,30 +228,33 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              name="companyTel"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company Telephone:</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+852-1234-5678" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="companyFax"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company Fax No:</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+852-1234-5678" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <FormField
+                name="companyTel"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Telephone:</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+852-1234-5678" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="companyFax"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Fax No:</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+852-1234-5678" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <Button type="submit">Submit</Button>
           </form>
         </Form>
