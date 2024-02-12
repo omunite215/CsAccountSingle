@@ -5,8 +5,8 @@ const bankAccountSchema = z.object({
   bankName: z.string().min(2, "Bank Name must be atleast 2 characters").max(50),
   bankAcc: z
     .string()
-    .min(12, "It should be 12 numbers exactly")
-    .max(12, "It should be 12 numbers"),
+    .min(12, "It should be 12 characters exactly")
+    .max(12, "It should be 12 characters"),
 });
 
 export const CompanyInfoFormSchema = z.object({
@@ -25,7 +25,7 @@ export const CompanyInfoFormSchema = z.object({
 // Share-Capital
 const shareRightSchema = z.object({
   class: z.string().max(255),
-  rightsAttached: z.number(),
+  rightsAttached: z.number().nonnegative({message: "This number can't be negative."}),
 });
 
 export const ShareParticularRightsSchema = z.object({
@@ -34,11 +34,11 @@ export const ShareParticularRightsSchema = z.object({
 
 const shareSchema = z.object({
   class: z.string().max(255),
-  totalIssued: z.number(),
+  totalIssued: z.number().positive().min(1, {message: "Total Shares must be positive and greater than 0"}),
   currency: z.string().max(3),
-  totalSubscribed: z.number(),
-  paid: z.number(),
-  unpaid: z.number(),
+  totalSubscribed: z.number().positive().min(0.01, {message : "Value must be positive and greater than or equal to 0.01"}),
+  paid: z.number().nonnegative(),
+  unpaid: z.number().nonnegative(),
 });
 
 export const ShareCapitalFormSchema = z.object({

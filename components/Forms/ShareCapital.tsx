@@ -3,9 +3,8 @@
 import { ShareCapitalFormSchema } from "@/app/validationSchemas";
 import { Form, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "../ui/button";
 import {
   Card,
@@ -23,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Label } from "../ui/label";
 
 const ShareCapital = () => {
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
@@ -41,6 +39,7 @@ const ShareCapital = () => {
       ],
     },
   });
+
   const control = form.control;
   const { fields, append, remove } = useFieldArray({
     control,
@@ -70,76 +69,127 @@ const ShareCapital = () => {
                     <TableHead>Class of Shares</TableHead>
                     <TableHead>Total Shares Proposed</TableHead>
                     <TableHead>Currency</TableHead>
-                    <TableHead>Total Capital to be Subscribed</TableHead>
+                    <TableHead>Total Capital Subscribed</TableHead>
                     <TableHead>Total Amount (Paid Up)</TableHead>
                     <TableHead>Total Amount (Unpaid)</TableHead>
                     <TableHead>Edit</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {fields.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <Input
-                          {...(control.register(`shareCapital.${index}.class`),
-                          { required: true })}
+                  {fields.map((item, index) => {
+                    const handleTotalSharesChange = (
+                      index: number,
+                      value: number
+                    ) => {
+                      const currentValue = form.getValues(
+                        `shareCapital.${index}.totalSubscribed`
+                      );
+                      const totalAmount = value * currentValue;
+                      form.setValue(`shareCapital.${index}.paid`, totalAmount);
+                    };
+
+                    const handleValueChange = (
+                      index: number,
+                      value: number
+                    ) => {
+                      const currentShares = form.getValues(
+                        `shareCapital.${index}.totalIssued`
+                      );
+                      const totalAmount = currentShares * value;
+                      form.setValue(`shareCapital.${index}.paid`, totalAmount);
+                    };
+
+                    return (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          <Input
+                            {...(control.register(
+                              `shareCapital.${index}.class`
+                            ),
+                            { required: true })}
+                          />
+                          <FormMessage />
+                        </TableCell>
+                        <TableCell>
+                          <Controller
+                            name={`shareCapital.${index}.totalIssued`}
+                            control={control}
+                            render={({ field }) => (
+                              <Input
+                                type="number"
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  handleTotalSharesChange(
+                                    index,
+                                    Number(e.target.value)
+                                  );
+                                }}
+                              />
+                            )}
+                          />
+                          <FormMessage />
+                        </TableCell>
+                        <TableCell>
+                          <Input
+                            {...(control.register(
+                              `shareCapital.${index}.currency`
+                            ),
+                            { required: true })}
+                          />
+                          <FormMessage />
+                        </TableCell>
+                        <TableCell>
+                          <Controller
+                            name={`shareCapital.${index}.totalSubscribed`}
+                            control={control}
+                            render={({ field }) => (
+                              <Input
+                                type="number"
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  handleValueChange(
+                                    index,
+                                    Number(e.target.value)
+                                  );
+                                }}
+                              />
+                            )}
+                          />
+                          <FormMessage />
+                        </TableCell>
+                        <TableCell>
+                          <Controller
+                            name={`shareCapital.${index}.paid`}
+                            control={control}
+                            render={({ field }) => (
+                              <Input type="number" {...field} readOnly />
+                            )}
+                          />
+                          <FormMessage />
+                        </TableCell>
+                        <Controller
+                          render={({ field }) => (
+                            <TableCell>
+                              <Input type="number" {...field} />
+                              <FormMessage />
+                            </TableCell>
+                          )}
+                          name={`shareCapital.${index}.unpaid`}
                         />
-                        <FormMessage/>
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareCapital.${index}.totalIssued`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage/>
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareCapital.${index}.currency`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage/>
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareCapital.${index}.totalSubscribed`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage/>
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(`shareCapital.${index}.paid`),
-                          { required: true })}
-                        />
-                        <FormMessage/>
-                      </TableCell>
-                      <Controller
-                        render={({ field }) => (
-                          <TableCell>
-                            <Input {...field} />
-                            <FormMessage/>
-                          </TableCell>
-                        )}
-                        name={`shareCapital.${index}.unpaid`}
-                      />
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                        <TableCell>
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={() => remove(index)}
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
               <Button

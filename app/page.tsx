@@ -24,8 +24,8 @@ export default function Home() {
         </TabsContent>
         <TabsContent value="SC" className="flex flex-col gap-3">
           <ShareCapital />
-          <ShareParticulars />
           <Shareholders />
+          <ShareParticulars />
         </TabsContent>
         <TabsContent value="D">
           <Directors />
