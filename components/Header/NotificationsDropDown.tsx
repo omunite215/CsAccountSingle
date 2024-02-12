@@ -24,7 +24,7 @@ type MessageCardProps = {
 
 const NotificationCard = ({ title, description, date }: MessageCardProps) => {
   return (
-    <Card className="flex justify-start items-center gap-2 p-3 max-w-sm max-h-28">
+    <Card className="flex justify-start items-center gap-2 p-3 max-w-sm max-h-30">
       <CardHeader>
         <CardTitle className="font-medium text-xs">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

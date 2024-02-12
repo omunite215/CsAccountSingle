@@ -1,4 +1,5 @@
 "use client";
+
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
 import {
   Form,
@@ -19,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -29,8 +30,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
+import { Textarea } from "../ui/textarea";
 
 const CompanyInfo = () => {
   const date = new Date().toDateString();
@@ -81,7 +82,7 @@ const CompanyInfo = () => {
                 <FormItem>
                   <FormLabel>Report Date:</FormLabel>
                   <FormControl>
-                    <Input placeholder="date" {...field} />
+                    <Input type="date" placeholder="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -123,7 +124,11 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Incorporated Date:</FormLabel>
                     <FormControl>
-                      <Input placeholder="incorporated" {...field} />
+                      <Input
+                        type="date"
+                        placeholder="incorporated"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -136,7 +141,11 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Annual Return Date:</FormLabel>
                     <FormControl>
-                      <Input placeholder="Annual Return Date" {...field} />
+                      <Input
+                        type="date"
+                        placeholder="Annual Return Date"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -187,7 +196,7 @@ const CompanyInfo = () => {
                       <Controller
                         render={({ field }) => (
                           <TableCell>
-                            <Input {...field} />
+                            <Input {...field} type="number" />
                           </TableCell>
                         )}
                         name={`bankDetails.${index}.bankAcc`}
@@ -222,7 +231,11 @@ const CompanyInfo = () => {
                 <FormItem>
                   <FormLabel>E-mail:</FormLabel>
                   <FormControl>
-                    <Input placeholder="info@test1.com" {...field} />
+                    <Input
+                      placeholder="info@test1.com"
+                      type="email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -235,7 +248,11 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Company Telephone:</FormLabel>
                     <FormControl>
-                      <Input placeholder="+852-1234-5678" {...field} />
+                      <Input
+                        placeholder="+852-1234-5678"
+                        type="number"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -247,14 +264,17 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Company Fax No:</FormLabel>
                     <FormControl>
-                      <Input placeholder="+852-1234-5678" {...field} />
+                      <Input
+                        placeholder="+852-1234-5678"
+                        type="number"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-
             <Button type="submit">Submit</Button>
           </form>
         </Form>

@@ -172,7 +172,7 @@ const ShareCapital = () => {
                         <Controller
                           render={({ field }) => (
                             <TableCell>
-                              <Input type="number" {...field} />
+                              <Input type="number" {...field} readOnly />
                               <FormMessage />
                             </TableCell>
                           )}

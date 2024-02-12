@@ -3,9 +3,8 @@
 import { ShareholdersFormSchema } from "@/app/validationSchemas";
 import { Form, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "../ui/button";
 import {
   Card,
@@ -15,6 +14,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Table,
   TableBody,
@@ -23,7 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Label } from "../ui/label";
 
 const Shareholders = () => {
   const date = new Date().toDateString();
@@ -40,7 +39,7 @@ const Shareholders = () => {
           totalNumber: 0,
           currency: "",
           totalAmount: 0,
-          shareCertiNo: ""
+          shareCertiNo: "",
         },
       ],
     },
@@ -69,30 +68,48 @@ const Shareholders = () => {
           <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
             <div>
               <Table>
-              <TableHeader>
-              <TableRow>
-                <TableHead><Label htmlFor="name">Name</Label></TableHead>
-                <TableHead><Label htmlFor="chiname">Name(Chinese)</Label></TableHead>
-                <TableHead><Label htmlFor="start">Start Date</Label></TableHead>
-                <TableHead><Label htmlFor="end">End Date</Label></TableHead>
-                <TableHead><Label htmlFor="classOfShares">Class of Shares</Label></TableHead>
-                <TableHead><Label htmlFor="totalNumber">Total Number</Label></TableHead>
-                <TableHead><Label htmlFor="currency">Currency</Label></TableHead>
-                <TableHead><Label htmlFor="totalAmount">Total Amount</Label></TableHead>
-                <TableHead><Label htmlFor="shareCertiNo">Share Certificate No.</Label></TableHead>
-              </TableRow>
-            </TableHeader>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>
+                      <Label htmlFor="name">Name</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="chiname">Name(Chinese)</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="start">Start Date</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="end">End Date</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="classOfShares">Class of Shares</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="totalNumber">Total Number</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="currency">Currency</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="totalAmount">Total Amount</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="shareCertiNo">
+                        Share Certificate No.
+                      </Label>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
                 <TableBody>
                   {fields.map((item, index) => (
                     <TableRow key={item.id}>
                       <TableCell>
                         <Input
-                          {...(control.register(
-                            `shareholders.${index}.name`
-                          ),
+                          {...(control.register(`shareholders.${index}.name`),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
@@ -101,25 +118,23 @@ const Shareholders = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
-                          {...(control.register(
-                            `shareholders.${index}.start`
-                          ),
+                          type="date"
+                          {...(control.register(`shareholders.${index}.start`),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
-                          {...(control.register(
-                            `shareholders.${index}.end`
-                          ),
+                          type="date"
+                          {...(control.register(`shareholders.${index}.end`),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
@@ -128,16 +143,17 @@ const Shareholders = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="number"
                           {...(control.register(
                             `shareholders.${index}.totalNumber`
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
@@ -146,22 +162,23 @@ const Shareholders = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="number"
                           {...(control.register(
                             `shareholders.${index}.totalAmount`
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <Controller
                         render={({ field }) => (
                           <TableCell>
                             <Input {...field} />
-                            <FormMessage/>
+                            <FormMessage />
                           </TableCell>
                         )}
                         name={`shareholders.${index}.shareCertiNo`}
@@ -190,7 +207,7 @@ const Shareholders = () => {
                     totalNumber: 0,
                     currency: "",
                     totalAmount: 0,
-                    shareCertiNo: ""
+                    shareCertiNo: "",
                   })
                 }
               >

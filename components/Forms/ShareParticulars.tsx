@@ -3,7 +3,7 @@
 import { ShareParticularRightsSchema } from "@/app/validationSchemas";
 import { Form, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Table,
   TableBody,
@@ -22,16 +23,15 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Label } from "../ui/label";
 
 const ShareParticulars = () => {
-  const form = useForm<z.infer<typeof ShareParticularRightsSchema >>({
+  const form = useForm<z.infer<typeof ShareParticularRightsSchema>>({
     resolver: zodResolver(ShareParticularRightsSchema),
     defaultValues: {
       shareParticulars: [
         {
           class: "",
-          rightsAttached: 0
+          rightsAttached: 0,
         },
       ],
     },
@@ -52,7 +52,8 @@ const ShareParticulars = () => {
       <CardHeader>
         <CardTitle>Particulars of Rights Attached/所附权利详情</CardTitle>
         <CardDescription>
-          Please enter information on Particulars of Rights Attached/请输入有关所附权利详情的信息
+          Please enter information on Particulars of Rights
+          Attached/请输入有关所附权利详情的信息
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -62,8 +63,14 @@ const ShareParticulars = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead><Label htmlFor="class">Class of Shares</Label></TableHead>
-                    <TableHead><Label htmlFor="rightsAttached">Particulars of Rights Attached</Label></TableHead>
+                    <TableHead>
+                      <Label htmlFor="class">Class of Shares</Label>
+                    </TableHead>
+                    <TableHead>
+                      <Label htmlFor="rightsAttached">
+                        Particulars of Rights Attached
+                      </Label>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -71,16 +78,18 @@ const ShareParticulars = () => {
                     <TableRow key={item.id}>
                       <TableCell>
                         <Input
-                          {...(control.register(`shareParticulars.${index}.class`),
+                          {...(control.register(
+                            `shareParticulars.${index}.class`
+                          ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <Controller
                         render={({ field }) => (
                           <TableCell>
                             <Input {...field} />
-                            <FormMessage/>
+                            <FormMessage />
                           </TableCell>
                         )}
                         name={`shareParticulars.${index}.rightsAttached`}
@@ -102,7 +111,7 @@ const ShareParticulars = () => {
                 onClick={() =>
                   append({
                     class: "",
-                   rightsAttached: 0
+                    rightsAttached: 0,
                   })
                 }
               >

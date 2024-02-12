@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,11 +6,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MessageSquareQuote } from "lucide-react";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { messagesContent } from "@/lib/constants";
+import { MessageSquareQuote } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 type MessageCardProps = {
   imgSrc: string;
@@ -43,7 +42,7 @@ const MessageDropdown = () => {
         <MessageSquareQuote />
         <div className=" bg-destructive animate-pulse delay-500 absolute top-0 rounded-full h-2 w-2 right-0" />
       </DropdownMenuTrigger>
-      <DropdownMenuSeparator/>
+      <DropdownMenuSeparator />
       <DropdownMenuContent>
         <ScrollArea className=" h-48  w-72">
           <DropdownMenuLabel>Messages</DropdownMenuLabel>

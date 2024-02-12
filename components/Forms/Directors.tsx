@@ -3,7 +3,7 @@
 import { DirectorsSchema } from "@/app/validationSchemas";
 import { Form, FormControl, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -14,14 +14,6 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
 import { Label } from "../ui/label";
 import {
   Select,
@@ -30,6 +22,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 
 const Directors = () => {
   const date = new Date().toDateString();
@@ -137,6 +137,7 @@ const Directors = () => {
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="date"
                           {...(control.register(`directors.${index}.start`),
                           { required: true })}
                         />
@@ -144,6 +145,7 @@ const Directors = () => {
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="date"
                           {...(control.register(`directors.${index}.end`),
                           { required: true })}
                         />

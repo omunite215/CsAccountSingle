@@ -130,7 +130,7 @@ const CompanySecretary = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
@@ -139,25 +139,27 @@ const CompanySecretary = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="date"
                           {...(control.register(
                             `companySecretary.${index}.start`
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
+                          type="date"
                           {...(control.register(
                             `companySecretary.${index}.end`
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <TableCell>
                         <Input
@@ -166,13 +168,13 @@ const CompanySecretary = () => {
                           ),
                           { required: true })}
                         />
-                        <FormMessage/>
+                        <FormMessage />
                       </TableCell>
                       <Controller
                         render={({ field }) => (
                           <TableCell>
                             <Input {...field} />
-                            <FormMessage/>
+                            <FormMessage />
                           </TableCell>
                         )}
                         name={`companySecretary.${index}.companyNo`}
