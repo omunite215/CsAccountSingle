@@ -1,11 +1,26 @@
 "use client";
 
 import { ShareholdersFormSchema } from "@/app/validationSchemas";
-import { Form, FormMessage } from "@/components/ui/form";
+import { classOfSharesContent, currencyContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { useState } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,8 +28,15 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -22,32 +44,26 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "@/components/ui/table";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import DummyShareholders from "./_components/DummyShareholders";
 
 const Shareholders = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const date = new Date().toDateString();
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
     defaultValues: {
-      shareholders: [
-        {
-          name: "",
-          chiname: "",
-          start: date,
-          end: date,
-          classOfShares: "",
-          totalNumber: 0,
-          currency: "",
-          totalAmount: 0,
-          shareCertiNo: "",
-        },
-      ],
+      name: "",
+      chiname: "",
+      start: date,
+      end: date,
+      classOfShares: "ordinary",
+      totalNumber: 0,
+      currency: "",
+      totalAmount: 0,
+      shareCertiNo: "",
     },
-  });
-  const control = form.control;
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "shareholders",
   });
 
   // Submit Handler.
@@ -55,18 +71,35 @@ const Shareholders = () => {
     console.log("Backend is yet to be initialized");
   }
 
+  const [amountOfShares, setAmountOfShares] = useState(1000);
+  const handleSelectChange = (selectedValue: string) => {
+    switch (selectedValue) {
+      case "ordinary":
+        setAmountOfShares(1000);
+        break;
+      case "preferance":
+        setAmountOfShares(100000);
+        break;
+      case "ordinary class 1":
+        setAmountOfShares(10);
+        break;
+      default:
+        setAmountOfShares(1000);
+        break;
+    }
+  };
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Shareholders/股东</CardTitle>
+        <CardTitle>Shareholders</CardTitle>
         <CardDescription>
-          Please enter information on Shareholders/请输入股东信息
+          Please enter information on Shareholders
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <Collapsible  open={isOpen} onOpenChange={setIsOpen} className="w-full">
         <Form {...form}>
           <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -74,151 +107,245 @@ const Shareholders = () => {
                       <Label htmlFor="name">Name</Label>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="chiname">Name(Chinese)</Label>
+                      <FormLabel htmlFor="chiname">Name(Chinese)</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="start">Start Date</Label>
+                      <FormLabel htmlFor="start">Start Date</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="end">End Date</Label>
+                      <FormLabel htmlFor="end">End Date</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="classOfShares">Class of Shares</Label>
+                      <FormLabel htmlFor="classOfShares">
+                        Class of Shares
+                      </FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="totalNumber">Total Number</Label>
+                      <FormLabel htmlFor="totalNumber">Total Number</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="currency">Currency</Label>
+                      <FormLabel htmlFor="currency">Currency</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="totalAmount">Total Amount</Label>
+                      <FormLabel htmlFor="totalAmount">Total Amount</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="shareCertiNo">
+                      <FormLabel htmlFor="shareCertiNo">
                         Share Certificate No.
-                      </Label>
+                      </FormLabel>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {fields.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <Input
-                          {...(control.register(`shareholders.${index}.name`),
-                          { required: true })}
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="company name (English)"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="chiname"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="company name (Chinese)"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="start"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              type="date"
+                              placeholder="company name (Chinese)"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="end"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              type="date"
+                              placeholder="company name (Chinese)"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <HoverCard>
+                      <HoverCardTrigger>
+                        <FormField
+                          control={form.control}
+                          name="classOfShares"
+                          render={({ field }) => (
+                            <FormItem>
+                              <Select
+                                onValueChange={() => {
+                                  field.onChange;
+                                  handleSelectChange;
+                                }}
+                                defaultValue="ordinary"
+                                {...field}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a Class of Shares" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {classOfSharesContent.map((item) => (
+                                    <SelectItem value={item.value} key={item.value}>
+                                      {item.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareholders.${index}.chiname`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="date"
-                          {...(control.register(`shareholders.${index}.start`),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="date"
-                          {...(control.register(`shareholders.${index}.end`),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareholders.${index}.classOfShares`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="number"
-                          {...(control.register(
-                            `shareholders.${index}.totalNumber`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareholders.${index}.currency`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <TableCell>
-                        <Input
-                          type="number"
-                          {...(control.register(
-                            `shareholders.${index}.totalAmount`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <Controller
-                        render={({ field }) => (
-                          <TableCell>
-                            <Input {...field} />
-                            <FormMessage />
-                          </TableCell>
-                        )}
-                        name={`shareholders.${index}.shareCertiNo`}
-                      />
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                      </HoverCardTrigger>
+                      <HoverCardContent>
+                        <div className="flex justify-start items-center">
+                          <h1>
+                            Total Shares UnAllocated:&nbsp;
+                            {amountOfShares}
+                          </h1>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="totalNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="XXXX"
+                              type="number"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="currency"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue="HKD"
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a Currency" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {currencyContent.map((item) => (
+                                <SelectItem value={item} key={item}>{item}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="totalAmount"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="XXXX"
+                              type="number"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="shareCertiNo"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="ShareID-XXXX" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
                 </TableBody>
               </Table>
-              <Button
-                onClick={() =>
-                  append({
-                    name: "",
-                    chiname: "",
-                    start: date,
-                    end: date,
-                    classOfShares: "",
-                    totalNumber: 0,
-                    currency: "",
-                    totalAmount: 0,
-                    shareCertiNo: "",
-                  })
-                }
-              >
-                Add field
-              </Button>
-            </div>
-            <Button type="submit" className="ml-3">
-              Submit
-            </Button>
+              <div className="flex justify-between items-center">
+                <Button type="submit" className="my-4">
+                  Submit
+                </Button>
+                <CollapsibleTrigger className="ml-auto">
+                  <Button variant="outline">
+                    {isOpen ? "Show Less" : "Show More"}
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent>
+                <DummyShareholders/>
+              </CollapsibleContent>
+            
           </form>
         </Form>
+        </Collapsible>
       </CardContent>
     </Card>
   );

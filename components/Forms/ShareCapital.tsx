@@ -1,9 +1,23 @@
 "use client";
 
 import { ShareCapitalFormSchema } from "@/app/validationSchemas";
-import { Form, FormMessage } from "@/components/ui/form";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { classOfSharesContent, currencyContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -15,6 +29,13 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
   Table,
   TableBody,
   TableCell,
@@ -22,29 +43,33 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import DummyShareCapital from "./_components/DummyShareCapital";
 
 const ShareCapital = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
     resolver: zodResolver(ShareCapitalFormSchema),
     defaultValues: {
-      shareCapital: [
-        {
-          class: "",
-          totalIssued: 0,
-          currency: "",
-          totalSubscribed: 0,
-          paid: 0,
-          unpaid: 0,
-        },
-      ],
+      class: "",
+      totalIssued: 0,
+      currency: "",
+      totalSubscribed: 0,
+      paid: 0,
+      unpaid: 0,
     },
   });
 
-  const control = form.control;
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "shareCapital",
-  });
+  const handleTotalSharesChange = (value: number) => {
+    const currentValue = form.getValues("totalSubscribed");
+    const totalAmount = value * currentValue;
+    form.setValue("paid", totalAmount);
+  };
+
+  const handleValueChange = (value: number) => {
+    const currentShares = form.getValues("totalIssued");
+    const totalAmount = currentShares * value;
+    form.setValue("paid", totalAmount);
+  };
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareCapitalFormSchema>) {
@@ -54,164 +79,208 @@ const ShareCapital = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Share Capital/股本</CardTitle>
+        <CardTitle>Share Capital</CardTitle>
         <CardDescription>
-          Please enter information on Share Capital/请输入股本信息
+          Please enter information on Share Capital
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+          <Form {...form}>
+            <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Class of Shares</TableHead>
-                    <TableHead>Total Shares Proposed</TableHead>
-                    <TableHead>Currency</TableHead>
-                    <TableHead>Total Capital Subscribed</TableHead>
-                    <TableHead>Total Amount (Paid Up)</TableHead>
-                    <TableHead>Total Amount (Unpaid)</TableHead>
-                    <TableHead>Edit</TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="class">Class of Shares</FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="totalIssued">
+                        Total Shares Proposed
+                      </FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="currency">Currency</FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="totalSubscribed">
+                        Total Capital Subscribed
+                      </FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="paid">
+                        Total Amount (Paid Up)
+                      </FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="unpaid">
+                        Total Amount (Unpaid)
+                      </FormLabel>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {fields.map((item, index) => {
-                    const handleTotalSharesChange = (
-                      index: number,
-                      value: number
-                    ) => {
-                      const currentValue = form.getValues(
-                        `shareCapital.${index}.totalSubscribed`
-                      );
-                      const totalAmount = value * currentValue;
-                      form.setValue(`shareCapital.${index}.paid`, totalAmount);
-                    };
-
-                    const handleValueChange = (
-                      index: number,
-                      value: number
-                    ) => {
-                      const currentShares = form.getValues(
-                        `shareCapital.${index}.totalIssued`
-                      );
-                      const totalAmount = currentShares * value;
-                      form.setValue(`shareCapital.${index}.paid`, totalAmount);
-                    };
-
-                    return (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <Input
-                            {...(control.register(
-                              `shareCapital.${index}.class`
-                            ),
-                            { required: true })}
-                          />
-                          <FormMessage />
-                        </TableCell>
-                        <TableCell>
-                          <Controller
-                            name={`shareCapital.${index}.totalIssued`}
-                            control={control}
-                            render={({ field }) => (
+                  <TableRow>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="class"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue="ordinary"
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a Class of Shares" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {classOfSharesContent.map((item) => (
+                                  <SelectItem
+                                    value={item.value}
+                                    key={item.label}
+                                  >
+                                    {item.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="totalIssued"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
                               <Input
+                                placeholder="XXXX"
                                 type="number"
                                 {...field}
                                 onChange={(e) => {
                                   field.onChange(e);
                                   handleTotalSharesChange(
-                                    index,
                                     Number(e.target.value)
                                   );
                                 }}
                               />
-                            )}
-                          />
-                          <FormMessage />
-                        </TableCell>
-                        <TableCell>
-                          <Input
-                            {...(control.register(
-                              `shareCapital.${index}.currency`
-                            ),
-                            { required: true })}
-                          />
-                          <FormMessage />
-                        </TableCell>
-                        <TableCell>
-                          <Controller
-                            name={`shareCapital.${index}.totalSubscribed`}
-                            control={control}
-                            render={({ field }) => (
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="currency"
+                        render={({ field }) => (
+                          <FormItem>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue="HKD"
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a Currency" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {currencyContent.map((item) => (
+                                  <SelectItem value={item} key={item}>{item}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="totalSubscribed"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
                               <Input
+                                placeholder="XXXX"
                                 type="number"
                                 {...field}
                                 onChange={(e) => {
                                   field.onChange(e);
-                                  handleValueChange(
-                                    index,
-                                    Number(e.target.value)
-                                  );
+                                  handleValueChange(Number(e.target.value));
                                 }}
                               />
-                            )}
-                          />
-                          <FormMessage />
-                        </TableCell>
-                        <TableCell>
-                          <Controller
-                            name={`shareCapital.${index}.paid`}
-                            control={control}
-                            render={({ field }) => (
-                              <Input type="number" {...field} readOnly />
-                            )}
-                          />
-                          <FormMessage />
-                        </TableCell>
-                        <Controller
-                          render={({ field }) => (
-                            <TableCell>
-                              <Input type="number" {...field} readOnly />
-                              <FormMessage />
-                            </TableCell>
-                          )}
-                          name={`shareCapital.${index}.unpaid`}
-                        />
-                        <TableCell>
-                          <Button
-                            type="button"
-                            variant="destructive"
-                            onClick={() => remove(index)}
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="paid"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                readOnly
+                                placeholder="XXXX"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="unpaid"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                readOnly
+                                placeholder="XXXX"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
-              <Button
-                onClick={() =>
-                  append({
-                    class: "",
-                    totalIssued: 0,
-                    currency: "",
-                    totalSubscribed: 0,
-                    paid: 0,
-                    unpaid: 0,
-                  })
-                }
-              >
-                Add field
-              </Button>
-            </div>
-            <Button type="submit" className="ml-3">
-              Submit
-            </Button>
-          </form>
-        </Form>
+              <div className="flex justify-between items-center">
+                <Button type="submit" className="my-4">
+                  Submit
+                </Button>
+                <CollapsibleTrigger className="ml-auto" type="button">
+                  <Button variant="outline">
+                    {isOpen ? "Show Less" : "Show More"}
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent>
+                <DummyShareCapital />
+              </CollapsibleContent>
+            </form>
+          </Form>
+        </Collapsible>
       </CardContent>
     </Card>
   );

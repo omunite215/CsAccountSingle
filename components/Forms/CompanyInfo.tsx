@@ -1,6 +1,10 @@
 "use client";
 
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -18,20 +22,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 const CompanyInfo = () => {
   const date = new Date().toDateString();
@@ -67,10 +67,8 @@ const CompanyInfo = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Company Info / 公司信息</CardTitle>
-        <CardDescription>
-          Enter Info about Company / 输入有关公司的信息
-        </CardDescription>
+        <CardTitle>Company Info</CardTitle>
+        <CardDescription>Enter Info about Company</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -152,7 +150,6 @@ const CompanyInfo = () => {
                 )}
               />
             </div>
-
             <FormField
               control={form.control}
               name="address"
@@ -186,17 +183,21 @@ const CompanyInfo = () => {
                   {fields.map((item, index) => (
                     <TableRow key={item.id}>
                       <TableCell>
-                        <Input
-                          {...(control.register(
-                            `bankDetails.${index}.bankName`
-                          ),
-                          { required: false })}
-                        />
+                        <FormControl>
+                          <Input
+                            {...(control.register(
+                              `bankDetails.${index}.bankName`
+                            ),
+                            { required: false })}
+                          />
+                        </FormControl>
                       </TableCell>
                       <Controller
                         render={({ field }) => (
                           <TableCell>
-                            <Input {...field} type="number" />
+                            <FormControl>
+                              <Input {...field} type="number" />
+                            </FormControl>
                           </TableCell>
                         )}
                         name={`bankDetails.${index}.bankAcc`}
@@ -226,6 +227,7 @@ const CompanyInfo = () => {
               </Button>
             </div>
             <FormField
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -243,6 +245,7 @@ const CompanyInfo = () => {
             />
             <div className="grid grid-cols-2 gap-3">
               <FormField
+                control={form.control}
                 name="companyTel"
                 render={({ field }) => (
                   <FormItem>
@@ -259,7 +262,8 @@ const CompanyInfo = () => {
                 )}
               />
               <FormField
-                name="companyFax"
+                control={form.control}
+                name="companyfax"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Fax No:</FormLabel>

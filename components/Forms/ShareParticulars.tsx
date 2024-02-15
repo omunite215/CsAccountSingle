@@ -1,9 +1,24 @@
 "use client";
 
 import { ShareParticularRightsSchema } from "@/app/validationSchemas";
-import { Form, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { classOfSharesContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
@@ -14,7 +29,6 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import {
   Table,
   TableBody,
@@ -28,18 +42,9 @@ const ShareParticulars = () => {
   const form = useForm<z.infer<typeof ShareParticularRightsSchema>>({
     resolver: zodResolver(ShareParticularRightsSchema),
     defaultValues: {
-      shareParticulars: [
-        {
-          class: "",
-          rightsAttached: 0,
-        },
-      ],
+      class: "ordinary",
+      rightsAttached: 0,
     },
-  });
-  const control = form.control;
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "shareParticulars",
   });
 
   // Submit Handler.
@@ -50,10 +55,9 @@ const ShareParticulars = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Particulars of Rights Attached/所附权利详情</CardTitle>
+        <CardTitle>Particulars of Rights Attached</CardTitle>
         <CardDescription>
-          Please enter information on Particulars of Rights
-          Attached/请输入有关所附权利详情的信息
+          Please enter information on Particulars of Rights Attached
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -64,61 +68,65 @@ const ShareParticulars = () => {
                 <TableHeader>
                   <TableRow>
                     <TableHead>
-                      <Label htmlFor="class">Class of Shares</Label>
+                      <FormLabel htmlFor="class">Class of Shares</FormLabel>
                     </TableHead>
                     <TableHead>
-                      <Label htmlFor="rightsAttached">
+                      <FormLabel htmlFor="rightsAttached">
                         Particulars of Rights Attached
-                      </Label>
+                      </FormLabel>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {fields.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <Input
-                          {...(control.register(
-                            `shareParticulars.${index}.class`
-                          ),
-                          { required: true })}
-                        />
-                        <FormMessage />
-                      </TableCell>
-                      <Controller
-                        render={({ field }) => (
-                          <TableCell>
-                            <Input {...field} />
-                            <FormMessage />
-                          </TableCell>
-                        )}
-                        name={`shareParticulars.${index}.rightsAttached`}
-                      />
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="class"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue="ordinary"
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a Class of Shares" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {classOfSharesContent.map((item) => (
+                                <SelectItem value={item.value} key={item.value}>
+                                  {item.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormField
+                      control={form.control}
+                      name="rightsAttached"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Particulars of Rights Attached"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </TableCell>
                 </TableBody>
               </Table>
-              <Button
-                onClick={() =>
-                  append({
-                    class: "",
-                    rightsAttached: 0,
-                  })
-                }
-              >
-                Add field
-              </Button>
             </div>
-            <Button type="submit" className="ml-3">
+            <Button type="submit" className="my-4">
               Submit
             </Button>
           </form>
