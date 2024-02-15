@@ -45,7 +45,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
 import DummyShareholders from "./_components/DummyShareholders";
 
 const Shareholders = () => {
@@ -71,20 +75,18 @@ const Shareholders = () => {
     console.log("Backend is yet to be initialized");
   }
 
-  const [amountOfShares, setAmountOfShares] = useState(1000);
+  const [amountOfShares, setAmountOfShares] = useState(800);
   const handleSelectChange = (selectedValue: string) => {
     switch (selectedValue) {
       case "ordinary":
-        setAmountOfShares(1000);
+        setAmountOfShares(900);
         break;
       case "preferance":
-        setAmountOfShares(100000);
+        setAmountOfShares(800);
         break;
-      case "ordinary class 1":
-        setAmountOfShares(10);
-        break;
+
       default:
-        setAmountOfShares(1000);
+        setAmountOfShares(0);
         break;
     }
   };
@@ -97,9 +99,9 @@ const Shareholders = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Collapsible  open={isOpen} onOpenChange={setIsOpen} className="w-full">
-        <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+          <Form {...form}>
+            <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -230,7 +232,10 @@ const Shareholders = () => {
                                 </FormControl>
                                 <SelectContent>
                                   {classOfSharesContent.map((item) => (
-                                    <SelectItem value={item.value} key={item.value}>
+                                    <SelectItem
+                                      value={item.value}
+                                      key={item.value}
+                                    >
                                       {item.label}
                                     </SelectItem>
                                   ))}
@@ -286,7 +291,9 @@ const Shareholders = () => {
                             </FormControl>
                             <SelectContent>
                               {currencyContent.map((item) => (
-                                <SelectItem value={item} key={item}>{item}</SelectItem>
+                                <SelectItem value={item} key={item}>
+                                  {item}
+                                </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
@@ -334,17 +341,16 @@ const Shareholders = () => {
                   Submit
                 </Button>
                 <CollapsibleTrigger className="ml-auto">
-                  <span className={buttonVariants({variant: "outline"})}>
+                  <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <DummyShareholders/>
+                <DummyShareholders />
               </CollapsibleContent>
-            
-          </form>
-        </Form>
+            </form>
+          </Form>
         </Collapsible>
       </CardContent>
     </Card>
