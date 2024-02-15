@@ -20,7 +20,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -334,9 +334,9 @@ const Shareholders = () => {
                   Submit
                 </Button>
                 <CollapsibleTrigger className="ml-auto">
-                  <Button variant="outline">
+                  <span className={buttonVariants({variant: "outline"})}>
                     {isOpen ? "Show Less" : "Show More"}
-                  </Button>
+                  </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>

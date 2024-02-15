@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -215,7 +215,7 @@ const CompanyInfo = () => {
                   ))}
                 </TableBody>
               </Table>
-              <Button
+              <span className={buttonVariants()}
                 onClick={() =>
                   append({
                     bankAcc: "",
@@ -224,7 +224,7 @@ const CompanyInfo = () => {
                 }
               >
                 Add field
-              </Button>
+              </span>
             </div>
             <FormField
               control={form.control}

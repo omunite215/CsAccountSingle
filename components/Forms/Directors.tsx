@@ -12,7 +12,7 @@ import { positionType } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -245,9 +245,9 @@ const Directors = () => {
                   Submit
                 </Button>
                 <CollapsibleTrigger className="ml-auto">
-                  <Button variant="outline">
+                  <span className={buttonVariants({variant: "outline"})}>
                     {isOpen ? "Show Less" : "Show More"}
-                  </Button>
+                  </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
