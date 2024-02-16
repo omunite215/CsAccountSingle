@@ -13,7 +13,7 @@ const DummyCS = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Company Secretary List List</CardTitle>
+        <CardTitle>Company Secretary List</CardTitle>
       </CardHeader>
       <Table className="w-full">
         <TableHeader>
