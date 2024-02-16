@@ -111,12 +111,12 @@ const Shareholders = () => {
                     <TableHead>
                       <FormLabel htmlFor="chiname">Name(Chinese)</FormLabel>
                     </TableHead>
-                    <TableHead>
+                    {/* <TableHead>
                       <FormLabel htmlFor="start">Start Date</FormLabel>
                     </TableHead>
                     <TableHead>
                       <FormLabel htmlFor="end">End Date</FormLabel>
-                    </TableHead>
+                    </TableHead> */}
                     <TableHead>
                       <FormLabel htmlFor="classOfShares">
                         Class of Shares
