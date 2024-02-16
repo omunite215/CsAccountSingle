@@ -21,9 +21,9 @@ const DummyShareCapital = () => {
             <TableHead>Class of Shares</TableHead>
             <TableHead>Total Shares Proposed</TableHead>
             <TableHead>Currency</TableHead>
-            <TableHead>Total Capital Subscribed</TableHead>
+            <TableHead>Unit Price of Share</TableHead>
+            <TableHead>Total Amount</TableHead>
             <TableHead>Total Amount (Paid Up)</TableHead>
-            <TableHead>Total Amount (Unpaid)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

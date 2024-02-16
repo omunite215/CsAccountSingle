@@ -104,17 +104,17 @@ const ShareCapital = () => {
                     </TableHead>
                     <TableHead>
                       <FormLabel htmlFor="totalSubscribed">
-                        Total Capital Subscribed
+                        Unit Price of Share
                       </FormLabel>
                     </TableHead>
                     <TableHead>
                       <FormLabel htmlFor="paid">
-                        Total Amount (Paid Up)
+                        Total Amount
                       </FormLabel>
                     </TableHead>
                     <TableHead>
                       <FormLabel htmlFor="unpaid">
-                        Total Amount (Unpaid)
+                        Total Amount (Paid Up)
                       </FormLabel>
                     </TableHead>
                   </TableRow>
