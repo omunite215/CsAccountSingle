@@ -122,20 +122,6 @@ const Shareholders = () => {
                         Class of Shares
                       </FormLabel>
                     </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="totalNumber">Total Number</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="currency">Currency</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="totalAmount">Total Amount</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="shareCertiNo">
-                        Share Certificate No.
-                      </FormLabel>
-                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -256,6 +242,28 @@ const Shareholders = () => {
                       </HoverCardContent>
                     </HoverCard>
                   </TableCell>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>
+                      <FormLabel htmlFor="totalNumber">Total Number</FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="currency">Currency</FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="totalAmount">Total Amount</FormLabel>
+                    </TableHead>
+                    <TableHead>
+                      <FormLabel htmlFor="shareCertiNo">
+                        Share Certificate No.
+                      </FormLabel>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   <TableCell>
                     <FormField
                       control={form.control}
