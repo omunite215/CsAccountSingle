@@ -88,12 +88,12 @@ const Directors = () => {
                     <TableHead>
                       <Label htmlFor="chiname">Name (Chinese)</Label>
                     </TableHead>
-                    <TableHead>
+                    {/* <TableHead>
                       <Label htmlFor="start">Start Date</Label>
                     </TableHead>
                     <TableHead>
                       <Label htmlFor="end">End Date</Label>
-                    </TableHead>
+                    </TableHead> */}
                     <TableHead>
                       <Label htmlFor="idNo">ID Card No. / Passport</Label>
                     </TableHead>
@@ -166,7 +166,7 @@ const Directors = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <FormField
                         control={form.control}
                         name="start"
@@ -183,8 +183,8 @@ const Directors = () => {
                           </FormItem>
                         )}
                       />
-                    </TableCell>
-                    <TableCell>
+                    </TableCell> */}
+                    {/* <TableCell>
                       <FormField
                         control={form.control}
                         name="end"
@@ -201,7 +201,7 @@ const Directors = () => {
                           </FormItem>
                         )}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <FormField
                         control={form.control}

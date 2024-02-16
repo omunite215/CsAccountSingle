@@ -21,8 +21,8 @@ const DummyDirectors = () => {
             <TableHead>Person / Body Corporate</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Name (Chinese)</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
+            {/* <TableHead>Start Date</TableHead>
+            <TableHead>End Date</TableHead> */}
             <TableHead>ID Card No.</TableHead>
             <TableHead>Company No.</TableHead>
           </TableRow>
@@ -33,8 +33,8 @@ const DummyDirectors = () => {
               <TableCell>{item.type}</TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.chiname}</TableCell>
-              <TableCell>{item.start}</TableCell>
-              <TableCell>{item.end}</TableCell>
+              {/* <TableCell>{item.start}</TableCell>
+              <TableCell>{item.end}</TableCell> */}
               <TableCell>{item.idNo}</TableCell>
               <TableCell>{item.companyNo}</TableCell>
             </TableRow>

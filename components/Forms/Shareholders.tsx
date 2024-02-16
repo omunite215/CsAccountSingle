@@ -159,7 +159,7 @@ const Shareholders = () => {
                       )}
                     />
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <FormField
                       control={form.control}
                       name="start"
@@ -186,7 +186,7 @@ const Shareholders = () => {
                           <FormControl>
                             <Input
                               type="date"
-                              placeholder="company name (Chinese)"
+                              placeholder="End Date"
                               {...field}
                             />
                           </FormControl>
@@ -194,7 +194,7 @@ const Shareholders = () => {
                         </FormItem>
                       )}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <HoverCard>
                       <HoverCardTrigger>

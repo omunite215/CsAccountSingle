@@ -24,8 +24,8 @@ const DummyShareholders = () => {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Name(Chinese)</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead>
+            {/* <TableHead>Start Date</TableHead>
+            <TableHead>End Date</TableHead> */}
             <TableHead>Class of Shares</TableHead>
             <TableHead>Total Number</TableHead>
             <TableHead>Currency</TableHead>
@@ -38,8 +38,8 @@ const DummyShareholders = () => {
             <TableRow key={item.classOfShares}>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.chiname}</TableCell>
-              <TableCell>{item.start}</TableCell>
-              <TableCell>{item.end}</TableCell>
+              {/* <TableCell>{item.start}</TableCell>
+              <TableCell>{item.end}</TableCell> */}
               <TableCell>{item.classOfShares}</TableCell>
               <TableCell>{item.totalNumber}</TableCell>
               <TableCell>{item.currency}</TableCell>
