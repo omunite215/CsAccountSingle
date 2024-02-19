@@ -9,15 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { classOfSharesContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -78,51 +70,41 @@ const ShareParticulars = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="class"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue="ordinary"
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a Class of Shares" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {classOfSharesContent.map((item) => (
-                                <SelectItem value={item.value} key={item.value}>
-                                  {item.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="rightsAttached"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
+                  <TableRow>
+                    <TableCell>
+                      <FormField
+                        name="class"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
                             <Input
-                              placeholder="Particulars of Rights Attached"
+                              placeholder="Eg: Ordinary, Preferance..."
+                              type="text"
                               {...field}
                             />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        control={form.control}
+                        name="rightsAttached"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Particulars of Rights Attached"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </div>

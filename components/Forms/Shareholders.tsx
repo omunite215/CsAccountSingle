@@ -1,11 +1,20 @@
 "use client";
 
 import { ShareholdersFormSchema } from "@/app/validationSchemas";
-import { classOfSharesContent, currencyContent } from "@/lib/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useState } from "react";
+import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Form,
   FormControl,
@@ -14,29 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Table,
   TableBody,
@@ -45,28 +34,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
-import DummyShareholders from "./_components/DummyShareholders";
+import { shareholdersRows } from "@/lib/constants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const Shareholders = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const date = new Date().toDateString();
+
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
     defaultValues: {
+      type: "person",
+      surname: "",
       name: "",
-      chiname: "",
-      start: date,
-      end: date,
-      classOfShares: "ordinary",
-      totalNumber: 0,
-      currency: "",
-      totalAmount: 0,
-      shareCertiNo: "",
+      email: "",
+      classOfShares: "Ordinary",
+      noOfShares: 1,
     },
   });
 
@@ -75,21 +60,6 @@ const Shareholders = () => {
     console.log("Backend is yet to be initialized");
   }
 
-  const [amountOfShares, setAmountOfShares] = useState(800);
-  const handleSelectChange = (selectedValue: string) => {
-    switch (selectedValue) {
-      case "ordinary":
-        setAmountOfShares(900);
-        break;
-      case "preferance":
-        setAmountOfShares(800);
-        break;
-
-      default:
-        setAmountOfShares(0);
-        break;
-    }
-  };
   return (
     <Card>
       <CardHeader>
@@ -105,243 +75,130 @@ const Shareholders = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>
-                      <Label htmlFor="name">Name</Label>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="chiname">Name(Chinese)</FormLabel>
-                    </TableHead>
-                    {/* <TableHead>
-                      <FormLabel htmlFor="start">Start Date</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="end">End Date</FormLabel>
-                    </TableHead> */}
-                    <TableHead>
-                      <FormLabel htmlFor="classOfShares">
-                        Class of Shares
-                      </FormLabel>
-                    </TableHead>
+                    {shareholdersRows.map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="company name (English)"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="chiname"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="company name (Chinese)"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  {/* <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="start"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              type="date"
-                              placeholder="company name (Chinese)"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="end"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              type="date"
-                              placeholder="End Date"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell> */}
-                  <TableCell>
-                    <HoverCard>
-                      <HoverCardTrigger>
-                        <FormField
-                          control={form.control}
-                          name="classOfShares"
-                          render={({ field }) => (
-                            <FormItem>
-                              <Select
-                                onValueChange={() => {
-                                  field.onChange;
-                                  handleSelectChange;
-                                }}
-                                defaultValue="ordinary"
-                                {...field}
-                              >
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select a Class of Shares" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  {classOfSharesContent.map((item) => (
-                                    <SelectItem
-                                      value={item.value}
-                                      key={item.value}
-                                    >
-                                      {item.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </HoverCardTrigger>
-                      <HoverCardContent>
-                        <div className="flex justify-start items-center">
-                          <h1>
-                            Total Shares UnAllocated:&nbsp;
-                            {amountOfShares}
-                          </h1>
-                        </div>
-                      </HoverCardContent>
-                    </HoverCard>
-                  </TableCell>
-                </TableBody>
-              </Table>
-              <Table>
-                <TableHeader>
                   <TableRow>
-                    <TableHead>
-                      <FormLabel htmlFor="totalNumber">Total Number</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="currency">Currency</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="totalAmount">Total Amount</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="shareCertiNo">
-                        Share Certificate No.
-                      </FormLabel>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="totalNumber"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="XXXX"
-                              type="number"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="currency"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue="HKD"
-                          >
+                    <TableCell>
+                      <FormField
+                        name="type"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
                             <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a Currency" />
-                              </SelectTrigger>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="flex justify-start items-center gap-10"
+                              >
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="person" />
+                                  </FormControl>
+                                  <FormLabel className="font-normal">
+                                    Person
+                                  </FormLabel>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="company" />
+                                  </FormControl>
+                                  <Label className="font-normal">Company</Label>
+                                </FormItem>
+                              </RadioGroup>
                             </FormControl>
-                            <SelectContent>
-                              {currencyContent.map((item) => (
-                                <SelectItem value={item} key={item}>
-                                  {item}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="totalAmount"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="XXXX"
-                              type="number"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
-                      control={form.control}
-                      name="shareCertiNo"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input placeholder="ShareID-XXXX" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="surname"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input placeholder="Surname Eg: Mar" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="name"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input placeholder="Name Eg: Curtis" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="email"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                placeholder="Name Eg: email1@gmail.com"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="classOfShares"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Name Eg: Ordinary Class A"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="noOfShares"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="number"
+                                placeholder="Name Eg: 1000"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
               <div className="flex justify-between items-center">
@@ -355,7 +212,7 @@ const Shareholders = () => {
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <DummyShareholders />
+                <ShareholdersData />
               </CollapsibleContent>
             </form>
           </Form>

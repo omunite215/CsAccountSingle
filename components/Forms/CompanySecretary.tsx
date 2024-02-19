@@ -1,34 +1,33 @@
 "use client";
 
-import { userSchema } from "@/app/validationSchemas";
+import { companySecretarySchema } from "@/app/validationSchemas";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { positionType } from "@/lib/constants";
+import { companySecretaryRows } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button, buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+} from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -37,32 +36,25 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
-import DummyCS from "./_components/DummyCS";
+import CompanySecretaryData from "@/components/Forms/Data/CompanySecretaryData";
 import { useState } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const CompanySecretary = () => {
   const [isOpen, setIsOpen] = useState(false);
   const date = new Date().toDateString();
-  const form = useForm<z.infer<typeof userSchema>>({
-    resolver: zodResolver(userSchema),
+  const form = useForm<z.infer<typeof companySecretarySchema>>({
+    resolver: zodResolver(companySecretarySchema),
     defaultValues: {
-      type: "Person",
+      type: "person",
+      surname: "",
       name: "",
-      chiname: "",
-      start: date,
-      end: date,
       idNo: "",
-      companyNo: 0,
     },
   });
 
   // Submit Handler.
-  function onSubmit(values: z.infer<typeof userSchema>) {
+  function onSubmit(values: z.infer<typeof companySecretarySchema>) {
     console.log("Backend is yet to be initialized");
   }
 
@@ -79,54 +71,43 @@ const CompanySecretary = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>
-                      <Label htmlFor="type">Person/Body Corporate</Label>
-                    </TableHead>
-                    <TableHead>
-                      <Label htmlFor="name">Name</Label>
-                    </TableHead>
-                    <TableHead>
-                      <Label htmlFor="chiname">Name (Chinese)</Label>
-                    </TableHead>
-                    {/* <TableHead>
-                      <Label htmlFor="start">Start Date</Label>
-                    </TableHead>
-                    <TableHead>
-                      <Label htmlFor="end">End Date</Label>
-                    </TableHead> */}
-                    <TableHead>
-                      <Label htmlFor="idNo">ID Card No. / Passport</Label>
-                    </TableHead>
-                    <TableHead>
-                      <Label htmlFor="companyNo">Company Number</Label>
-                    </TableHead>
+                    {companySecretaryRows.map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
                     <TableCell>
                       <FormField
-                        control={form.control}
                         name="type"
+                        control={form.control}
                         render={({ field }) => (
                           <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue="person"
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select Position Type" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {positionType.map((item) => (
-                                  <SelectItem value={item.value} key={item.value}>
-                                    {item.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="flex justify-start items-center gap-10"
+                              >
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="person" />
+                                  </FormControl>
+                                  <FormLabel className="font-normal">
+                                    Person
+                                  </FormLabel>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                  <FormControl>
+                                    <RadioGroupItem value="company" />
+                                  </FormControl>
+                                  <Label className="font-normal">Company</Label>
+                                </FormItem>
+                              </RadioGroup>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -134,15 +115,26 @@ const CompanySecretary = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="surname"
                         control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input placeholder="Surname Eg: Mar" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
                         name="name"
+                        control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input
-                                placeholder="company name (English)"
-                                {...field}
-                              />
+                              <Input placeholder="Name Eg: Curtis" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -151,84 +143,14 @@ const CompanySecretary = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
-                        control={form.control}
-                        name="chiname"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="company name (Chinese)"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    {/* <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="start"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="Start Date"
-                                type="date"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        control={form.control}
-                        name="end"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="End Date"
-                                type="date"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell> */}
-                    <TableCell>
-                      <FormField
-                        control={form.control}
                         name="idNo"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                placeholder="ID Card / Number"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
                         control={form.control}
-                        name="companyNo"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Input
-                                placeholder="Company No."
-                                type="number"
+                                type="email"
+                                placeholder="Name Eg: 313XXX412"
                                 {...field}
                               />
                             </FormControl>
@@ -245,13 +167,13 @@ const CompanySecretary = () => {
                   Submit
                 </Button>
                 <CollapsibleTrigger className="ml-auto">
-                  <span className={buttonVariants({variant: "outline"})}>
+                  <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <DummyCS />
+                <CompanySecretaryData />
               </CollapsibleContent>
             </form>
           </Form>

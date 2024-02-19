@@ -7,9 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { companySecretaryContent } from "@/lib/constants";
+import { companySecretaryContent, companySecretaryRows } from "@/lib/constants";
 
-const DummyCS = () => {
+const CompanySecretaryData = () => {
   return (
     <Card>
       <CardHeader>
@@ -18,25 +18,18 @@ const DummyCS = () => {
       <Table className="w-full">
         <TableHeader>
           <TableRow>
-            <TableHead>Person / Body Corporate</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Name (Chinese)</TableHead>
-            {/* <TableHead>Start Date</TableHead>
-            <TableHead>End Date</TableHead> */}
-            <TableHead>ID Card No.</TableHead>
-            <TableHead>Company No.</TableHead>
+            {companySecretaryRows.map((row) => (
+              <TableHead key={row.for}>{row.label}</TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {companySecretaryContent.map((item) => (
-            <TableRow key={item.idNo}>
+            <TableRow key={item.id}>
               <TableCell>{item.type}</TableCell>
+              <TableCell>{item.surname}</TableCell>
               <TableCell>{item.name}</TableCell>
-              <TableCell>{item.chiname}</TableCell>
-              {/* <TableCell>{item.start}</TableCell>
-              <TableCell>{item.end}</TableCell> */}
               <TableCell>{item.idNo}</TableCell>
-              <TableCell>{item.companyNo}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -45,4 +38,4 @@ const DummyCS = () => {
   );
 };
 
-export default DummyCS;
+export default CompanySecretaryData;

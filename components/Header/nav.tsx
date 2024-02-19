@@ -16,7 +16,7 @@ const SiteHeader = () => {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex items-center justify-start">
         <Link className={cn(buttonVariants({variant: "ghost"}), "text-2xl font-bold text-primary")} href="/">
-          <Image src="/logo/logo.png" width={28} height={28} alt="logo"/>&nbsp;ComSec360
+          <Image src="/logo/logo.png" width={28} height={28} alt="logo" className="object-contain" />&nbsp;ComSec360
         </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">

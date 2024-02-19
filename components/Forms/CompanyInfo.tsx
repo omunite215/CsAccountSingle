@@ -2,9 +2,16 @@
 
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -14,55 +21,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 
 const CompanyInfo = () => {
-  const date = new Date().toDateString();
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
-      date: date,
       name: "",
-      incorporated: date,
-      annual: date,
+      nature: "",
+      type: "public",
       address: "",
-      bankDetails: [{ bankName: "HSBC", bankAcc: "1234" }],
       email: "",
       companyTel: "",
       companyfax: "",
+      time: "1 year",
     },
-  });
-  const control = form.control;
-  const { fields, append, remove } = useFieldArray({
-    name: "bankDetails",
-    control,
   });
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanyInfoFormSchema>) {
     console.log("Backend is yet to be initilialized");
   }
-
-  useEffect(() => {
-    remove(1);
-  }, [remove]);
 
   return (
     <Card>
@@ -73,23 +53,10 @@ const CompanyInfo = () => {
       <CardContent>
         <Form {...form}>
           <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Report Date:</FormLabel>
-                  <FormControl>
-                    <Input type="date" placeholder="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <div className="grid grid-cols-2 gap-3">
               <FormField
-                control={form.control}
                 name="name"
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Name (English):</FormLabel>
@@ -101,8 +68,8 @@ const CompanyInfo = () => {
                 )}
               />
               <FormField
-                control={form.control}
                 name="chiname"
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Name (Chinese):</FormLabel>
@@ -116,32 +83,44 @@ const CompanyInfo = () => {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <FormField
+                name="type"
                 control={form.control}
-                name="incorporated"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Incorporated Date:</FormLabel>
+                    <FormLabel>Select Type of Company:</FormLabel>
                     <FormControl>
-                      <Input
-                        type="date"
-                        placeholder="incorporated"
-                        {...field}
-                      />
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex justify-start items-center gap-10"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="private" />
+                          </FormControl>
+                          <FormLabel className="font-normal">Private</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="public" />
+                          </FormControl>
+                          <FormLabel className="font-normal">Public</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
+                name="nature"
                 control={form.control}
-                name="annual"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Annual Return Date:</FormLabel>
+                    <FormLabel>Nature of Business:</FormLabel>
                     <FormControl>
                       <Input
-                        type="date"
-                        placeholder="Annual Return Date"
+                        placeholder="Description about Nature..."
                         {...field}
                       />
                     </FormControl>
@@ -151,8 +130,8 @@ const CompanyInfo = () => {
               />
             </div>
             <FormField
-              control={form.control}
               name="address"
+              control={form.control}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Address:</FormLabel>
@@ -166,72 +145,12 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
-            <div>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>
-                      <Label htmlFor="bankName">Bank Name</Label>
-                    </TableHead>
-                    <TableHead>
-                      <Label htmlFor="bankAcc">Bank Account No.</Label>
-                    </TableHead>
-                    <TableHead>Edit</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {fields.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <FormControl>
-                          <Input
-                            {...(control.register(
-                              `bankDetails.${index}.bankName`
-                            ),
-                            { required: false })}
-                          />
-                        </FormControl>
-                      </TableCell>
-                      <Controller
-                        render={({ field }) => (
-                          <TableCell>
-                            <FormControl>
-                              <Input {...field} type="number" />
-                            </FormControl>
-                          </TableCell>
-                        )}
-                        name={`bankDetails.${index}.bankAcc`}
-                      />
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <span className={buttonVariants()}
-                onClick={() =>
-                  append({
-                    bankAcc: "",
-                    bankName: "",
-                  })
-                }
-              >
-                Add field
-              </span>
-            </div>
             <FormField
-              control={form.control}
               name="email"
+              control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>E-mail:</FormLabel>
+                  <FormLabel>Company E-mail:</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="info@test1.com"
@@ -245,8 +164,8 @@ const CompanyInfo = () => {
             />
             <div className="grid grid-cols-2 gap-3">
               <FormField
-                control={form.control}
                 name="companyTel"
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Telephone:</FormLabel>
@@ -262,8 +181,8 @@ const CompanyInfo = () => {
                 )}
               />
               <FormField
-                control={form.control}
                 name="companyfax"
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Fax No:</FormLabel>
@@ -279,6 +198,38 @@ const CompanyInfo = () => {
                 )}
               />
             </div>
+            <FormField
+              name="time"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Choose how long period of Business Registration Fee:
+                  </FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex justify-start items-center gap-10"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="1 year" />
+                        </FormControl>
+                        <FormLabel className="font-normal">1 Year</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="3 years" />
+                        </FormControl>
+                        <FormLabel className="font-normal">3 Years</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit">Submit</Button>
           </form>
         </Form>

@@ -1,6 +1,8 @@
 "use client";
 
 import { ShareCapitalFormSchema } from "@/app/validationSchemas";
+import ShareCapitalData from "@/components/Forms/Data/ShareCapitalData";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Collapsible,
   CollapsibleContent,
@@ -14,7 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { classOfSharesContent, currencyContent } from "@/lib/constants";
+import { useDataContext } from "@/context/ContextProvider";
+import { currencyContent, shareCapitalRows } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -43,37 +46,53 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import DummyShareCapital from "./_components/DummyShareCapital";
 
 const ShareCapital = () => {
+  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const { shareCapitalData, setShareCapitalData } = useDataContext();
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
     resolver: zodResolver(ShareCapitalFormSchema),
     defaultValues: {
-      class: "",
-      totalIssued: 0,
-      currency: "",
-      totalSubscribed: 0,
-      paid: 0,
+      class: "Ordinary",
+      totalProposed: 10000.0,
+      currency: "HKD",
+      unitPrice: 1.0,
+      total: 10000.0,
+      paid: 10000.0,
       unpaid: 0,
     },
   });
 
   const handleTotalSharesChange = (value: number) => {
-    const currentValue = form.getValues("totalSubscribed");
+    const currentValue = form.getValues("unitPrice");
     const totalAmount = value * currentValue;
-    form.setValue("paid", totalAmount);
+    form.setValue("total", totalAmount);
   };
 
   const handleValueChange = (value: number) => {
-    const currentShares = form.getValues("totalIssued");
+    const currentShares = form.getValues("totalProposed");
     const totalAmount = currentShares * value;
-    form.setValue("paid", totalAmount);
+    form.setValue("total", totalAmount);
   };
 
+  const handlePaidChange = (value: number) => {
+    const totalAmount = form.getValues("total");
+    form.setValue("unpaid", totalAmount - value);
+  };
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareCapitalFormSchema>) {
-    console.log("Backend is yet to be initialized");
+    const newId = Math.max(...shareCapitalData.map((entry) => entry.id), 0) + 1;
+    const newValues = {
+      id: newId,
+      ...values,
+    };
+    shareCapitalData.push(newValues);
+    setShareCapitalData(shareCapitalData);
+    toast({
+      title: "Success!!",
+      description: "Field has been Added Successfully!!"
+    })
   }
 
   return (
@@ -91,62 +110,26 @@ const ShareCapital = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>
-                      <FormLabel htmlFor="class">Class of Shares</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="totalIssued">
-                        Total Shares Proposed
-                      </FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="currency">Currency</FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="totalSubscribed">
-                        Unit Price of Share
-                      </FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="paid">
-                        Total Amount
-                      </FormLabel>
-                    </TableHead>
-                    <TableHead>
-                      <FormLabel htmlFor="unpaid">
-                        Total Amount (Paid Up)
-                      </FormLabel>
-                    </TableHead>
+                    {shareCapitalRows.map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow>
                     <TableCell>
                       <FormField
-                        control={form.control}
                         name="class"
+                        control={form.control}
                         render={({ field }) => (
                           <FormItem>
-                            <Select
-                              onValueChange={field.onChange}
-                              defaultValue="ordinary"
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a Class of Shares" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {classOfSharesContent.map((item) => (
-                                  <SelectItem
-                                    value={item.value}
-                                    key={item.label}
-                                  >
-                                    {item.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <Input
+                              placeholder="Eg: Ordinary, Preferance..."
+                              type="text"
+                              {...field}
+                            />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -154,8 +137,8 @@ const ShareCapital = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="totalProposed"
                         control={form.control}
-                        name="totalIssued"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -178,8 +161,8 @@ const ShareCapital = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
-                        control={form.control}
                         name="currency"
+                        control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <Select
@@ -193,7 +176,9 @@ const ShareCapital = () => {
                               </FormControl>
                               <SelectContent>
                                 {currencyContent.map((item) => (
-                                  <SelectItem value={item} key={item}>{item}</SelectItem>
+                                  <SelectItem value={item} key={item}>
+                                    {item}
+                                  </SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -204,8 +189,8 @@ const ShareCapital = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="unitPrice"
                         control={form.control}
-                        name="totalSubscribed"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -226,8 +211,8 @@ const ShareCapital = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="total"
                         control={form.control}
-                        name="paid"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -245,8 +230,28 @@ const ShareCapital = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="paid"
                         control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  handlePaidChange(Number(e.target.value));
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
                         name="unpaid"
+                        control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -265,18 +270,22 @@ const ShareCapital = () => {
                   </TableRow>
                 </TableBody>
               </Table>
+
               <div className="flex justify-between items-center">
-                <Button type="submit" className="my-4">
-                  Submit
-                </Button>
-                <CollapsibleTrigger className="ml-auto" type="button">
-                  <span className={buttonVariants({variant: "outline"})}>
+                <div className="flex items-center gap-3 my-4">
+                  <Button type="submit">Submit</Button>
+                  {/* <Button variant="secondary" type="submit">
+                    Add Field
+                  </Button> */}
+                </div>
+                <CollapsibleTrigger type="button">
+                  <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <DummyShareCapital />
+                <ShareCapitalData />
               </CollapsibleContent>
             </form>
           </Form>

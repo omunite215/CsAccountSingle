@@ -1,5 +1,7 @@
 import SiteHeader from "@/components/Header/nav";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { DataContextProvider } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
@@ -30,17 +32,20 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="flex justify-center items-center flex-col">
-            <SiteHeader />
-            {children}
-          </main>
-        </ThemeProvider>
+        <DataContextProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="flex justify-center items-center flex-col">
+              <SiteHeader />
+              {children}
+            </main>
+            <Toaster/>
+          </ThemeProvider>
+        </DataContextProvider>
       </body>
     </html>
   );

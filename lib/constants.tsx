@@ -75,7 +75,7 @@ export const classOfSharesContent = [
   },
   {
     label: "Preferance Class A",
-    value: "preferance class a",
+    value: "preferance class A",
   },
   {
     label: "Ordinary Class 2",
@@ -113,169 +113,221 @@ export const positionType = [
   },
 ];
 
+// Share Capital => Start-------------------------------------------------------------------
+export const shareCapitalRows = [
+  {
+    label: "Class of Shares",
+    for: "class",
+  },
+  {
+    label: "Total Shares Proposed",
+    for: "totalProposed",
+  },
+  {
+    label: "Currency",
+    for: "currency",
+  },
+  {
+    label: "Unit Price of Share",
+    for: "unitPrice",
+  },
+  {
+    label: "Total Amount",
+    for: "total",
+  },
+  {
+    label: "Total Capital Subscribed",
+    for: "paid",
+  },
+  {
+    label: "Unpaid Amount",
+    for: "unpaid",
+  },
+];
+
 export const shareCapitalContent = [
   {
+    id: 1,
     class: "Ordinary",
-    totalIssued: 1000,
+    totalProposed: 1000,
     currency: "HKD",
-    totalSubscribed: 1,
-    paid: 1000,
-    unpaid: 800,
+    unitPrice: 1,
+    total: 10000.0,
+    paid: 10000.0,
+    unpaid: 0,
   },
   {
+    id: 2,
     class: "Preferance",
-    totalIssued: 1000,
+    totalProposed: 1000,
     currency: "USD",
-    totalSubscribed: 1,
-    paid: 1000,
-    unpaid: 800,
+    unitPrice: 1,
+    total: 10000.0,
+    paid: 10000.0,
+    unpaid: 0,
   },
   {
+    id: 3,
     class: "Ordinary Class 1",
-    totalIssued: 1000,
+    totalProposed: 1000,
     currency: "EUR",
-    totalSubscribed: 1,
-    paid: 1000,
+    unitPrice: 1,
+    total: 10000.0,
+    paid: 10000.0,
     unpaid: 0,
+  },
+];
+// Share Capital => End-------------------------------------------------------------------
+
+// Shareholders => Start-------------------------------------------------------------------
+
+export const shareholdersRows = [
+  {
+    label: "Person/Company",
+    for: "type",
   },
   {
-    class: "Preferance Class A",
-    totalIssued: 1000,
-    currency: "INR",
-    totalSubscribed: 1,
-    paid: 1000,
-    unpaid: 0,
+    label: "Surname",
+    for: "surname",
   },
+  {
+    label: "Name",
+    for: "name",
+  },
+  {
+    label: "Email",
+    for: "email",
+  },
+  {
+    label: "Class of Shares",
+    for: "unitPrice",
+  },
+  
+  {
+    label: "No. of Shares",
+    for: "totalShares",
+  }
 ];
 
 export const shareholdersContent = [
   {
-    name: "Tencent",
-    chiname: "腾讯",
-    start: "12-04-2021",
-    end: "12-04-2023",
+    id: 1,
+    type: "Person",
+    surname: "Kun Lee",
+    name: "Chang",
+    email: "email1@gmail.com",
     classOfShares: "Ordinary",
-    totalNumber: 200,
-    currency: "HKD",
-    totalAmount: 200,
-    shareCertiNo: "n3o2r1e0p",
+    noOfShares: 200
   },
   {
-    name: "Sina Corporation",
-    chiname: " 新浪",
-    start: "13-05-2021",
-    end: "15-06-2023",
+    id: 2,
+    type: "Company",
+    surname: "-",
+    name: "Tencent Games Pvt Ltd.",
+    email: "email2@gmail.com",
     classOfShares: "Preferance",
-    totalNumber: 100,
-    currency: "CYN",
-    totalAmount: 100,
-    shareCertiNo: "l8e7i6s5h",
+    noOfShares: 200
   },
   {
-    name: "China Merchants Group",
-    chiname: "招商局集团",
-    start: "12-04-2021",
-    end: "12-04-2023",
-    classOfShares: "Preferance",
-    totalNumber: 100,
-    currency: "AUD",
-    totalAmount: 100,
-    shareCertiNo: 1324654,
+    id: 3,
+    type: "Person",
+    surname: "Minamoto",
+    name: "Riotsu",
+    email: "email3@gmail.com",
+    classOfShares: "Preferance Class 1",
+    noOfShares: 200
   },
+];
+
+// Shareholders => End-------------------------------------------------------------------
+
+// Directors => Start-------------------------------------------------------------------
+export const directorsRows = [
+  {
+    label: "Person/Company",
+    for: "type",
+  },
+  {
+    label: "Surname",
+    for: "surname",
+  },
+  {
+    label: "Name",
+    for: "name",
+  },
+  {
+    label: "Email",
+    for: "email",
+  }
 ];
 
 export const directorsContent = [
   {
+    id: 1,
     type: "Person",
-    name: "John Doe",
-    chiname: "约翰杜",
-    start: "2022-01-01",
-    end: "2022-12-31",
-    idNo: "123456789",
-    companyNo: 1234567890,
+    surname: "Kun Lee",
+    name: "Chang",
+    email: "email1@gmail.com"
   },
   {
-    type: "Body Corporate",
-    name: "Alice Smith",
-    chiname: "爱丽丝史密斯",
-    start: "2022-02-01",
-    end: "2022-11-30",
-    idNo: "987654321",
-    companyNo: 9876543210,
+    id: 2,
+    type: "Company",
+    surname: "-",
+    name: "Tencent Games Pvt Ltd.",
+    email: "email2@gmail.com"
   },
   {
+    id: 3,
     type: "Person",
-    name: "Bob Johnson",
-    chiname: "鲍勃约翰逊",
-    start: "2022-03-01",
-    end: "2022-10-31",
-    idNo: "567890123",
-    companyNo: 5678901230,
+    surname: "Minamoto",
+    name: "Riotsu",
+    email: "email3@gmail.com"
+  },
+];
+
+// Directors => End-------------------------------------------------------------------
+
+// Company Secretary => Start-------------------------------------------------------------------
+export const companySecretaryRows = [
+  {
+    label: "Person/Company",
+    for: "type",
   },
   {
-    type: "Person",
-    name: "Eva Brown",
-    chiname: "伊娃布朗",
-    start: "2022-04-01",
-    end: "2022-09-30",
-    idNo: "345678901",
-    companyNo: 3456789010,
+    label: "Surname",
+    for: "surname",
   },
   {
-    type: "Body Corporate",
-    name: "Michael Lee",
-    chiname: "迈克尔李",
-    start: "2022-05-01",
-    end: "2022-08-31",
-    idNo: "111222333",
-    companyNo: 1112223330,
+    label: "Name",
+    for: "name",
   },
+  {
+    label: "Id No./Passport/Company No.",
+    for: "id",
+  }
 ];
 
 export const companySecretaryContent = [
   {
-    type: "Body Corporate",
-    name: "XYZ Properties",
-    chiname: "XYZ 物业",
-    start: "2022-01-01",
-    end: "2022-12-31",
-    idNo: "999999999",
-    companyNo: 1111111111,
-  },
-  {
+    id: 1,
     type: "Person",
-    name: "Sophie Williams",
-    chiname: "索菲娅威廉姆斯",
-    start: "2022-02-01",
-    end: "2022-11-30",
-    idNo: "888888888",
-    companyNo: 2222222222,
+    surname: "Kun Lee",
+    name: "Chang",
+    idNo: "3132XXX216"
   },
   {
-    type: "Body Corporate",
-    name: "ABC Condos",
-    chiname: "ABC 公寓",
-    start: "2022-03-01",
-    end: "2022-10-31",
-    idNo: "777777777",
-    companyNo: 3333333333,
+    id: 2,
+    type: "Company",
+    surname: "-",
+    name: "Tencent Games Pvt Ltd.",
+    idNo: "416XXX213"
   },
   {
+    id: 3,
     type: "Person",
-    name: "David Miller",
-    chiname: "大卫米勒",
-    start: "2022-04-01",
-    end: "2022-09-30",
-    idNo: "666666666",
-    companyNo: 4444444444,
-  },
-  {
-    type: "Body Corporate",
-    name: "LMN Estates",
-    chiname: "LMN 地产",
-    start: "2022-05-01",
-    end: "2022-08-31",
-    idNo: "555555555",
-    companyNo: 5555555555,
+    surname: "Minamoto",
+    name: "Riotsu",
+    idNo: "713XXX316"
   },
 ];
+
