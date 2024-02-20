@@ -3,6 +3,7 @@ import { ShareCapitalFormSchema } from "@/app/validationSchemas";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -76,17 +77,22 @@ const EditShareCapital = ({ id }: { id: number }) => {
   };
 
   function onSubmit(values: z.infer<typeof ShareCapitalFormSchema>) {
-    const updatedArray = shareCapitalData.filter((item) => item.id !== id);
-    const updatedObject = {
-      id: id,
-      ...values,
-    };
-    updatedArray.push(updatedObject);
-    setShareCapitalData(updatedArray);
     toast({
       title: "Updated!!",
       description: "The field has been updated successfully.",
     });
+    shareCapitalData.forEach((item) => {
+      if (item.id === id) {
+        (item.class = values.class),
+          (item.totalProposed = values.totalProposed),
+          (item.currency = values.currency),
+          (item.unitPrice = values.unitPrice),
+          (item.total = values.total),
+          (item.paid = values.paid),
+          (item.unpaid = values.unpaid);
+      }
+    });
+    setShareCapitalData(shareCapitalData);
   }
 
   return (
@@ -98,7 +104,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit ShareCapital (id: {id})</DialogTitle>
+          <DialogTitle>Edit ShareCapital ( id: {id} )</DialogTitle>
           <DialogDescription>
             Make changes to your ShareCapital. Click save when you&apos;re done.
           </DialogDescription>
@@ -226,7 +232,9 @@ const EditShareCapital = ({ id }: { id: number }) => {
               )}
             />
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <DialogClose asChild>
+                <Button type="submit">Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>

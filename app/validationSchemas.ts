@@ -40,6 +40,18 @@ export const ShareCapitalFormSchema = z.object({
   unpaid: z.coerce.number().nonnegative(),
 });
 
+export const EditShareCapitalFormSchema = z.object({
+  class: z.string().max(255),
+  totalProposed: z.coerce.number().positive().min(1, { message: "min. 1" }),
+  currency: z.string().max(3),
+  unitPrice: z.coerce.number().positive().min(1, {
+    message: "min. 1",
+  }),
+  total: z.coerce.number().nonnegative().min(0.01),
+  paid: z.coerce.number().nonnegative().min(0),
+  unpaid: z.coerce.number().nonnegative(),
+});
+
 // Sharholders
 
 export const ShareholdersFormSchema = z.object({
