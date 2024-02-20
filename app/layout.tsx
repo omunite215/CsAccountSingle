@@ -43,7 +43,7 @@ export default function RootLayout({
               <SiteHeader />
               {children}
             </main>
-            <Toaster/>
+            <Toaster />
           </ThemeProvider>
         </DataContextProvider>
       </body>

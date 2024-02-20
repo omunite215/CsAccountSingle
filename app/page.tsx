@@ -6,6 +6,7 @@ import {
   Directors,
   CompanySecretary,
 } from "@/components/Forms";
+import { Popup } from "@/components/Popup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
           <TabsTrigger value="CS">Company Secretary</TabsTrigger>
         </TabsList>
         <TabsContent value="CI">
+          <Popup />
           <CompanyInfo />
         </TabsContent>
         <TabsContent value="SI" className="flex flex-col gap-3">
