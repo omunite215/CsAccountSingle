@@ -21,7 +21,7 @@ export function Popup() {
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <div className="my-3 flex items-center gap-2">
+          <div className=" pb-3 flex items-center gap-2">
             <Image
               src="/logo/logo.png"
               width={36}

@@ -16,6 +16,15 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Form,
   FormControl,
   FormField,
@@ -34,6 +43,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDataContext } from "@/context/ContextProvider";
 import { shareholdersRows } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -42,6 +52,8 @@ import { z } from "zod";
 
 const Shareholders = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
@@ -170,10 +182,31 @@ const Shareholders = () => {
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input
-                                placeholder="Name Eg: Ordinary Class A"
-                                {...field}
-                              />
+                              <Select>
+                                <SelectTrigger className="w-[180px]">
+                                  <SelectValue placeholder="Class of Shares" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>Class of Shares</SelectLabel>
+                                    {shareCapitalData.map((item) => (
+                                      <SelectItem
+                                        key={item.id}
+                                        value={item.class}
+                                      >
+                                        <div className="flex gap-3">
+                                          <span className="font-medium">
+                                            {item.class}
+                                          </span>
+                                          <span className="font-light">
+                                            {item.unpaid}
+                                          </span>
+                                        </div>
+                                      </SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

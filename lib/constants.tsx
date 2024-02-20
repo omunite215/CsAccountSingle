@@ -152,9 +152,9 @@ export const shareCapitalContent = [
     totalProposed: 1000,
     currency: "HKD",
     unitPrice: 1,
-    total: 10000.0,
-    paid: 10000.0,
-    unpaid: 0,
+    total: 1000,
+    paid: 200,
+    unpaid: 800,
   },
   {
     id: 2,
@@ -162,9 +162,9 @@ export const shareCapitalContent = [
     totalProposed: 1000,
     currency: "USD",
     unitPrice: 1,
-    total: 10000.0,
-    paid: 10000.0,
-    unpaid: 0,
+    total: 1000,
+    paid: 200,
+    unpaid: 800,
   },
   {
     id: 3,
@@ -172,8 +172,8 @@ export const shareCapitalContent = [
     totalProposed: 1000,
     currency: "EUR",
     unitPrice: 1,
-    total: 10000.0,
-    paid: 10000.0,
+    total: 1000,
+    paid: 0,
     unpaid: 0,
   },
 ];
@@ -200,7 +200,7 @@ export const shareholdersRows = [
   },
   {
     label: "Class of Shares",
-    for: "unitPrice",
+    for: "classOfShares",
   },
   
   {
@@ -234,8 +234,8 @@ export const shareholdersContent = [
     surname: "Minamoto",
     name: "Riotsu",
     email: "email3@gmail.com",
-    classOfShares: "Preferance Class 1",
-    noOfShares: 200
+    classOfShares: "Ordinary Class 1",
+    noOfShares: 0
   },
 ];
 
