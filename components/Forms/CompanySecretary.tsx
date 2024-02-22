@@ -1,18 +1,7 @@
 "use client";
 
-import { companySecretarySchema } from "@/app/validationSchemas";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { companySecretaryRows } from "@/lib/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { CompanySecretaryFormSchema } from "@/app/validationSchemas";
+import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -26,8 +15,17 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Table,
   TableBody,
@@ -35,34 +33,88 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import CompanySecretaryData from "@/components/Forms/Data/CompanySecretaryData";
-import { useState } from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from "@/components/ui/table";
+import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const CompanySecretary = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const date = new Date().toDateString();
-  const form = useForm<z.infer<typeof companySecretarySchema>>({
-    resolver: zodResolver(companySecretarySchema),
+  const [disable, setDisable] = useState(false);
+  const { shareCapitalData } = useDataContext();
+
+  const form = useForm<z.infer<typeof CompanySecretaryFormSchema>>({
+    resolver: zodResolver(CompanySecretaryFormSchema),
     defaultValues: {
       type: "person",
-      surname: "",
-      name: "",
-      idNo: "",
+      surname: null,
+      name: undefined,
+      idNo: undefined,
+      address: undefined,
+      email: undefined,
+      phone: undefined,
+      idProof: undefined,
     },
   });
 
+  const shareholdersRows = [
+    {
+      label: "Person/Company",
+      for: "type",
+    },
+    {
+      label: "Surname",
+      for: "surname",
+    },
+    {
+      label: "Name",
+      for: "name",
+    },
+    {
+      label: disable ? "Company No." : "ID No.",
+      for: "idNo",
+    },
+    {
+      label: "Address",
+      for: "address",
+    },
+    {
+      label: "Email",
+      for: "email",
+    },
+    {
+      label: "Phone",
+      for: "phone",
+    },
+    {
+      label: "ID Proof",
+      for: "idProof",
+    },
+  ];
+
   // Submit Handler.
-  function onSubmit(values: z.infer<typeof companySecretarySchema>) {
+  function onSubmit(values: z.infer<typeof CompanySecretaryFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
+  useEffect(() => {
+    const type = form.getValues("type");
+    if (type === "company") {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [form.getValues("type")]);
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Company Secretary</CardTitle>
-        <CardDescription>Please enter information on Directors</CardDescription>
+        <CardDescription>
+          Please enter information on Company Secretary
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
@@ -71,8 +123,13 @@ const CompanySecretary = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {companySecretaryRows.map((row) => (
-                      <TableHead key={row.for}>
+                    {shareholdersRows.slice(0, 4).map((row) => (
+                      <TableHead
+                        key={row.for}
+                        className={cn({
+                          hidden: disable && row.label === "Surname",
+                        })}
+                      >
                         <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
                     ))}
@@ -113,14 +170,21 @@ const CompanySecretary = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      className={cn({
+                        hidden: disable,
+                      })}
+                    >
                       <FormField
                         name="surname"
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input placeholder="Surname Eg: Mar" {...field} />
+                              <Input
+                                placeholder="Surname Eg: Mar"
+                                {...form.register("surname")}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -149,9 +213,95 @@ const CompanySecretary = () => {
                           <FormItem>
                             <FormControl>
                               <Input
-                                type="email"
-                                placeholder="Name Eg: 313XXX412"
+                                placeholder={`${
+                                  disable ? "Company" : "ID"
+                                } No. Eg: S313XX31X`}
                                 {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {shareholdersRows.slice(4, 8).map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <FormField
+                        name="address"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Name Eg: No.1 Jianguomenwai Avenue"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="email"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                placeholder="Eg: email1@gmail.com"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="phone"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Eg: +86 XXX XXXX XXXX"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="idProof"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="File"
+                                placeholder="No File Choosen"
+                                {...form.register("idProof")}
                               />
                             </FormControl>
                             <FormMessage />
@@ -164,16 +314,16 @@ const CompanySecretary = () => {
               </Table>
               <div className="flex justify-between items-center">
                 <Button type="submit" className="my-4">
-                  Submit
+                  Save
                 </Button>
-                <CollapsibleTrigger className="ml-auto">
+                <CollapsibleTrigger className="ml-auto hidden">
                   <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <CompanySecretaryData />
+                <ShareholdersData />
               </CollapsibleContent>
             </form>
           </Form>

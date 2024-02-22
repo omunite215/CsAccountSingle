@@ -1,6 +1,6 @@
 import CompanyInfo from "./CompanyInfo";
 import ShareCapital from "./ShareCapital";
-import ShareParticulars from "./ShareParticulars";
+import InviteGuestUsers from "./InviteGuestUser";
 import Shareholders from "./Shareholders";
 import Directors from "./Directors";
 import CompanySecretary from "./CompanySecretary";
@@ -8,7 +8,7 @@ import CompanySecretary from "./CompanySecretary";
 export {
     CompanyInfo,
     ShareCapital,
-    ShareParticulars,
+    InviteGuestUsers,
     Shareholders,
     Directors,
     CompanySecretary

@@ -61,6 +61,7 @@ const ShareCapital = () => {
       total: 10000.0,
       paid: 10000.0,
       unpaid: 0,
+      rightsAttached: "",
     },
   });
 
@@ -91,8 +92,8 @@ const ShareCapital = () => {
     setShareCapitalData(shareCapitalData);
     toast({
       title: "Success!!",
-      description: "Field has been Added Successfully!!"
-    })
+      description: "Field has been Added Successfully!!",
+    });
   }
 
   return (
@@ -267,18 +268,30 @@ const ShareCapital = () => {
                         )}
                       />
                     </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="rightsAttached"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <Input placeholder="" type="text" {...field} />
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
 
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 my-4">
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">Save</Button>
                   {/* <Button variant="secondary" type="submit">
                     Add Field
                   </Button> */}
                 </div>
-                <CollapsibleTrigger type="button">
+                <CollapsibleTrigger type="button" className="hidden">
                   <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>

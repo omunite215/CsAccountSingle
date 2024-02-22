@@ -40,7 +40,7 @@ export function Popup() {
             You do not have any project or company yet!!
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Project - Company Incorporate Starts. Click OK to continue...
+            Project - Company Incorporate Starts.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

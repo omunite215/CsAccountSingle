@@ -1,7 +1,7 @@
 import {
   CompanyInfo,
   ShareCapital,
-  ShareParticulars,
+  InviteGuestUsers,
   Shareholders,
   Directors,
   CompanySecretary,
@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export default function Home() {
   return (
     <main className="md:container w-full py-6 md:px-0 px-6">
+      <Popup />
       <Tabs defaultValue="CI">
         <TabsList className="grid w-full md:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:mb-0 mb-40">
           <TabsTrigger value="CI">Company Info</TabsTrigger>
@@ -20,13 +21,12 @@ export default function Home() {
           <TabsTrigger value="CS">Company Secretary</TabsTrigger>
         </TabsList>
         <TabsContent value="CI">
-          <Popup />
           <CompanyInfo />
         </TabsContent>
         <TabsContent value="SI" className="flex flex-col gap-3">
           <ShareCapital />
           <Shareholders />
-          <ShareParticulars />
+          <InviteGuestUsers/>
         </TabsContent>
         <TabsContent value="D">
           <Directors />

@@ -50,7 +50,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 
-const Shareholders = () => {
+const InviteGuestUsers = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [disable, setDisable] = useState(false);
   const { shareCapitalData } = useDataContext();
@@ -71,7 +71,7 @@ const Shareholders = () => {
     },
   });
 
-  const shareholdersRows = [
+  const inviteGuestUserRows = [
     {
       label: "Person/Company",
       for: "type",
@@ -130,9 +130,9 @@ const Shareholders = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Shareholders</CardTitle>
+        <CardTitle>Invite Guest Users</CardTitle>
         <CardDescription>
-          Please enter information on Shareholders
+          Please enter information on Guest Users
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -142,7 +142,7 @@ const Shareholders = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {shareholdersRows.slice(0, 5).map((row) => (
+                    {inviteGuestUserRows.slice(0, 5).map((row) => (
                       <TableHead
                         key={row.for}
                         className={cn({
@@ -266,7 +266,7 @@ const Shareholders = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {shareholdersRows.slice(5, 10).map((row) => (
+                    {inviteGuestUserRows.slice(5, 10).map((row) => (
                       <TableHead key={row.for}>
                         <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
@@ -408,4 +408,4 @@ const Shareholders = () => {
   );
 };
 
-export default Shareholders;
+export default InviteGuestUsers;

@@ -30,7 +30,7 @@ const CompanyInfo = () => {
     defaultValues: {
       name: "",
       nature: "",
-      type: "public",
+      type: "private",
       address: "",
       email: "",
       companyTel: "",
@@ -102,9 +102,11 @@ const CompanyInfo = () => {
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="public" />
+                            <RadioGroupItem value="public" disabled />
                           </FormControl>
-                          <FormLabel className="font-normal">Public</FormLabel>
+                          <FormLabel className="font-normal text-muted-foreground">
+                            Public
+                          </FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
@@ -230,7 +232,7 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Save</Button>
           </form>
         </Form>
       </CardContent>

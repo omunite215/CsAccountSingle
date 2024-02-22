@@ -1,7 +1,20 @@
 "use client";
 
-import { directorsSchema } from "@/app/validationSchemas";
-import DirectorsData from "@/components/Forms/Data/DirectorsData";
+import { DirectorsFormSchema } from "@/app/validationSchemas";
+import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Form,
   FormControl,
@@ -10,27 +23,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { directorsRows } from "@/lib/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button, buttonVariants } from "../ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -38,24 +42,80 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "@/components/ui/table";
+import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const Directors = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const form = useForm<z.infer<typeof directorsSchema>>({
-    resolver: zodResolver(directorsSchema),
+  const [disable, setDisable] = useState(false);
+  const { shareCapitalData } = useDataContext();
+
+  const form = useForm<z.infer<typeof DirectorsFormSchema>>({
+    resolver: zodResolver(DirectorsFormSchema),
     defaultValues: {
       type: "person",
-      surname: "",
-      name: "",
-      email: "",
+      surname: null,
+      name: undefined,
+      idNo: undefined,
+      address: undefined,
+      email: undefined,
+      phone: undefined,
+      idProof: undefined,
     },
   });
 
+  const directorsRows = [
+    {
+      label: "Person/Company",
+      for: "type",
+    },
+    {
+      label: "Surname",
+      for: "surname",
+    },
+    {
+      label: "Name",
+      for: "name",
+    },
+    {
+      label: disable ? "Company No." : "ID No.",
+      for: "idNo",
+    },
+    {
+      label: "Address",
+      for: "address",
+    },
+    {
+      label: "Email",
+      for: "email",
+    },
+    {
+      label: "Phone",
+      for: "phone",
+    },
+    {
+      label: "ID Proof",
+      for: "idProof",
+    },
+  ];
+
   // Submit Handler.
-  function onSubmit(values: z.infer<typeof directorsSchema>) {
+  function onSubmit(values: z.infer<typeof DirectorsFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
+  useEffect(() => {
+    const type = form.getValues("type");
+    if (type === "company") {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [form.getValues("type")]);
 
   return (
     <Card>
@@ -70,8 +130,13 @@ const Directors = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {directorsRows.map((row) => (
-                      <TableHead key={row.for}>
+                    {directorsRows.slice(0, 4).map((row) => (
+                      <TableHead
+                        key={row.for}
+                        className={cn({
+                          hidden: disable && row.label === "Surname",
+                        })}
+                      >
                         <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
                     ))}
@@ -112,14 +177,21 @@ const Directors = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      className={cn({
+                        hidden: disable,
+                      })}
+                    >
                       <FormField
                         name="surname"
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input placeholder="Surname Eg: Mar" {...field} />
+                              <Input
+                                placeholder="Surname Eg: Mar"
+                                {...form.register("surname")}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -142,6 +214,57 @@ const Directors = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
+                        name="idNo"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder={`${
+                                  disable ? "Company" : "ID"
+                                } No. Eg: S313XX31X`}
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {directorsRows.slice(4, 8).map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <FormField
+                        name="address"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Name Eg: No.1 Jianguomenwai Avenue"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
                         name="email"
                         control={form.control}
                         render={({ field }) => (
@@ -149,8 +272,43 @@ const Directors = () => {
                             <FormControl>
                               <Input
                                 type="email"
-                                placeholder="Name Eg: email1@gmail.com"
+                                placeholder="Eg: email1@gmail.com"
                                 {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="phone"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Eg: +86 XXX XXXX XXXX"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <FormField
+                        name="idProof"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="File"
+                                placeholder="No File Choosen"
+                                {...form.register("idProof")}
                               />
                             </FormControl>
                             <FormMessage />
@@ -163,16 +321,16 @@ const Directors = () => {
               </Table>
               <div className="flex justify-between items-center">
                 <Button type="submit" className="my-4">
-                  Submit
+                  Save
                 </Button>
-                <CollapsibleTrigger className="ml-auto">
+                <CollapsibleTrigger className="ml-auto hidden">
                   <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent>
-                <DirectorsData />
+                <ShareholdersData />
               </CollapsibleContent>
             </form>
           </Form>

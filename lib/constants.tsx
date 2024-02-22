@@ -143,6 +143,10 @@ export const shareCapitalRows = [
     label: "Unpaid Amount",
     for: "unpaid",
   },
+  {
+    label: "Particulars of Rights Attached",
+    for: "rightsAttached",
+  },
 ];
 
 export const shareCapitalContent = [
@@ -195,18 +199,33 @@ export const shareholdersRows = [
     for: "name",
   },
   {
+    label: "ID/Company No.",
+    for: "idNo",
+  },
+  {
+    label: "Address",
+    for: "address",
+  },
+  {
     label: "Email",
     for: "email",
+  },
+  {
+    label: "Phone",
+    for: "phone",
+  },
+  {
+    label: "ID Proof",
+    for: "idProof",
   },
   {
     label: "Class of Shares",
     for: "classOfShares",
   },
-  
   {
     label: "No. of Shares",
     for: "totalShares",
-  }
+  },
 ];
 
 export const shareholdersContent = [
@@ -217,7 +236,7 @@ export const shareholdersContent = [
     name: "Chang",
     email: "email1@gmail.com",
     classOfShares: "Ordinary",
-    noOfShares: 200
+    noOfShares: 200,
   },
   {
     id: 2,
@@ -226,7 +245,7 @@ export const shareholdersContent = [
     name: "Tencent Games Pvt Ltd.",
     email: "email2@gmail.com",
     classOfShares: "Preferance",
-    noOfShares: 200
+    noOfShares: 200,
   },
   {
     id: 3,
@@ -235,7 +254,7 @@ export const shareholdersContent = [
     name: "Riotsu",
     email: "email3@gmail.com",
     classOfShares: "Ordinary Class 1",
-    noOfShares: 0
+    noOfShares: 0,
   },
 ];
 
@@ -258,7 +277,7 @@ export const directorsRows = [
   {
     label: "Email",
     for: "email",
-  }
+  },
 ];
 
 export const directorsContent = [
@@ -267,21 +286,21 @@ export const directorsContent = [
     type: "Person",
     surname: "Kun Lee",
     name: "Chang",
-    email: "email1@gmail.com"
+    email: "email1@gmail.com",
   },
   {
     id: 2,
     type: "Company",
     surname: "-",
     name: "Tencent Games Pvt Ltd.",
-    email: "email2@gmail.com"
+    email: "email2@gmail.com",
   },
   {
     id: 3,
     type: "Person",
     surname: "Minamoto",
     name: "Riotsu",
-    email: "email3@gmail.com"
+    email: "email3@gmail.com",
   },
 ];
 
@@ -304,7 +323,7 @@ export const companySecretaryRows = [
   {
     label: "Id No./Passport/Company No.",
     for: "id",
-  }
+  },
 ];
 
 export const companySecretaryContent = [
@@ -313,21 +332,20 @@ export const companySecretaryContent = [
     type: "Person",
     surname: "Kun Lee",
     name: "Chang",
-    idNo: "3132XXX216"
+    idNo: "3132XXX216",
   },
   {
     id: 2,
     type: "Company",
     surname: "-",
     name: "Tencent Games Pvt Ltd.",
-    idNo: "416XXX213"
+    idNo: "416XXX213",
   },
   {
     id: 3,
     type: "Person",
     surname: "Minamoto",
     name: "Riotsu",
-    idNo: "713XXX316"
+    idNo: "713XXX316",
   },
 ];
-
