@@ -312,7 +312,7 @@ const Directors = () => {
                 <Button type="submit" className="my-4">
                   Save
                 </Button>
-                <CollapsibleTrigger className="ml-auto hidden">
+                <CollapsibleTrigger className="ml-auto">
                   <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>

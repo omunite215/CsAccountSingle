@@ -159,7 +159,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 200,
     unpaid: 800,
-    rightsAttached: "Voting Rights"
+    rightsAttached: "Voting Rights",
   },
   {
     id: 2,
@@ -170,7 +170,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 200,
     unpaid: 800,
-    rightsAttached: "Voting Rights"
+    rightsAttached: "Voting Rights",
   },
   {
     id: 3,
@@ -181,7 +181,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 0,
     unpaid: 0,
-    rightsAttached: "Voting Rights"
+    rightsAttached: "Voting Rights",
   },
 ];
 // Share Capital => End-------------------------------------------------------------------
@@ -237,7 +237,10 @@ export const shareholdersContent = [
     type: "Person",
     surname: "Kun Lee",
     name: "Chang",
+    idNo: "313425",
+    address: "16 Hong Kong Street",
     email: "email1@gmail.com",
+    phone: "+91235689789",
     classOfShares: "Ordinary",
     noOfShares: 200,
   },
@@ -246,7 +249,10 @@ export const shareholdersContent = [
     type: "Company",
     surname: "-",
     name: "Tencent Games Pvt Ltd.",
+    idNo: "313425",
+    address: "16 Hong Kong Street",
     email: "email2@gmail.com",
+    phone: "+91235689789",
     classOfShares: "Preferance",
     noOfShares: 200,
   },
@@ -255,7 +261,10 @@ export const shareholdersContent = [
     type: "Person",
     surname: "Minamoto",
     name: "Riotsu",
+    idNo: "313425",
+    address: "16 Hong Kong Street",
     email: "email3@gmail.com",
+    phone: "+91235689789",
     classOfShares: "Ordinary Class 1",
     noOfShares: 0,
   },
