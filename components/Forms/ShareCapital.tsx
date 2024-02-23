@@ -292,7 +292,7 @@ const ShareCapital = () => {
                 <div className="flex items-center gap-3 my-4">
                   <Button type="submit">Save</Button>
                 </div>
-                <CollapsibleTrigger type="button" className="hidden">
+                <CollapsibleTrigger type="button" className="">
                   <span className={buttonVariants({ variant: "outline" })}>
                     {isOpen ? "Show Less" : "Show More"}
                   </span>
