@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { shareholdersContent, shareholdersRows } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const ShareholdersData = () => {
   return (
@@ -19,7 +20,9 @@ const ShareholdersData = () => {
         <TableHeader>
           <TableRow>
             {shareholdersRows.map((row) => (
-              <TableHead key={row.for}>{row.label}</TableHead>
+              <TableHead key={row.for} className={cn({
+                "hidden" : row.label === "ID Proof"
+              })}>{row.label}</TableHead>
             ))}
           </TableRow>
         </TableHeader>
