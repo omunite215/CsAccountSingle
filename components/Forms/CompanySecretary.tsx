@@ -34,7 +34,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -44,7 +43,6 @@ import { z } from "zod";
 const CompanySecretary = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof CompanySecretaryFormSchema>>({
     resolver: zodResolver(CompanySecretaryFormSchema),

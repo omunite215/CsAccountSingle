@@ -27,15 +27,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -43,7 +34,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -53,7 +43,6 @@ import { z } from "zod";
 const Directors = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof DirectorsFormSchema>>({
     resolver: zodResolver(DirectorsFormSchema),

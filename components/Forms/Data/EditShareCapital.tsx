@@ -56,6 +56,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
       total: tracedObject?.total,
       paid: tracedObject?.paid,
       unpaid: tracedObject?.unpaid,
+      rightsAttached: tracedObject?.rightsAttached
     },
   });
 
@@ -92,6 +93,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
           (item.unpaid = values.unpaid);
       }
     });
+    shareCapitalData.pop();
     setShareCapitalData(shareCapitalData);
   }
 
@@ -227,6 +229,21 @@ const EditShareCapital = ({ id }: { id: number }) => {
                 <FormItem>
                   <FormLabel>Unpaid Amount</FormLabel>
                   <Input readOnly placeholder="XXXX" type="number" {...field} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="rightsAttached"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Rights Attached</FormLabel>
+                  <Input
+                    placeholder="Eg: Voting..."
+                    type="text"
+                    {...field}
+                  />
                   <FormMessage />
                 </FormItem>
               )}

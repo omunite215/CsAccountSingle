@@ -159,6 +159,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 200,
     unpaid: 800,
+    rightsAttached: "Voting Rights"
   },
   {
     id: 2,
@@ -169,6 +170,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 200,
     unpaid: 800,
+    rightsAttached: "Voting Rights"
   },
   {
     id: 3,
@@ -179,6 +181,7 @@ export const shareCapitalContent = [
     total: 1000,
     paid: 0,
     unpaid: 0,
+    rightsAttached: "Voting Rights"
   },
 ];
 // Share Capital => End-------------------------------------------------------------------

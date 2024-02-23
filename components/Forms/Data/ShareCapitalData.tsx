@@ -24,9 +24,8 @@ const ShareCapitalData = () => {
     toast({
       variant: "destructive",
       title: "Deleted!!",
-      description: "The field is deleted successfully."
+      description: "The field is deleted successfully.",
     });
-
   }
 
   return (
@@ -54,6 +53,7 @@ const ShareCapitalData = () => {
               <TableCell>{item.total}</TableCell>
               <TableCell>{item.paid}</TableCell>
               <TableCell>{item.unpaid}</TableCell>
+              <TableCell>{item.rightsAttached}</TableCell>
               <TableCell>
                 <EditShareCapital id={item.id} />
               </TableCell>

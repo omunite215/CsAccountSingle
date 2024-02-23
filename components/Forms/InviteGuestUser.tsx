@@ -16,15 +16,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormControl,
   FormField,
@@ -43,17 +34,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 
 const InviteGuestUsers = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
@@ -66,8 +55,6 @@ const InviteGuestUsers = () => {
       email: undefined,
       phone: undefined,
       idProof: undefined,
-      classOfShares: "Ordinary",
-      noOfShares: 1,
     },
   });
 
@@ -104,14 +91,6 @@ const InviteGuestUsers = () => {
       label: "ID Proof",
       for: "idProof",
     },
-    {
-      label: "Class of Shares",
-      for: "classOfShares",
-    },
-    {
-      label: "No. of Shares",
-      for: "totalShares",
-    },
   ];
 
   // Submit Handler.
@@ -142,7 +121,7 @@ const InviteGuestUsers = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {inviteGuestUserRows.slice(0, 5).map((row) => (
+                    {inviteGuestUserRows.slice(0, 4).map((row) => (
                       <TableHead
                         key={row.for}
                         className={cn({
@@ -243,6 +222,21 @@ const InviteGuestUsers = () => {
                         )}
                       />
                     </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {inviteGuestUserRows.slice(4, 8).map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
                     <TableCell>
                       <FormField
                         name="address"
@@ -260,21 +254,6 @@ const InviteGuestUsers = () => {
                         )}
                       />
                     </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    {inviteGuestUserRows.slice(5, 10).map((row) => (
-                      <TableHead key={row.for}>
-                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
                     <TableCell>
                       <FormField
                         name="email"
@@ -321,62 +300,6 @@ const InviteGuestUsers = () => {
                                 type="File"
                                 placeholder="No File Choosen"
                                 {...form.register("idProof")}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="classOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Select>
-                                <SelectTrigger className="w-[180px]">
-                                  <SelectValue placeholder="Class of Shares" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Class of Shares</SelectLabel>
-                                    {shareCapitalData.map((item) => (
-                                      <SelectItem
-                                        key={item.id}
-                                        value={item.class}
-                                      >
-                                        <div className="flex gap-3">
-                                          <span className="font-medium">
-                                            {item.class}
-                                          </span>
-                                          <span className="font-light">
-                                            {item.unpaid}
-                                          </span>
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="noOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                placeholder="Eg: 1000"
-                                {...field}
                               />
                             </FormControl>
                             <FormMessage />

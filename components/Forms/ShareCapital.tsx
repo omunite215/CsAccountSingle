@@ -274,7 +274,11 @@ const ShareCapital = () => {
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
-                            <Input placeholder="" type="text" {...field} />
+                            <Input
+                              placeholder="Voting Rights, etc..."
+                              type="text"
+                              {...field}
+                            />
                             <FormMessage />
                           </FormItem>
                         )}
@@ -287,9 +291,6 @@ const ShareCapital = () => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 my-4">
                   <Button type="submit">Save</Button>
-                  {/* <Button variant="secondary" type="submit">
-                    Add Field
-                  </Button> */}
                 </div>
                 <CollapsibleTrigger type="button" className="hidden">
                   <span className={buttonVariants({ variant: "outline" })}>
