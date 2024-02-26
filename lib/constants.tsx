@@ -1,3 +1,14 @@
+export const CompanyInfoHoverContent = {
+  name: {
+    first: "A company name may be in English or in Chinese. A company may also adopt both an English name and a Chinese name. Please refer to the 'Guideline on Registration of Company Names for Hong Kong Companies' for the points to note when choosing a company name.",
+    second: "The company name(s) stated in this Section should be identical to the name(s) stated in the Name Clause of the articles of the company as required under section 81 of the Companies Ordinance. An application for incorporation with errors in the proposed company name(s) may be rejected by the Companies Registry and the lodgement fee paid will not be refunded."
+  },
+  type: "A company is a 'private company' if its articles restrict a member's right to transfer shares, limit the number of members to 50, and prohibit any invitation to the public to subscribe for any shares or debentures of the company; and it is not a company limited by guarantee. A company is a 'public company' if it is not a private company and not a company limited by guarantee. Please seek independent legal advice on the choice of an appropriate type of company, if necessary.",
+  address: " Please provide the code and description of the nature of proposed business of the company in accordance with the categories of business nature which are available from the Companies Registry's website (www.cr.gov.hk). If the company proposes to carry on more than one category of business, please provide the major category.",
+  time: "According to sections 5A(1) and 5D(2) of the Business Registration Ordinance (Cap. 310), an applicant for company incorporation must deliver a Notice to Business Registration Office (IRBR1) and the prescribed business registration fee and levy together with this form. Otherwise, the application will be rejected by the Companies Registry",
+  presentor: "Please complete the Presentor's Reference. Unless the presentor needs to raise a specific issue for the attention of the Companies Registry, no covering letter is required. The Companies Registry will notify the presentor by email or fax to collect the Certificate of Incorporation and Business Registration Certificate in person. A written authorization will be required if the presentor sends a representative to collect the certificates."
+}
+
 export const notificationContent = [
   {
     title: "New Form Released!!",
@@ -216,10 +227,6 @@ export const shareholdersRows = [
   {
     label: "Phone",
     for: "phone",
-  },
-  {
-    label: "ID Proof",
-    for: "idProof",
   },
   {
     label: "Class of Shares",

@@ -2,6 +2,7 @@
 
 import { ShareholdersFormSchema } from "@/app/validationSchemas";
 import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import { TooltipComponent } from "@/components/Tooltip";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -16,15 +17,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Form,
   FormControl,
   FormField,
@@ -36,6 +28,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Table,
   TableBody,
   TableCell,
@@ -44,11 +45,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 
 const Shareholders = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +67,7 @@ const Shareholders = () => {
       email: undefined,
       phone: undefined,
       idProof: undefined,
+      addressProof: undefined,
       classOfShares: "Ordinary",
       noOfShares: 1,
     },
@@ -99,10 +101,6 @@ const Shareholders = () => {
     {
       label: "Phone",
       for: "phone",
-    },
-    {
-      label: "ID Proof",
-      for: "idProof",
     },
     {
       label: "Class of Shares",
@@ -149,7 +147,18 @@ const Shareholders = () => {
                           hidden: disable && row.label === "Surname",
                         })}
                       >
-                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                        <FormLabel
+                          htmlFor={row.for}
+                          className={cn({
+                            "inline-flex items-center gap-3":
+                              !disable && row.label === "Address",
+                          })}
+                        >
+                          {row.label}
+                          {!disable && row.label === "Address" && (
+                            <TooltipComponent content="Address proof can be a bank letter or utility letter with the name and the address." />
+                          )}
+                        </FormLabel>
                       </TableHead>
                     ))}
                   </TableRow>
@@ -261,12 +270,76 @@ const Shareholders = () => {
                       />
                     </TableCell>
                   </TableRow>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      {disable && (
+                        <FormField
+                          name="idProof"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  type="File"
+                                  placeholder="Upload a Copy"
+                                  {...form.register("idProof")}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {!disable && (
+                        <FormField
+                          name="idProof"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  type="File"
+                                  placeholder="Upload a Copy"
+                                  {...form.register("idProof")}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {!disable && (
+                        <FormField
+                          name="addressProof"
+                          control={form.control}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  type="File"
+                                  placeholder="Upload a Copy"
+                                  {...form.register("addressProof")}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {shareholdersRows.slice(5, 10).map((row) => (
+                    {shareholdersRows.slice(5, 9).map((row) => (
                       <TableHead key={row.for}>
                         <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
@@ -312,31 +385,13 @@ const Shareholders = () => {
                     </TableCell>
                     <TableCell>
                       <FormField
-                        name="idProof"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                type="File"
-                                placeholder="No File Choosen"
-                                {...form.register("idProof")}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
                         name="classOfShares"
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Select>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger>
                                   <SelectValue placeholder="Class of Shares" />
                                 </SelectTrigger>
                                 <SelectContent>

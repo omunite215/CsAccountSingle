@@ -24,10 +24,10 @@ type MessageCardProps = {
 
 const NotificationCard = ({ title, description, date }: MessageCardProps) => {
   return (
-    <Card className="flex justify-start items-center gap-2 p-3 max-w-sm max-h-30">
+    <Card className="flex justify-start items-center gap-2 w-64 p-0">
       <CardHeader>
-        <CardTitle className="font-medium text-xs">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle className="font-medium text-base">{title}</CardTitle>
+        <CardDescription className=" text-xs">{description}</CardDescription>
         <CardDescription className="text-xs font-light mt-2">
           {date}
         </CardDescription>

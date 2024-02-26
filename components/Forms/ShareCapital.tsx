@@ -2,7 +2,15 @@
 
 import { ShareCapitalFormSchema } from "@/app/validationSchemas";
 import ShareCapitalData from "@/components/Forms/Data/ShareCapitalData";
-import { useToast } from "@/components/ui/use-toast";
+import { HoverCardComponent } from "@/components/HoverCard";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,28 +24,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useDataContext } from "@/context/ContextProvider";
-import { currencyContent, shareCapitalRows } from "@/lib/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button, buttonVariants } from "../ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -45,7 +39,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "@/components/ui/table";
+import { useToast } from "@/components/ui/use-toast";
+import { useDataContext } from "@/context/ContextProvider";
+import { currencyContent, shareCapitalRows } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const ShareCapital = () => {
   const { toast } = useToast();
@@ -61,7 +63,7 @@ const ShareCapital = () => {
       total: 10000.0,
       paid: 10000.0,
       unpaid: 0,
-      rightsAttached: "",
+      rightsAttached: undefined,
     },
   });
 
@@ -113,7 +115,48 @@ const ShareCapital = () => {
                   <TableRow>
                     {shareCapitalRows.map((row) => (
                       <TableHead key={row.for}>
-                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
+                        <FormLabel
+                          htmlFor={row.for}
+                          className={cn({
+                            "inline-flex gap-2 items-center":
+                              row.for === "rightsAttached",
+                          })}
+                        >
+                          {row.label}
+                          {row.for === "rightsAttached" && (
+                            <HoverCardComponent
+                              size={24}
+                              content={
+                                <ol
+                                  type="a"
+                                  className="space-y-3 px-2 py-2 list-[lower-alpha]"
+                                >
+                                  <li>
+                                    The particulars of any voting rights
+                                    attached to shares in that class, including
+                                    rights that arise only in certain
+                                    circumstances
+                                  </li>
+                                  <li>
+                                    The particulars of any rights attached to
+                                    shares in that class, as respects dividends,
+                                    to participate in a distribution
+                                  </li>
+                                  <li>
+                                    The particulars of any rights attached to
+                                    shares in that class, as respects capital,
+                                    to participate in a distribution (including
+                                    on a winding up)
+                                  </li>
+                                  <li>
+                                    Whether or not shares in that class are
+                                    redeemable shares
+                                  </li>
+                                </ol>
+                              }
+                            />
+                          )}
+                        </FormLabel>
                       </TableHead>
                     ))}
                   </TableRow>

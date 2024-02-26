@@ -4,6 +4,7 @@ import { CompanyInfoFormSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { CompanyInfoHoverContent } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,20 +23,34 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from "@/components/ui/textarea";
+import TooltipComponent from "./Tooltip/TooltipComponent";
+import HoverCardComponent from "../HoverCard/HoverCardComponent";
 
 const CompanyInfo = () => {
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
-      name: "",
-      nature: "",
+      name: undefined,
+      nature: undefined,
       type: "private",
-      address: "",
-      email: "",
-      companyTel: "",
-      companyfax: "",
+      house: undefined,
+      building: undefined,
+      street: undefined,
+      district: undefined,
+      country: "Hong Kong",
+      email: undefined,
+      companyTel: undefined,
+      companyfax: undefined,
       time: "1 year",
+      presentorName: undefined,
+      presentorChiName: undefined,
+      presentorAddress: undefined,
+      presentorTel: undefined,
+      presentorFax: undefined,
+      presentorEmail: undefined,
+      shareholders: undefined,
+      directors: undefined,
+      companySecretary: 1,
     },
   });
 
@@ -48,7 +63,7 @@ const CompanyInfo = () => {
     <Card>
       <CardHeader>
         <CardTitle>Company Info</CardTitle>
-        <CardDescription>Enter Info about Company</CardDescription>
+        <CardDescription>Enter information about your Company</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -59,7 +74,18 @@ const CompanyInfo = () => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name (English):</FormLabel>
+                    <FormLabel className="inline-flex items-center gap-2">
+                      <span>Company Name (English):</span>
+                      <HoverCardComponent
+                        content={
+                          <ol className="space-y-3 list-[lower-alpha] *:leading-relaxed px-2 py-2">
+                            <li>{CompanyInfoHoverContent.name.first}</li>
+                            <li>{CompanyInfoHoverContent.name.second}</li>
+                          </ol>
+                        }
+                        size={20}
+                      />
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="company name (English)" {...field} />
                     </FormControl>
@@ -87,7 +113,17 @@ const CompanyInfo = () => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Select Type of Company:</FormLabel>
+                    <FormLabel className="inline-flex items-center gap-2">
+                      <span>Select Type of Company:</span>
+                      <HoverCardComponent
+                        content={
+                          <span className=" leading-relaxed">
+                            {CompanyInfoHoverContent.type}
+                          </span>
+                        }
+                        size={20}
+                      />
+                    </FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
@@ -131,22 +167,79 @@ const CompanyInfo = () => {
                 )}
               />
             </div>
-            <FormField
-              name="address"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address:</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Hong Kong Address Only..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="space-y-3">
+              <FormField
+                name="house"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="inline-flex items-center gap-2">
+                      <span>Address: </span>
+                      <HoverCardComponent
+                        content={
+                          <span className=" leading-relaxed">
+                            {CompanyInfoHoverContent.address}
+                          </span>
+                        }
+                        size={20}
+                      />
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Flat / Floor / Block" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="building"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Building" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="street"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Street" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="district"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="District" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="country"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="HongKong" {...field} readOnly />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               name="email"
               control={form.control}
@@ -205,8 +298,18 @@ const CompanyInfo = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Choose how long period of Business Registration Fee:
+                  <FormLabel className=" inline-flex items-center gap-2">
+                    <span>
+                      Choose how long period of Business Registration Fee:
+                    </span>
+                    <HoverCardComponent
+                      content={
+                        <span className=" leading-relaxed">
+                          {CompanyInfoHoverContent.time}
+                        </span>
+                      }
+                      size={20}
+                    />
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
@@ -232,6 +335,174 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
+            <Card>
+              <CardHeader>
+                <CardTitle className=" inline-flex items-center gap-2">
+                  <span>Presentor&lsquo;s Referance</span>
+                  <HoverCardComponent
+                    content={
+                      <span className=" font-normal leading-relaxed text-base">
+                        {CompanyInfoHoverContent.presentor}
+                      </span>
+                    }
+                    size={28}
+                  />
+                </CardTitle>
+                <CardDescription>
+                  Please enter info on Presentor&lsquo;s Referance
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                <div className="grid grid-cols-2 gap-3">
+                  <FormField
+                    name="presentorName"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name (English):</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Curtis Mar" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="presentorChiName"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name (Chinese):</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Name (Chinese)" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  name="presentorAddress"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Address:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Eg: 16, Taichi Street..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <FormField
+                    name="presentorTel"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telephone:</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="+852-1234-5678"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="presentorFax"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Fax No:</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="+852-1234-5678"
+                            type="number"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  name="presentorEmail"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="info@test1.com"
+                          type="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Other Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                <FormField
+                  name="shareholders"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Shareholders:</FormLabel>
+                      <FormControl>
+                        <Input placeholder="XXXXX" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="directors"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Directors:</FormLabel>
+                      <FormControl>
+                        <Input placeholder="XXXXX" type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="companySecretary"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Company Secretary:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="XXXXX"
+                          type="number"
+                          {...field}
+                          readOnly
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
             <Button type="submit">Save</Button>
           </form>
         </Form>
