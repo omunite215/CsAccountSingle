@@ -1,10 +1,7 @@
 "use client";
 
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { CompanyInfoHoverContent } from "@/lib/constants";
+import { HoverCardComponent } from "@/components/HoverCard";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,8 +20,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import TooltipComponent from "./Tooltip/TooltipComponent";
-import HoverCardComponent from "../HoverCard/HoverCardComponent";
+import { CompanyInfoHoverContent } from "@/lib/constants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const CompanyInfo = () => {
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
