@@ -43,7 +43,6 @@ const EditShareCapital = ({ id }: { id: number }) => {
   function getObjectById(id: number) {
     return shareCapitalData.find((item) => item.id === id);
   }
-
   const tracedObject = getObjectById(id);
 
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
@@ -56,7 +55,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
       total: tracedObject?.total,
       paid: tracedObject?.paid,
       unpaid: tracedObject?.unpaid,
-      rightsAttached: tracedObject?.rightsAttached
+      rightsAttached: tracedObject?.rightsAttached,
     },
   });
 
@@ -84,16 +83,16 @@ const EditShareCapital = ({ id }: { id: number }) => {
     });
     shareCapitalData.forEach((item) => {
       if (item.id === id) {
-        (item.class = values.class),
-          (item.totalProposed = values.totalProposed),
-          (item.currency = values.currency),
-          (item.unitPrice = values.unitPrice),
-          (item.total = values.total),
-          (item.paid = values.paid),
-          (item.unpaid = values.unpaid);
+        item.class = values.class;
+        item.totalProposed = values.totalProposed;
+        item.currency = values.currency;
+        item.unitPrice = values.unitPrice;
+        item.total = values.total;
+        item.paid = values.paid;
+        item.unpaid = values.unpaid;
+        item.rightsAttached = values.rightsAttached;
       }
     });
-    shareCapitalData.pop();
     setShareCapitalData(shareCapitalData);
   }
 
@@ -239,11 +238,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Rights Attached</FormLabel>
-                  <Input
-                    placeholder="Eg: Voting..."
-                    type="text"
-                    {...field}
-                  />
+                  <Input placeholder="Eg: Voting..." type="text" {...field} />
                   <FormMessage />
                 </FormItem>
               )}

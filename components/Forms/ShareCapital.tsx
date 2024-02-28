@@ -51,8 +51,10 @@ import { z } from "zod";
 
 const ShareCapital = () => {
   const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+
   const { shareCapitalData, setShareCapitalData } = useDataContext();
+
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
     resolver: zodResolver(ShareCapitalFormSchema),
     defaultValues: {
@@ -83,6 +85,7 @@ const ShareCapital = () => {
     const totalAmount = form.getValues("total");
     form.setValue("unpaid", totalAmount - value);
   };
+
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareCapitalFormSchema>) {
     const newId = Math.max(...shareCapitalData.map((entry) => entry.id), 0) + 1;
@@ -99,15 +102,25 @@ const ShareCapital = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Share Capital</CardTitle>
-        <CardDescription>
-          Please enter information on Share Capital
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <Card>
+        <div className="flex flex-1 justify-between items-center">
+          <CardHeader>
+            <CardTitle>Share Capital</CardTitle>
+            <CardDescription>
+              Please enter information on Share Capital
+            </CardDescription>
+          </CardHeader>
+          <CollapsibleTrigger type="button" className="pr-6">
+            <span className={buttonVariants({ variant: "outline" })}>
+              {isOpen ? "-" : "+"}
+            </span>
+          </CollapsibleTrigger>
+        </div>
+        <CardContent className="space-y-6">
+          <CollapsibleContent className="CollapsibleContent">
+            <ShareCapitalData />
+          </CollapsibleContent>
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <Table>
@@ -330,25 +343,14 @@ const ShareCapital = () => {
                   </TableRow>
                 </TableBody>
               </Table>
-
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3 my-4">
-                  <Button type="submit">Save</Button>
-                </div>
-                <CollapsibleTrigger type="button" className="">
-                  <span className={buttonVariants({ variant: "outline" })}>
-                    {isOpen ? "Show Less" : "Show More"}
-                  </span>
-                </CollapsibleTrigger>
+              <div>
+                <Button type="submit">Save</Button>
               </div>
-              <CollapsibleContent>
-                <ShareCapitalData />
-              </CollapsibleContent>
             </form>
           </Form>
-        </Collapsible>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Collapsible>
   );
 };
 

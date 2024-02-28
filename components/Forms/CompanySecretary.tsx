@@ -1,7 +1,7 @@
 "use client";
 
 import { CompanySecretaryFormSchema } from "@/app/validationSchemas";
-import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import CompanySecretaryData from "./Data/CompanySecretaryData";
 import { TooltipComponent } from "@/components/Tooltip";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -48,17 +48,19 @@ import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const Company = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const CompanySecretary = () => {
+  const [isOpen, setIsOpen] = useState(true);
   const [disable, setDisable] = useState(false);
   const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof CompanySecretaryFormSchema>>({
     resolver: zodResolver(CompanySecretaryFormSchema),
     defaultValues: {
+      tcspLicenseNo: undefined,
+      tcspReason: undefined,
       type: "person",
       surname: null,
       name: undefined,
@@ -68,12 +70,10 @@ const Company = () => {
       phone: undefined,
       idProof: undefined,
       addressProof: undefined,
-      classOfShares: "Ordinary",
-      noOfShares: 1,
     },
   });
 
-  const directorsRows = [
+  const shareholdersRows = [
     {
       label: "Person/Company",
       for: "type",
@@ -102,20 +102,13 @@ const Company = () => {
       label: "Phone",
       for: "phone",
     },
-    {
-      label: "Class of Shares",
-      for: "classOfShares",
-    },
-    {
-      label: "No. of Shares",
-      for: "totalShares",
-    },
   ];
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanySecretaryFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
+
   useEffect(() => {
     const type = form.getValues("type");
     if (type === "company") {
@@ -126,39 +119,72 @@ const Company = () => {
   }, [form.getValues("type")]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Company Secretary</CardTitle>
-        <CardDescription>
-          Please enter information on Company Secretary
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <Card>
+        <div className="flex flex-1 justify-between items-center">
+          <CardHeader>
+            <CardTitle>Company Secretary</CardTitle>
+            <CardDescription>
+              Please enter information on Company Secretary
+            </CardDescription>
+          </CardHeader>
+          <CollapsibleTrigger type="button" className="pr-6">
+            <span className={buttonVariants({ variant: "outline" })}>
+              {isOpen ? "-" : "+"}
+            </span>
+          </CollapsibleTrigger>
+        </div>
+        <CardContent className="space-y-6">
+          <CollapsibleContent className="CollapsibleContent">
+            <CompanySecretaryData />
+          </CollapsibleContent>
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="grid sm:grid-cols-2 grid-cols-1 items-center gap-6">
+                <FormField
+                  name="tcspLicenseNo"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>TCSP license No:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="TCSP License No..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="tcspReason"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>If you do not have License, Please explain the reason:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Write your reason here..."
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {directorsRows.slice(0, 5).map((row) => (
+                    {shareholdersRows.slice(0, 4).map((row) => (
                       <TableHead
                         key={row.for}
                         className={cn({
                           hidden: disable && row.label === "Surname",
                         })}
                       >
-                        <FormLabel
-                          htmlFor={row.for}
-                          className={cn({
-                            "inline-flex items-center gap-3":
-                              !disable && row.label === "Address",
-                          })}
-                        >
-                          {row.label}
-                          {!disable && row.label === "Address" && (
-                            <TooltipComponent content="Address proof can be a bank letter or utility letter with the name and the address." />
-                          )}
-                        </FormLabel>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
                     ))}
                   </TableRow>
@@ -233,7 +259,7 @@ const Company = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="space-y-6">
                       <FormField
                         name="idNo"
                         control={form.control}
@@ -251,17 +277,16 @@ const Company = () => {
                           </FormItem>
                         )}
                       />
-                    </TableCell>
-                    <TableCell>
                       <FormField
-                        name="address"
+                        name="idProof"
                         control={form.control}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
                               <Input
-                                placeholder="Name Eg: No.1 Jianguomenwai Avenue"
-                                {...field}
+                                type="File"
+                                placeholder="Upload a Copy"
+                                {...form.register("idProof")}
                               />
                             </FormControl>
                             <FormMessage />
@@ -270,50 +295,47 @@ const Company = () => {
                       />
                     </TableCell>
                   </TableRow>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
                   <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>
-                      {disable && (
-                        <FormField
-                          name="idProof"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="File"
-                                  placeholder="Upload a Copy"
-                                  {...form.register("idProof")}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
+                    {shareholdersRows.slice(4, 9).map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel
+                          htmlFor={row.for}
+                          className={cn({
+                            "inline-flex items-center gap-3":
+                              !disable && row.label === "Address",
+                          })}
+                        >
+                          {row.label}
+                          {!disable && row.label === "Address" && (
+                            <TooltipComponent content="Address proof can be a bank letter or utility letter with the name and the address." />
                           )}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {!disable && (
-                        <FormField
-                          name="idProof"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="File"
-                                  placeholder="Upload a Copy"
-                                  {...form.register("idProof")}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell>
+                        </FormLabel>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="space-y-6">
+                      <FormField
+                        name="address"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Eg: No.1 Jianguomenwai Avenue"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       {!disable && (
                         <FormField
                           name="addressProof"
@@ -333,21 +355,6 @@ const Company = () => {
                         />
                       )}
                     </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    {directorsRows.slice(5, 9).map((row) => (
-                      <TableHead key={row.for}>
-                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
                     <TableCell>
                       <FormField
                         name="email"
@@ -383,84 +390,20 @@ const Company = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="classOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Select>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Class of Shares" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Class of Shares</SelectLabel>
-                                    {shareCapitalData.map((item) => (
-                                      <SelectItem
-                                        key={item.id}
-                                        value={item.class}
-                                      >
-                                        <div className="flex gap-3">
-                                          <span className="font-medium">
-                                            {item.class}
-                                          </span>
-                                          <span className="font-light">
-                                            {item.unpaid}
-                                          </span>
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="noOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                placeholder="Eg: 1000"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              <div className="flex justify-between items-center">
+              <div>
                 <Button type="submit" className="my-4">
                   Save
                 </Button>
-                <CollapsibleTrigger className="ml-auto">
-                  <span className={buttonVariants({ variant: "outline" })}>
-                    {isOpen ? "Show Less" : "Show More"}
-                  </span>
-                </CollapsibleTrigger>
               </div>
-              <CollapsibleContent>
-                <ShareholdersData />
-              </CollapsibleContent>
             </form>
           </Form>
-        </Collapsible>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Collapsible>
   );
 };
 
-export default Company;
+export default CompanySecretary;

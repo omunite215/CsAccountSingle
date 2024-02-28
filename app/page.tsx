@@ -1,5 +1,5 @@
-import { CompanyInfo, ShareCapital } from "@/components/Forms";
-import { CSMain, DirectorsMain, ShareHoldersMain } from "@/components/Main";
+import { CompanyInfo, CompanySecretary, ShareCapital } from "@/components/Forms";
+import { DirectorsMain, ShareHoldersMain } from "@/components/Main";
 import { Popup } from "@/components/Popup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -25,7 +25,7 @@ export default function Home() {
           <DirectorsMain />
         </TabsContent>
         <TabsContent value="CS">
-          <CSMain />
+          <CompanySecretary/>
         </TabsContent>
       </Tabs>
       <p className="mt-4">

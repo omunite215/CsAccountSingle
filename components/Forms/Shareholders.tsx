@@ -48,11 +48,11 @@ import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const Shareholders = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [disable, setDisable] = useState(false);
   const { shareCapitalData } = useDataContext();
 
@@ -68,9 +68,19 @@ const Shareholders = () => {
       phone: undefined,
       idProof: undefined,
       addressProof: undefined,
-      classOfShares: "Ordinary",
-      noOfShares: 1,
+      shareDetails: [
+        {
+          classOfShares: "Ordinary",
+          noOfShares: 800,
+        },
+      ],
     },
+  });
+
+  const control = form.control;
+  const { fields, append, remove } = useFieldArray({
+    name: "shareDetails",
+    control,
   });
 
   const shareholdersRows = [
@@ -102,20 +112,13 @@ const Shareholders = () => {
       label: "Phone",
       for: "phone",
     },
-    {
-      label: "Class of Shares",
-      for: "classOfShares",
-    },
-    {
-      label: "No. of Shares",
-      for: "totalShares",
-    },
   ];
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareholdersFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
+
   useEffect(() => {
     const type = form.getValues("type");
     if (type === "company") {
@@ -126,39 +129,38 @@ const Shareholders = () => {
   }, [form.getValues("type")]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Shareholders</CardTitle>
-        <CardDescription>
-          Please enter information on Shareholders
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+      <Card>
+        <div className="flex flex-1 justify-between items-center">
+          <CardHeader>
+            <CardTitle>Shareholders</CardTitle>
+            <CardDescription>
+              Please enter information on Shareholders
+            </CardDescription>
+          </CardHeader>
+          <CollapsibleTrigger type="button" className="pr-6">
+            <span className={buttonVariants({ variant: "outline" })}>
+              {isOpen ? "-" : "+"}
+            </span>
+          </CollapsibleTrigger>
+        </div>
+        <CardContent className="space-y-6">
+          <CollapsibleContent className="CollapsibleContent">
+            <ShareholdersData />
+          </CollapsibleContent>
           <Form {...form}>
             <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    {shareholdersRows.slice(0, 5).map((row) => (
+                    {shareholdersRows.slice(0, 4).map((row) => (
                       <TableHead
                         key={row.for}
                         className={cn({
                           hidden: disable && row.label === "Surname",
                         })}
                       >
-                        <FormLabel
-                          htmlFor={row.for}
-                          className={cn({
-                            "inline-flex items-center gap-3":
-                              !disable && row.label === "Address",
-                          })}
-                        >
-                          {row.label}
-                          {!disable && row.label === "Address" && (
-                            <TooltipComponent content="Address proof can be a bank letter or utility letter with the name and the address." />
-                          )}
-                        </FormLabel>
+                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
                       </TableHead>
                     ))}
                   </TableRow>
@@ -200,7 +202,7 @@ const Shareholders = () => {
                     </TableCell>
                     <TableCell
                       className={cn({
-                        hidden: disable,
+                        "hidden": disable,
                       })}
                     >
                       <FormField
@@ -233,7 +235,7 @@ const Shareholders = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="space-y-6">
                       <FormField
                         name="idNo"
                         control={form.control}
@@ -251,8 +253,50 @@ const Shareholders = () => {
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        name="idProof"
+                        control={form.control}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                type="File"
+                                placeholder="Upload a Copy"
+                                {...form.register("idProof")}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </TableCell>
-                    <TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {shareholdersRows.slice(4, 9).map((row) => (
+                      <TableHead key={row.for}>
+                        <FormLabel
+                          htmlFor={row.for}
+                          className={cn({
+                            "inline-flex items-center gap-3":
+                              !disable && row.label === "Address",
+                          })}
+                        >
+                          {row.label}
+                          {!disable && row.label === "Address" && (
+                            <TooltipComponent content="Address proof can be a bank letter or utility letter with the name and the address." />
+                          )}
+                        </FormLabel>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="space-y-6">
                       <FormField
                         name="address"
                         control={form.control}
@@ -268,52 +312,6 @@ const Shareholders = () => {
                           </FormItem>
                         )}
                       />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell>
-                      {disable && (
-                        <FormField
-                          name="idProof"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="File"
-                                  placeholder="Upload a Copy"
-                                  {...form.register("idProof")}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {!disable && (
-                        <FormField
-                          name="idProof"
-                          control={form.control}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  type="File"
-                                  placeholder="Upload a Copy"
-                                  {...form.register("idProof")}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
-                    </TableCell>
-                    <TableCell>
                       {!disable && (
                         <FormField
                           name="addressProof"
@@ -333,21 +331,6 @@ const Shareholders = () => {
                         />
                       )}
                     </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    {shareholdersRows.slice(5, 9).map((row) => (
-                      <TableHead key={row.for}>
-                        <FormLabel htmlFor={row.for}>{row.label}</FormLabel>
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
                     <TableCell>
                       <FormField
                         name="email"
@@ -383,83 +366,96 @@ const Shareholders = () => {
                         )}
                       />
                     </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="classOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Select>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Class of Shares" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Class of Shares</SelectLabel>
-                                    {shareCapitalData.map((item) => (
-                                      <SelectItem
-                                        key={item.id}
-                                        value={item.class}
-                                      >
-                                        <div className="flex gap-3">
-                                          <span className="font-medium">
-                                            {item.class}
-                                          </span>
-                                          <span className="font-light">
-                                            {item.unpaid}
-                                          </span>
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <FormField
-                        name="noOfShares"
-                        control={form.control}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                placeholder="Eg: 1000"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-              <div className="flex justify-between items-center">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Class of Shares</TableHead>
+                    <TableHead>No. of Shares</TableHead>
+                    <TableHead>Delete</TableHead>
+                    <TableHead>
+                      <span
+                        className={buttonVariants()}
+                        onClick={() =>
+                          append({
+                            classOfShares: "",
+                            noOfShares: 0,
+                          })
+                        }
+                      >
+                        Add field
+                      </span>
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {fields.map((item, index) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <FormItem>
+                          <FormControl>
+                            <Select>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Class of Shares" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  <SelectLabel>Class of Shares</SelectLabel>
+                                  {shareCapitalData.map((item) => (
+                                    <SelectItem
+                                      key={item.id}
+                                      value={item.class}
+                                    >
+                                      <div className="flex gap-3">
+                                        <span className="font-medium">
+                                          {item.class}
+                                        </span>
+                                        <span className="font-light">
+                                          {item.unpaid}
+                                        </span>
+                                      </div>
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      </TableCell>
+                      <Controller
+                        render={({ field }) => (
+                          <TableCell>
+                            <Input {...field} type="number" />
+                          </TableCell>
+                        )}
+                        name={`shareDetails.${index}.noOfShares`}
+                      />
+                      <TableCell>
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          onClick={() => remove(index)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div>
                 <Button type="submit" className="my-4">
                   Save
                 </Button>
-                <CollapsibleTrigger className="ml-auto">
-                  <span className={buttonVariants({ variant: "outline" })}>
-                    {isOpen ? "Show Less" : "Show More"}
-                  </span>
-                </CollapsibleTrigger>
               </div>
-              <CollapsibleContent>
-                <ShareholdersData />
-              </CollapsibleContent>
             </form>
           </Form>
-        </Collapsible>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Collapsible>
   );
 };
 

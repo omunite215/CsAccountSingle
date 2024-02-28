@@ -20,14 +20,14 @@ const SettingsPage = () => {
     <div className="md:container w-full py-6 md:px-0 px-6">
       <Card className="mt-5">
         <CardHeader>
-          <CardTitle>Preferences/优先</CardTitle>
+          <CardTitle>Preferences</CardTitle>
           <CardDescription>
             You can change your language settings from
-            here/您可以从这里更改您的语言设置
+            here
           </CardDescription>
         </CardHeader>
         <CardContent className="mt-5">
-          <Select>
+          <Select defaultValue="en">
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a Language" />
             </SelectTrigger>

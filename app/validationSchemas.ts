@@ -67,18 +67,6 @@ export const CompanyInfoFormSchema = z.object({
     .optional(),
   presentorEmail: z.string().max(255).optional(),
   presentorReferance: z.string().max(255),
-  shareholders: z.coerce
-    .number()
-    .positive()
-    .max(50, { message: "Cant' exceed 50" }),
-  directors: z.coerce
-    .number()
-    .positive()
-    .max(50, { message: "Can't exceed 50" }),
-  companySecretary: z.coerce
-    .number()
-    .positive()
-    .max(50, { message: "Can't exceed 50" }),
 });
 
 // Share-Capital
@@ -101,10 +89,21 @@ export const ShareCapitalFormSchema = z.object({
   unpaid: z.coerce
     .number()
     .nonnegative({ message: "This field can't be negative" }),
-  rightsAttached: z.string().max(255),
+  rightsAttached: z
+    .string({ required_error: "*required" })
+    .min(1, { message: "*required" })
+    .max(255),
 });
 
 // Sharholders
+
+const shareDetailsSchema = z.object({
+  classOfShares: z.string().max(255),
+  noOfShares: z.coerce
+    .number()
+    .nonnegative({ message: "This field can't be negative" })
+    .min(1),
+});
 
 export const ShareholdersFormSchema = z.object({
   type: z.enum(["person", "company"], { required_error: "*required" }),
@@ -119,12 +118,8 @@ export const ShareholdersFormSchema = z.object({
     .string()
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
-  classOfShares: z.string().max(255),
   email: z.string().max(255).email().optional(),
-  noOfShares: z.coerce
-    .number()
-    .nonnegative({ message: "This field can't be negative" })
-    .min(1),
+  shareDetails: z.array(shareDetailsSchema).default([]),
   idProof: z.instanceof(File).superRefine((file, ctx) => {
     if (!file) {
       ctx.addIssue({
@@ -161,12 +156,8 @@ export const DirectorsFormSchema = z.object({
     .string()
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
-  classOfShares: z.string().max(255),
   email: z.string().max(255).email().optional(),
-  noOfShares: z.coerce
-    .number()
-    .nonnegative({ message: "This field can't be negative" })
-    .min(1),
+  shareDetails: z.array(shareDetailsSchema).default([]),
   idProof: z.instanceof(File).superRefine((file, ctx) => {
     if (!file) {
       ctx.addIssue({
@@ -190,6 +181,12 @@ export const DirectorsFormSchema = z.object({
 
 //Company Secretary Schema
 export const CompanySecretaryFormSchema = z.object({
+  tcspLicenseNo: z.string().max(100),
+  tcspReason: z
+    .string()
+    .min(10, "need min. 10 characters")
+    .max(65535)
+    .optional(),
   type: z.enum(["person", "company"], { required_error: "*required" }),
   surname: z.string().min(2, "min. 2 char(s)").max(255).nullable(),
   name: z.string().min(2, "min. 2 char(s)").max(255),
@@ -202,12 +199,7 @@ export const CompanySecretaryFormSchema = z.object({
     .string()
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
-  classOfShares: z.string().max(255),
   email: z.string().max(255).email().optional(),
-  noOfShares: z.coerce
-    .number()
-    .nonnegative({ message: "This field can't be negative" })
-    .min(1),
   idProof: z.instanceof(File).superRefine((file, ctx) => {
     if (!file) {
       ctx.addIssue({
@@ -216,12 +208,15 @@ export const CompanySecretaryFormSchema = z.object({
       });
     }
   }),
-  addressProof: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "*ID Proof is required",
-      });
-    }
-  }).nullable()
+  addressProof: z
+    .instanceof(File)
+    .superRefine((file, ctx) => {
+      if (!file) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "*ID Proof is required",
+        });
+      }
+    })
+    .nullable(),
 });

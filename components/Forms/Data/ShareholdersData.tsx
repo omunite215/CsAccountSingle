@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -9,26 +10,27 @@ import {
 } from "@/components/ui/table";
 import { shareholdersContent, shareholdersRows } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { Pencil, Trash2 } from "lucide-react";
+import ShareDetailsPopup from "./ShareDetailsPopup";
 
 const ShareholdersData = () => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Shareholders List</CardTitle>
-      </CardHeader>
-      <Table className="w-full">
+      <Table>
         <TableHeader>
           <TableRow>
             {shareholdersRows.map((row) => (
               <TableHead
                 key={row.for}
                 className={cn({
-                  hidden: row.label === "ID Proof",
+                  "hidden": row.for === "classOfShares" || row.for === "totalShares",
                 })}
               >
                 {row.label}
               </TableHead>
             ))}
+            <TableHead>Share Details</TableHead>
+            <TableHead>Edit</TableHead>
+            <TableHead>Delete</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,13 +43,22 @@ const ShareholdersData = () => {
               <TableCell>{item.address}</TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell>{item.phone}</TableCell>
-              <TableCell>{item.classOfShares}</TableCell>
-              <TableCell>{item.noOfShares}</TableCell>
+              <TableCell><ShareDetailsPopup name={item.name} surname={item.surname} /></TableCell>
+              <TableCell>
+                <Button variant="outline">
+                  <Pencil />
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button variant="destructive">
+                  <Trash2 />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </Card>
+    
   );
 };
 

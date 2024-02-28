@@ -47,9 +47,6 @@ const CompanyInfo = () => {
       presentorTel: undefined,
       presentorFax: undefined,
       presentorEmail: undefined,
-      shareholders: undefined,
-      directors: undefined,
-      companySecretary: 1,
     },
   });
 
@@ -443,57 +440,6 @@ const CompanyInfo = () => {
                           placeholder="info@test1.com"
                           type="email"
                           {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Other Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-8">
-                <FormField
-                  name="shareholders"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Shareholders:</FormLabel>
-                      <FormControl>
-                        <Input placeholder="XXXXX" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="directors"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Directors:</FormLabel>
-                      <FormControl>
-                        <Input placeholder="XXXXX" type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="companySecretary"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company Secretary:</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="XXXXX"
-                          type="number"
-                          {...field}
-                          readOnly
                         />
                       </FormControl>
                       <FormMessage />
