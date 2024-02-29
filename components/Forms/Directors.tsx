@@ -374,7 +374,7 @@ const Directors = () => {
                   <TableRow>
                     <TableHead>Class of Shares</TableHead>
                     <TableHead>No. of Shares</TableHead>
-                    <TableHead>Delete</TableHead>
+                    <TableHead>Action</TableHead>
                     <TableHead>
                       <span
                         className={buttonVariants()}
