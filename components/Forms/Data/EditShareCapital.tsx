@@ -90,7 +90,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
         item.total = values.total;
         item.paid = values.paid;
         item.unpaid = values.unpaid;
-        item.rightsAttached = values.rightsAttached;
+        item.rightsAttached = values.rightsAttached ? values.rightsAttached : undefined;
       }
     });
     setShareCapitalData(shareCapitalData);

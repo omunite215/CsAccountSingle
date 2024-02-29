@@ -332,7 +332,6 @@ const ShareCapital = () => {
                           <FormItem>
                             <Input
                               placeholder="Voting Rights, etc..."
-                              type="text"
                               {...field}
                             />
                             <FormMessage />

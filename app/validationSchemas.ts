@@ -90,9 +90,10 @@ export const ShareCapitalFormSchema = z.object({
     .number()
     .nonnegative({ message: "This field can't be negative" }),
   rightsAttached: z
-    .string({ required_error: "*required" })
+    .string()
     .min(1, { message: "*required" })
-    .max(255),
+    .max(255)
+    .optional(),
 });
 
 // Sharholders

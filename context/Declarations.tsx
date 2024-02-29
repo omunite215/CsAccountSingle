@@ -10,7 +10,7 @@ export type ShareCapitalProps = {
     paid: number;
     unpaid: number;
     id: number;
-    rightsAttached: string;
+    rightsAttached?: string | undefined;
 }[];
 
 export type ShareholdersProps = {
