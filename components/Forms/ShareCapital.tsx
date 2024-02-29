@@ -344,7 +344,7 @@ const ShareCapital = () => {
                 </TableBody>
               </Table>
               <div>
-                <Button type="submit">Save</Button>
+                <Button type="submit">Add Share</Button>
               </div>
             </form>
           </Form>
