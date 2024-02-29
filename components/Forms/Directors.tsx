@@ -27,15 +27,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -47,7 +38,7 @@ import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import DirectorsData from "./Data/DirectorsData";
 
@@ -68,19 +59,7 @@ const Directors = () => {
       phone: undefined,
       idProof: undefined,
       addressProof: undefined,
-      shareDetails: [
-        {
-          classOfShares: "Ordinary",
-          noOfShares: 800,
-        },
-      ],
     },
-  });
-
-  const control = form.control;
-  const { fields, append, remove } = useFieldArray({
-    name: "shareDetails",
-    control,
   });
 
   const shareholdersRows = [
@@ -367,83 +346,6 @@ const Directors = () => {
                       />
                     </TableCell>
                   </TableRow>
-                </TableBody>
-              </Table>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Class of Shares</TableHead>
-                    <TableHead>No. of Shares</TableHead>
-                    <TableHead>Action</TableHead>
-                    <TableHead>
-                      <span
-                        className={buttonVariants()}
-                        onClick={() =>
-                          append({
-                            classOfShares: "",
-                            noOfShares: 0,
-                          })
-                        }
-                      >
-                        Add field
-                      </span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {fields.map((item, index) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <FormItem>
-                          <FormControl>
-                            <Select>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Class of Shares" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  <SelectLabel>Class of Shares</SelectLabel>
-                                  {shareCapitalData.map((item) => (
-                                    <SelectItem
-                                      key={item.id}
-                                      value={item.class}
-                                    >
-                                      <div className="flex gap-3">
-                                        <span className="font-medium">
-                                          {item.class}
-                                        </span>
-                                        <span className="font-light">
-                                          {item.unpaid}
-                                        </span>
-                                      </div>
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      </TableCell>
-                      <Controller
-                        render={({ field }) => (
-                          <TableCell>
-                            <Input {...field} type="number" />
-                          </TableCell>
-                        )}
-                        name={`shareDetails.${index}.noOfShares`}
-                      />
-                      <TableCell>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
                 </TableBody>
               </Table>
               <div>

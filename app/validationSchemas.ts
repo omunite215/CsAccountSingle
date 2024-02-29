@@ -157,7 +157,6 @@ export const DirectorsFormSchema = z.object({
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
   email: z.string().max(255).email().optional(),
-  shareDetails: z.array(shareDetailsSchema).default([]),
   idProof: z.instanceof(File).superRefine((file, ctx) => {
     if (!file) {
       ctx.addIssue({
