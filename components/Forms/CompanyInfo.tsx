@@ -20,12 +20,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDataContext } from "@/context/ContextProvider";
 import { CompanyInfoHoverContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const CompanyInfo = () => {
+  const {setTabValue} = useDataContext();
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
@@ -53,6 +55,7 @@ const CompanyInfo = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanyInfoFormSchema>) {
     console.log("Backend is yet to be initilialized");
+    setTabValue("SI");
   }
 
   return (
@@ -448,7 +451,7 @@ const CompanyInfo = () => {
                 />
               </CardContent>
             </Card>
-            <Button type="submit">Save</Button>
+            <Button type="submit">Save & Next</Button>
           </form>
         </Form>
       </CardContent>

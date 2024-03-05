@@ -29,6 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ import { z } from "zod";
 
 const Directors = () => {
   const [disable, setDisable] = useState(false);
-
+  const {setTabValue} = useDataContext();
   const form = useForm<z.infer<typeof DirectorsFormSchema>>({
     resolver: zodResolver(DirectorsFormSchema),
     defaultValues: {
@@ -87,6 +88,7 @@ const Directors = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof DirectorsFormSchema>) {
     console.log("Backend is yet to be initialized");
+    setTabValue("CS");
   }
 
   useEffect(() => {
@@ -328,7 +330,7 @@ const Directors = () => {
             </Table>
             <div>
               <Button type="submit" className="my-4">
-                Save
+                Add Director
               </Button>
             </div>
           </form>

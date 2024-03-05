@@ -366,7 +366,7 @@ const CompanySecretary = () => {
             </Table>
             <div>
               <Button type="submit" className="my-4">
-                Save
+                Submit
               </Button>
             </div>
           </form>

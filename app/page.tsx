@@ -1,9 +1,23 @@
-import { CompanyInfo, CompanySecretary, ShareCapital } from "@/components/Forms";
+"use client";
+import {
+  CompanyInfo,
+  CompanySecretary,
+  ShareCapital,
+} from "@/components/Forms";
 import { DirectorsMain, ShareHoldersMain } from "@/components/Main";
 import { Popup } from "@/components/Popup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDataContext } from "@/context/ContextProvider";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { tabValue, setTabValue } = useDataContext();
+
+  useEffect(() => {
+    setTabValue;
+  }, [tabValue]);
+  
+  
   return (
     <main className="md:container w-full py-6 md:px-0 px-6">
       <Popup />
@@ -25,7 +39,7 @@ export default function Home() {
           <DirectorsMain />
         </TabsContent>
         <TabsContent value="CS">
-          <CompanySecretary/>
+          <CompanySecretary />
         </TabsContent>
       </Tabs>
       <p className="mt-4">

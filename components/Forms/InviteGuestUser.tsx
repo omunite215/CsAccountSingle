@@ -199,7 +199,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
               </TableBody>
             </Table>
             <Button type="submit" className="my-4">
-              Save
+              Invite
             </Button>
           </form>
         </Form>

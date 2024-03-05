@@ -78,7 +78,7 @@ const DirectorsMain = () => {
                 hidden: value === "self",
               })}
             >
-              <InviteGuestUsers text="Shareholder" />
+              <InviteGuestUsers text="Director" />
             </div>
           </RadioGroup>
         </CardContent>
