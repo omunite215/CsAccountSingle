@@ -2,6 +2,7 @@
 
 import { CompanySecretaryFormSchema } from "@/app/validationSchemas";
 import { TooltipComponent } from "@/components/Tooltip";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,7 +30,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -37,6 +37,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const CompanySecretary = () => {
+  const router = useRouter();
   const [disable, setDisable] = useState(false);
 
   const form = useForm<z.infer<typeof CompanySecretaryFormSchema>>({
@@ -90,6 +91,7 @@ const CompanySecretary = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanySecretaryFormSchema>) {
     console.log("Backend is yet to be initialized");
+    router.push('/summary');
   }
 
   useEffect(() => {
@@ -207,7 +209,7 @@ const CompanySecretary = () => {
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Surname Eg: Mar"
+                              placeholder="Surname Eg: Bond"
                               {...form.register("surname")}
                             />
                           </FormControl>
@@ -223,7 +225,7 @@ const CompanySecretary = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input placeholder="Name Eg: Curtis" {...field} />
+                            <Input placeholder="Name Eg: James" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

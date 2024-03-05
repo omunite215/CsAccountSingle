@@ -1,7 +1,6 @@
 "use client";
 
 import { ShareholdersFormSchema } from "@/app/validationSchemas";
-import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
 import { TooltipComponent } from "@/components/Tooltip";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -11,11 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   Form,
   FormControl,
@@ -53,7 +47,7 @@ import { z } from "zod";
 
 const Shareholders = () => {
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData, setTabValue } = useDataContext();
+  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
@@ -116,7 +110,7 @@ const Shareholders = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareholdersFormSchema>) {
     console.log("Backend is yet to be initialized");
-    setTabValue("D");
+    document.getElementById("D")?.click();
   }
 
   useEffect(() => {
@@ -201,7 +195,7 @@ const Shareholders = () => {
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Surname Eg: Mar"
+                              placeholder="Surname Eg: Bond"
                               {...form.register("surname")}
                             />
                           </FormControl>
@@ -217,7 +211,7 @@ const Shareholders = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input placeholder="Name Eg: Curtis" {...field} />
+                            <Input placeholder="Name Eg: James" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

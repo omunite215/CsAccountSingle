@@ -142,7 +142,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                   </TableCell>
                   <TableCell
                     className={cn({
-                      hidden: disable,
+                      "hidden": disable,
                     })}
                   >
                     <FormField
@@ -152,7 +152,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Surname Eg: Mar"
+                              placeholder="Surname Eg: Bond"
                               {...form.register("surname")}
                             />
                           </FormControl>
@@ -168,7 +168,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input placeholder="Name Eg: Curtis" {...field} />
+                            <Input placeholder="Name Eg: James" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

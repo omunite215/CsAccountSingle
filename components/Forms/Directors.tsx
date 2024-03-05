@@ -88,7 +88,7 @@ const Directors = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof DirectorsFormSchema>) {
     console.log("Backend is yet to be initialized");
-    setTabValue("CS");
+    document.getElementById("CS")?.click();
   }
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const Directors = () => {
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder="Surname Eg: Mar"
+                              placeholder="Surname Eg: Bond"
                               {...form.register("surname")}
                             />
                           </FormControl>
@@ -187,7 +187,7 @@ const Directors = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input placeholder="Name Eg: Curtis" {...field} />
+                            <Input placeholder="Name Eg: James" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
