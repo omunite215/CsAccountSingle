@@ -470,7 +470,11 @@ const CompanyInfo = () => {
                 />
               </CardContent>
             </Card>
-            <Button type="submit" variant="destructive">Save & Next</Button>
+            <div className="flex justify-end items-center">
+              <Button type="submit" variant="destructive">
+                Save & Next
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

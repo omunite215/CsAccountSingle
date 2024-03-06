@@ -41,6 +41,7 @@ import {
 import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PlusCircle, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -368,7 +369,7 @@ const Shareholders = () => {
                         })
                       }
                     >
-                      Add Share
+                      <PlusCircle/>
                     </span>
                   </TableHead>
                 </TableRow>
@@ -419,7 +420,7 @@ const Shareholders = () => {
                         variant="destructive"
                         onClick={() => remove(index)}
                       >
-                        Delete
+                        <Trash2/>
                       </Button>
                     </TableCell>
                   </TableRow>
