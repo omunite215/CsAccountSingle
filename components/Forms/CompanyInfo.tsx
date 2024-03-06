@@ -45,7 +45,7 @@ const CompanyInfo = () => {
       companyfax: "",
       time: "1 year",
       presentorName: "",
-      presentorChiName: "",
+      presentorChiName: undefined,
       presentorAddress: "",
       presentorTel: "",
       presentorFax: "",
