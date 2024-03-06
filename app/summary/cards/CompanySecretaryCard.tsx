@@ -19,7 +19,7 @@ const CompanySecretaryCard = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Company</CardTitle>
+        <CardTitle>Company Secretary</CardTitle>
         <CardDescription>
           Here are the details on Company Secretary
         </CardDescription>
