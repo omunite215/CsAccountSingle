@@ -94,7 +94,7 @@ const Shareholders = () => {
       for: "idNo",
     },
     {
-      label: "Address",
+      label: "Address / Upload a Copy",
       for: "address",
     },
     {

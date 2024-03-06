@@ -71,11 +71,11 @@ const CompanySecretary = () => {
       for: "name",
     },
     {
-      label: disable ? "Company No." : "ID No.",
+      label: disable ? "Company No. / Upload a Copy" : "ID/Passport No. / Upload a Copy",
       for: "idNo",
     },
     {
-      label: "Address",
+      label: "Address / Upload a Copy",
       for: "address",
     },
     {
