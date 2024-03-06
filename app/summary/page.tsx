@@ -33,7 +33,7 @@ const page = () => {
           <Link className={buttonVariants({ variant: "outline" })} href="/">
             Edit
           </Link>
-          <Button>Submit</Button>
+          <Button>Confirm</Button>
         </CardFooter>
       </Card>
     </div>
