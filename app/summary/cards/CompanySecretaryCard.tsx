@@ -15,12 +15,14 @@ import {
 import { shareholdersContent, shareholdersRows } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const DirectorsCard = () => {
+const CompanySecretaryCard = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Directors</CardTitle>
-        <CardDescription>Here are the details on Directors</CardDescription>
+        <CardTitle>Company</CardTitle>
+        <CardDescription>
+          Here are the details on Company Secretary
+        </CardDescription>
       </CardHeader>
       <Table className="w-full">
         <TableHeader>
@@ -39,21 +41,19 @@ const DirectorsCard = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {shareholdersContent.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.type}</TableCell>
-              <TableCell>{item.surname}</TableCell>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.idNo}</TableCell>
-              <TableCell>{item.address}</TableCell>
-              <TableCell>{item.email}</TableCell>
-              <TableCell>{item.phone}</TableCell>
-            </TableRow>
-          ))}
+          <TableRow>
+            <TableCell>{shareholdersContent[0].type}</TableCell>
+            <TableCell>{shareholdersContent[0].surname}</TableCell>
+            <TableCell>{shareholdersContent[0].name}</TableCell>
+            <TableCell>{shareholdersContent[0].idNo}</TableCell>
+            <TableCell>{shareholdersContent[0].address}</TableCell>
+            <TableCell>{shareholdersContent[0].email}</TableCell>
+            <TableCell>{shareholdersContent[0].phone}</TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </Card>
   );
 };
 
-export default DirectorsCard;
+export default CompanySecretaryCard;

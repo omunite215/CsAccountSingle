@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import {
   CompanyInfoCard,
+  CompanySecretaryCard,
   DirectorsCard,
   ShareCapitalCard,
   ShareholderCard,
@@ -28,6 +29,7 @@ const page = () => {
           <ShareCapitalCard />
           <ShareholderCard />
           <DirectorsCard />
+          <CompanySecretaryCard/>
         </CardContent>
         <CardFooter className="flex justify-between">
           <Link className={buttonVariants({ variant: "outline" })} href="/">

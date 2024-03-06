@@ -470,7 +470,7 @@ const CompanyInfo = () => {
                 />
               </CardContent>
             </Card>
-            <Button type="submit">Save & Next</Button>
+            <Button type="submit" variant="destructive">Save & Next</Button>
           </form>
         </Form>
       </CardContent>
