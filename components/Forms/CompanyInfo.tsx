@@ -20,41 +20,44 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDataContext } from "@/context/ContextProvider";
 import { CompanyInfoHoverContent } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const CompanyInfo = () => {
+  const { setTabValue } = useDataContext();
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
-      name: undefined,
-      nature: undefined,
+      name: "",
+      chiname: "",
+      nature: "",
       type: "private",
-      house: undefined,
-      building: undefined,
-      street: undefined,
-      district: undefined,
+      house: "",
+      building: "",
+      street: "",
+      district: "",
       country: "Hong Kong",
-      email: undefined,
-      companyTel: undefined,
-      companyfax: undefined,
+      email: "",
+      companyTel: "",
+      companyfax: "",
       time: "1 year",
-      presentorName: undefined,
-      presentorChiName: undefined,
-      presentorAddress: undefined,
-      presentorTel: undefined,
-      presentorFax: undefined,
-      presentorEmail: undefined,
+      presentorName: "",
+      presentorChiName: "",
+      presentorAddress: "",
+      presentorTel: "",
+      presentorFax: "",
+      presentorEmail: "",
+      presentorReferance: "ComSec360-NNC1-06-03-2024",
     },
   });
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanyInfoFormSchema>) {
     console.log(values);
-    document.getElementById("SI")?.click();
-    console.log(2);
+    setTabValue("SI");
   }
 
   return (
@@ -128,13 +131,13 @@ const CompanyInfo = () => {
                         defaultValue={field.value}
                         className="flex justify-start items-center gap-10"
                       >
-                        <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormItem className="flex items-center space-x-3">
                           <FormControl>
                             <RadioGroupItem value="private" />
                           </FormControl>
                           <FormLabel className="font-normal">Private</FormLabel>
                         </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormItem className="flex items-center space-x-3">
                           <FormControl>
                             <RadioGroupItem value="public" disabled />
                           </FormControl>
@@ -442,6 +445,23 @@ const CompanyInfo = () => {
                           placeholder="info@test1.com"
                           type="email"
                           {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="presentorReferance"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Presentor&lsquo;s Referance:</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Eg: ComSec360-NNC1-06-03-2024"
+                          {...field}
+                          readOnly
                         />
                       </FormControl>
                       <FormMessage />

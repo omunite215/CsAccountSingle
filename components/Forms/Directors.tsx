@@ -88,7 +88,7 @@ const Directors = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof DirectorsFormSchema>) {
     console.log("Backend is yet to be initialized");
-    document.getElementById("CS")?.click();
+    setTabValue("CS");
   }
 
   useEffect(() => {

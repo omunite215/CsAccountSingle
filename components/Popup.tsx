@@ -28,6 +28,7 @@ export function Popup() {
               height={36}
               alt="logo"
               priority
+              className="h-auto w-auto"
             />
             <span>
               <AlertDialogTitle className="mb-0.5">ComSec360</AlertDialogTitle>

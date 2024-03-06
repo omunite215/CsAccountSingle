@@ -88,6 +88,7 @@ const ShareCapital = () => {
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareCapitalFormSchema>) {
+    console.log(values);
     const newId = Math.max(...shareCapitalData.map((entry) => entry.id), 0) + 1;
     const newValues = {
       id: newId,

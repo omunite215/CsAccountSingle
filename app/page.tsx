@@ -1,3 +1,4 @@
+"use client";
 import {
   CompanyInfo,
   CompanySecretary,
@@ -6,23 +7,24 @@ import {
 import { DirectorsMain, ShareHoldersMain } from "@/components/Main";
 import { Popup } from "@/components/Popup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDataContext } from "@/context/ContextProvider";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { tabValue, setTabValue } = useDataContext();
+  useEffect(() => {
+    setTabValue(tabValue);
+  }, [tabValue]);
+
   return (
     <main className="md:container w-full py-6 md:px-0 px-6">
       <Popup />
-      <Tabs defaultValue="CI">
+      <Tabs defaultValue="CI" value={tabValue}>
         <TabsList className="grid w-full md:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:mb-0 mb-40">
           <TabsTrigger value="CI">Company Info</TabsTrigger>
-          <TabsTrigger value="SI" id="SI">
-            Shares Info
-          </TabsTrigger>
-          <TabsTrigger value="D" id="D">
-            Directors
-          </TabsTrigger>
-          <TabsTrigger value="CS" id="CS">
-            Company Secretary
-          </TabsTrigger>
+          <TabsTrigger value="SI">Shares Info</TabsTrigger>
+          <TabsTrigger value="D">Directors</TabsTrigger>
+          <TabsTrigger value="CS">Company Secretary</TabsTrigger>
         </TabsList>
         <TabsContent value="CI">
           <CompanyInfo />

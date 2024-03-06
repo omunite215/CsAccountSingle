@@ -47,7 +47,7 @@ import { z } from "zod";
 
 const Shareholders = () => {
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData } = useDataContext();
+  const { shareCapitalData, setTabValue } = useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
@@ -110,7 +110,7 @@ const Shareholders = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareholdersFormSchema>) {
     console.log("Backend is yet to be initialized");
-    document.getElementById("D")?.click();
+    setTabValue("D");
   }
 
   useEffect(() => {

@@ -25,7 +25,7 @@ const SiteHeader = () => {
               height={28}
               priority
               alt="logo"
-              className="object-contain"
+              className="object-contain w-auto h-auto"
             />
             &nbsp;ComSec360
           </Link>
