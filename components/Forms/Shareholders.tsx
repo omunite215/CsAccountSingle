@@ -368,7 +368,7 @@ const Shareholders = () => {
                         })
                       }
                     >
-                      Add field
+                      Add Share
                     </span>
                   </TableHead>
                 </TableRow>
