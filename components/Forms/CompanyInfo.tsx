@@ -32,7 +32,7 @@ const CompanyInfo = () => {
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
       name: "",
-      chiname: "",
+      chiname: undefined,
       nature: "",
       type: "private",
       house: "",
@@ -50,7 +50,7 @@ const CompanyInfo = () => {
       presentorTel: "",
       presentorFax: "",
       presentorEmail: "",
-      presentorReferance: "ComSec360-NNC1-06-03-2024",
+      presentorReferance: "CompanyName-NNC1-06-03-2024",
     },
   });
 
@@ -459,7 +459,7 @@ const CompanyInfo = () => {
                       <FormLabel>Presentor&lsquo;s Referance:</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Eg: ComSec360-NNC1-06-03-2024"
+                          placeholder="Eg: CompanyName-NNC1-06-03-2024"
                           {...field}
                           readOnly
                         />
