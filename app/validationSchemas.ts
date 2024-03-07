@@ -8,65 +8,38 @@ export const GuestUserFormSchema = z.object({
 });
 
 // CompanyInfo
-const emptyStringToUndefined = z.literal('').transform(() => undefined);
-
-function asOptionalField<T extends z.ZodTypeAny>(schema: T) {
-  return schema.optional().or(emptyStringToUndefined);
-}
+const emptyStringToUndefined = z.literal("").transform(() => undefined);
 
 export const CompanyInfoFormSchema = z.object({
-  name: z
-    .string()
-    .min(2, "min. 2 characters")
-    .max(255),
-  chiname: z.string().min(2, "min. 2 characters").max(255).optional(),
+  name: z.string().min(2, "min. 2 characters").max(255),
+  chiname: z.string().max(255).optional(),
   type: z.enum(["public", "private"]),
-  nature: z
-    .string()
-    .min(5, { message: "*required | need min. 5 characters" }),
-  house: z
-    .string()
-    .min(5, "*required | need min. 5 characters")
-    .max(65),
-  building: z
-    .string()
-    .min(5, "*required | need min. 5 characters")
-    .max(65),
-  street: z
-    .string()
-    .min(5, "*required | need min. 5 characters")
-    .max(65),
-  district: z
-    .string()
-    .min(5, "*required | need min. 5 characters")
-    .max(65),
-  country: z
-    .string()
-    .min(3, "*required | need min. 5 characters")
-    .max(20),
+  nature: z.string().min(5, { message: "*required | need min. 5 characters" }),
+  house: z.string().min(5, "*required | need min. 5 characters").max(65),
+  building: z.string().max(65).optional(),
+  street: z.string().max(65).optional(),
+  district: z.string().max(65).optional(),
+  country: z.string().min(3, "*required | need min. 5 characters").max(20),
   email: z.string().max(255).optional(),
   companyTel: z
-    .string().max(12, {message: "*required | max. 12 characters"})
+    .string()
+    .max(12, { message: "*required | max. 12 characters" })
     .optional(),
   companyfax: z
-    .string().max(12, {message: "*required | max. 5 characters"})
+    .string()
+    .max(12, { message: "*required | max. 5 characters" })
     .optional(),
   time: z.enum(["1 year", "3 years"]),
-  presentorName: z
-    .string()
-    .min(2, "min. 2 characters")
-    .max(255),
-  presentorChiName: z.string().min(2, "min. 2 characters").max(255).optional(),
+  presentorName: z.string().min(2, "min. 2 characters").max(255),
+  presentorChiName: z.string().max(255).optional(),
   presentorAddress: z
     .string()
     .min(10, "*required | need min. 10 characters")
     .max(65535),
-  presentorTel: z
-    .string()
-    .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" }),
-  presentorFax: z
-    .string()
-    .optional(),
+  presentorTel: z.string().regex(/^\+?\d{8,15}$/, {
+    message: "*required | Invalid Phone Number Format",
+  }),
+  presentorFax: z.string().optional(),
   presentorEmail: z.string().max(255).optional(),
   presentorReferance: z.string().max(255),
 });

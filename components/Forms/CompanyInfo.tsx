@@ -32,7 +32,7 @@ const CompanyInfo = () => {
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
       name: "",
-      chiname: undefined,
+      chiname: "",
       nature: "",
       type: "private",
       house: "",
@@ -45,7 +45,7 @@ const CompanyInfo = () => {
       companyfax: "",
       time: "1 year",
       presentorName: "",
-      presentorChiName: undefined,
+      presentorChiName: "",
       presentorAddress: "",
       presentorTel: "",
       presentorFax: "",
