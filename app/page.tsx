@@ -9,11 +9,24 @@ import { Popup } from "@/components/Popup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useDataContext } from "@/context/ContextProvider";
 import { useEffect } from "react";
+import { CheckCircle2, SquarePen } from "lucide-react";
 
 export default function Home() {
-  const { tabValue, setTabValue } = useDataContext();
+  const {
+    tabValue,
+    setTabValue,
+    disableSI,
+    setDisableSI,
+    disableDirectors,
+    setDisableDirectors,
+    disableCS,
+    setDisableCS,
+  } = useDataContext();
   useEffect(() => {
     setTabValue(tabValue);
+    setDisableSI(disableSI);
+    setDisableDirectors(disableDirectors);
+    setDisableCS(disableCS);
   }, [setTabValue, tabValue]);
 
   return (
@@ -21,10 +34,61 @@ export default function Home() {
       <Popup />
       <Tabs defaultValue="CI" value={tabValue}>
         <TabsList className="grid w-full md:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:mb-0 mb-40">
-          <TabsTrigger value="CI">Company Info</TabsTrigger>
-          <TabsTrigger value="SI">Shares Info</TabsTrigger>
-          <TabsTrigger value="D">Directors</TabsTrigger>
-          <TabsTrigger value="CS">Company Secretary</TabsTrigger>
+          <TabsTrigger
+            value="CI"
+            onClick={() => setTabValue("CI")}
+            className="space-x-2"
+          >
+            <span>Company Info</span>
+            <span>
+              {tabValue === "CI" ? (
+                <SquarePen size={20} />
+              ) : (
+                <CheckCircle2 size={20} />
+              )}
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="SI"
+            disabled={disableSI}
+            onClick={() => (disableSI ? setTabValue("CI") : setTabValue("SI"))}
+            className="space-x-2"
+          >
+            <span>Shares Info</span>
+            <span>
+              {tabValue === "D" ||
+              tabValue === "CS" ||
+              (disableDirectors === false && tabValue === "CI") ? (
+                <CheckCircle2 size={20} />
+              ) : (
+                <SquarePen size={20} />
+              )}
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="D"
+            disabled={disableDirectors}
+            onClick={() =>
+              disableDirectors ? setTabValue("SI") : setTabValue("D")
+            }
+            className="space-x-2"
+          >
+            <span>Directors</span>
+            <span>
+              {tabValue === "CS" || disableCS === false ? (
+                <CheckCircle2 size={20} />
+              ) : (
+                <SquarePen size={20} />
+              )}
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="CS"
+            disabled={disableCS}
+            onClick={() => (disableCS ? setTabValue("D") : setTabValue("CS"))}
+          >
+            Company Secretary
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="CI">
           <CompanyInfo />

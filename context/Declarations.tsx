@@ -23,4 +23,10 @@ export type ContextProps = {
     setShareCapitalData: Dispatch<SetStateAction<ShareCapitalProps>>;
     tabValue: "CI" | "SI" | "D" | "CS";
     setTabValue: Dispatch<SetStateAction<"CI" | "SI" | "D" | "CS">>;
+    disableSI: boolean;
+    setDisableSI: Dispatch<SetStateAction<boolean>>;
+    disableDirectors: boolean;
+    setDisableDirectors: Dispatch<SetStateAction<boolean>>;
+    disableCS: boolean;
+    setDisableCS: Dispatch<SetStateAction<boolean>>;
   };

@@ -8,7 +8,13 @@ const defaultValues = {
   shareCapitalData: shareCapitalContent,
   setShareCapitalData: () => {},
   tabValue: "CI" as "CI" | "SI" | "D" | "CS",
-  setTabValue: () => {}
+  setTabValue: () => {},
+  disableSI: true,
+  setDisableSI: () => {},
+  disableDirectors: true,
+  setDisableDirectors: () => {},
+  disableCS: true,
+  setDisableCS: () => {},
 };
 
 const DataContext = createContext<ContextProps>(defaultValues);
@@ -22,6 +28,9 @@ export const DataContextProvider = ({
     useState<ShareCapitalProps>(shareCapitalContent);
 
   const [tabValue, setTabValue] = useState<"CI" | "SI" | "D" | "CS">("CI");
+  const [disableSI, setDisableSI] = useState(true);
+  const [disableDirectors, setDisableDirectors] = useState(true);
+  const [disableCS, setDisableCS] = useState(true);
 
   return (
     <DataContext.Provider
@@ -29,7 +38,13 @@ export const DataContextProvider = ({
         shareCapitalData: shareCapitalData,
         setShareCapitalData: setShareCapitalData,
         tabValue: tabValue,
-        setTabValue: setTabValue
+        setTabValue: setTabValue,
+        disableSI: disableSI,
+        setDisableSI: setDisableSI,
+        disableDirectors: disableDirectors,
+        setDisableDirectors: setDisableDirectors,
+        disableCS: disableCS,
+        setDisableCS: setDisableCS,
       }}
     >
       {children}

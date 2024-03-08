@@ -2,52 +2,61 @@ import { z } from "zod";
 
 export const GuestUserFormSchema = z.object({
   type: z.enum(["person", "company"], { required_error: "*required" }),
-  surname: z.string().min(2, "min. 2 char(s)").max(255).nullable(),
-  name: z.string().min(2, "min. 2 char(s)").max(255),
-  email: z.string().max(255).email(),
+  surname: z.string().min(2, "min. 2 char(s)").max(255).trim().nullable(),
+  name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
+  email: z.string().max(255).email().trim(),
 });
 
 // CompanyInfo
-const emptyStringToUndefined = z.literal("").transform(() => undefined);
 
 export const CompanyInfoFormSchema = z.object({
-  name: z.string().min(2, "min. 2 characters").max(255),
-  chiname: z.string().max(255).optional(),
+  name: z.string().min(2, "min. 2 characters").max(255).trim(),
+  chiname: z.string().max(255).trim().optional(),
   type: z.enum(["public", "private"]),
-  nature: z.string().min(5, { message: "*required | need min. 5 characters" }),
-  house: z.string().min(5, "*required | need min. 5 characters").max(65),
-  building: z.string().max(65).optional(),
-  street: z.string().max(65).optional(),
-  district: z.string().max(65).optional(),
-  country: z.string().min(3, "*required | need min. 5 characters").max(20),
-  email: z.string().max(255).optional(),
+  nature: z
+    .string()
+    .min(5, { message: "*required | need min. 5 characters" })
+    .trim(),
+  house: z.string().min(5, "*required | need min. 5 characters").max(65).trim(),
+  building: z.string().max(65).trim().optional(),
+  street: z.string().max(65).trim().optional(),
+  district: z.string().max(65).trim().optional(),
+  country: z
+    .string()
+    .min(3, "*required | need min. 5 characters")
+    .max(20)
+    .trim(),
+  email: z.string().max(255).trim().optional(),
   companyTel: z
     .string()
     .max(12, { message: "*required | max. 12 characters" })
+    .trim()
     .optional(),
   companyfax: z
     .string()
     .max(12, { message: "*required | max. 5 characters" })
+    .trim()
     .optional(),
   time: z.enum(["1 year", "3 years"]),
-  presentorName: z.string().min(2, "min. 2 characters").max(255),
-  presentorChiName: z.string().max(255).optional(),
+  presentorName: z.string().min(2, "min. 2 characters").max(255).trim(),
+  presentorChiName: z.string().max(255).trim().optional(),
   presentorAddress: z
     .string()
     .min(10, "*required | need min. 10 characters")
-    .max(65535),
+    .max(65535)
+    .trim(),
   presentorTel: z.string().regex(/^\+?\d{8,15}$/, {
     message: "*required | Invalid Phone Number Format",
   }),
   presentorFax: z.string().optional(),
-  presentorEmail: z.string().max(255).optional(),
-  presentorReferance: z.string().max(255),
+  presentorEmail: z.string().max(255).trim().optional(),
+  presentorReferance: z.string().max(255).trim(),
 });
 
 // Share-Capital
 
 export const ShareCapitalFormSchema = z.object({
-  class: z.string().max(255),
+  class: z.string().max(255).trim(),
   totalProposed: z.coerce.number().positive().min(1, { message: "min. 1" }),
   currency: z.string().max(3),
   unitPrice: z.coerce.number().positive().min(1, {
@@ -68,6 +77,7 @@ export const ShareCapitalFormSchema = z.object({
     .string()
     .min(1, { message: "*required" })
     .max(255)
+    .trim()
     .optional(),
 });
 
@@ -83,38 +93,33 @@ const shareDetailsSchema = z.object({
 
 export const ShareholdersFormSchema = z.object({
   type: z.enum(["person", "company"], { required_error: "*required" }),
-  surname: z.string().min(2, "min. 2 char(s)").max(255).nullable(),
-  name: z.string().min(2, "min. 2 char(s)").max(255),
-  idNo: z.string().max(100),
+  surname: z.string().min(2, "min. 2 char(s)").max(255).trim().nullable(),
+  name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
+  idNo: z.string().max(100).trim(),
   address: z
     .string({ required_error: "*required" })
     .min(10, "*required | need min. 10 characters")
-    .max(65535),
+    .max(65535)
+    .trim(),
   phone: z
     .string()
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
-  email: z.string().max(255).email().optional(),
+  email: z.string().max(255).email().trim().optional(),
   shareDetails: z.array(shareDetailsSchema).default([]),
-  idProof: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "*ID Proof is required",
-      });
-    }
-  }),
+  idProof: z
+    .any()
+    .refine((file: string | any[]) => file?.length == 1, "File is required.")
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
   addressProof: z
-    .instanceof(File)
-    .superRefine((file, ctx) => {
-      if (!file) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "*ID Proof is required",
-        });
-      }
-    })
-    .nullable(),
+    .any()
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
 });
 
 //DirectorsSchema
@@ -133,65 +138,55 @@ export const DirectorsFormSchema = z.object({
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
   email: z.string().max(255).email().optional(),
-  idProof: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "*ID Proof is required",
-      });
-    }
-  }),
+  idProof: z
+    .any()
+    .refine((file: string | any[]) => file?.length == 1, "File is required.")
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
   addressProof: z
-    .instanceof(File)
-    .superRefine((file, ctx) => {
-      if (!file) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "*ID Proof is required",
-        });
-      }
-    })
-    .nullable(),
+    .any()
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
 });
 
 //Company Secretary Schema
 export const CompanySecretaryFormSchema = z.object({
-  tcspLicenseNo: z.string().max(100),
+  tcspLicenseNo: z.string().max(100).trim(),
   tcspReason: z
     .string()
     .min(10, "need min. 10 characters")
     .max(65535)
+    .trim()
     .optional(),
   type: z.enum(["person", "company"], { required_error: "*required" }),
-  surname: z.string().min(2, "min. 2 char(s)").max(255).nullable(),
-  name: z.string().min(2, "min. 2 char(s)").max(255),
+  surname: z.string().min(2, "min. 2 char(s)").max(255).trim(),
+  name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
   idNo: z.string().max(100),
   address: z
     .string({ required_error: "*required" })
     .min(10, "*required | need min. 10 characters")
-    .max(65535),
+    .max(65535)
+    .trim(),
   phone: z
     .string()
     .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
     .optional(),
-  email: z.string().max(255).email().optional(),
-  idProof: z.instanceof(File).superRefine((file, ctx) => {
-    if (!file) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "*ID Proof is required",
-      });
-    }
-  }),
+  email: z.string().max(255).email().trim(),
+  idProof: z
+    .any()
+    .refine((file: string | any[]) => file?.length == 1, "File is required.")
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
   addressProof: z
-    .instanceof(File)
-    .superRefine((file, ctx) => {
-      if (!file) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "*ID Proof is required",
-        });
-      }
-    })
-    .nullable(),
+    .any()
+    .refine(
+      (file: { size: number }[]) => file[0]?.size <= 3000000,
+      `Max file size is 3MB.`
+    ),
 });

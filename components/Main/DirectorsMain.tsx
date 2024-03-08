@@ -1,9 +1,7 @@
 "use client";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { Directors, InviteGuestUsers, Shareholders } from "@/components/Forms";
+import { Directors, InviteGuestUsers } from "@/components/Forms";
+import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,10 +14,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { buttonVariants } from "../ui/button";
-import ShareholdersData from "../Forms/Data/ShareholdersData";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 const DirectorsMain = () => {
+  const { setTabValue } = useDataContext();
   const [value, setValue] = useState<"self" | "invite">("self");
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -28,9 +30,7 @@ const DirectorsMain = () => {
         <div className="flex flex-1 justify-between items-center">
           <CardHeader>
             <CardTitle>Directors</CardTitle>
-            <CardDescription>
-              Here are the details on Directors
-            </CardDescription>
+            <CardDescription>Here are the details on Directors</CardDescription>
           </CardHeader>
           <CollapsibleTrigger type="button" className="pr-6">
             <span className={buttonVariants({ variant: "outline" })}>
@@ -49,8 +49,7 @@ const DirectorsMain = () => {
             >
               <RadioGroupItem value="self" id="r1" checked={value === "self"} />
               <Label htmlFor="r1" className=" text-2xl">
-                Fill in all the information for this 
-                Director
+                Fill in all the information for this Director
               </Label>
             </div>
             <div
@@ -58,7 +57,7 @@ const DirectorsMain = () => {
                 hidden: value === "invite",
               })}
             >
-              <Directors/>
+              <Directors />
             </div>
             <div
               className="flex items-center space-x-2 py-6"
@@ -69,9 +68,14 @@ const DirectorsMain = () => {
                 id="r2"
                 checked={value === "invite"}
               />
-              <Label htmlFor="r2" className="text-2xl">
-                Invite a Director to fill in the details.
-              </Label>
+              <div className="flex justify-between items-center w-full">
+                <Label htmlFor="r2" className="text-2xl">
+                  Invite a Director to fill in the details.
+                </Label>
+                <Button variant="destructive" onClick={() => setTabValue("CS")}>
+                  Save & Next
+                </Button>
+              </div>
             </div>
             <div
               className={cn({

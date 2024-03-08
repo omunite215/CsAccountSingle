@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const CompanyInfo = () => {
-  const { setTabValue } = useDataContext();
+  const { setTabValue, setDisableSI } = useDataContext();
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
@@ -57,6 +57,7 @@ const CompanyInfo = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanyInfoFormSchema>) {
     console.log(values);
+    setDisableSI(false);
     setTabValue("SI");
   }
 

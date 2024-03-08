@@ -38,19 +38,19 @@ import { z } from "zod";
 
 const Directors = () => {
   const [disable, setDisable] = useState(false);
-  const {setTabValue} = useDataContext();
+  const {setTabValue, setDisableCS} = useDataContext();
   const form = useForm<z.infer<typeof DirectorsFormSchema>>({
     resolver: zodResolver(DirectorsFormSchema),
     defaultValues: {
       type: "person",
-      surname: null,
-      name: undefined,
-      idNo: undefined,
-      address: undefined,
-      email: undefined,
-      phone: undefined,
+      surname: "",
+      name: "",
+      idNo: "",
+      address: "",
+      email: "",
+      phone: "",
       idProof: undefined,
-      addressProof: undefined,
+      addressProof: undefined
     },
   });
 
@@ -88,6 +88,7 @@ const Directors = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof DirectorsFormSchema>) {
     console.log("Backend is yet to be initialized");
+    setDisableCS(false);
     setTabValue("CS");
   }
 

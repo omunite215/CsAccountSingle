@@ -48,18 +48,18 @@ import { z } from "zod";
 
 const Shareholders = () => {
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData, setTabValue } = useDataContext();
+  const { shareCapitalData, setTabValue, setDisableDirectors } = useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
     defaultValues: {
       type: "person",
-      surname: null,
-      name: undefined,
-      idNo: undefined,
-      address: undefined,
-      email: undefined,
-      phone: undefined,
+      surname: "",
+      name: "",
+      idNo: "",
+      address: "",
+      email: "",
+      phone: "",
       idProof: undefined,
       addressProof: undefined,
       shareDetails: [
@@ -70,7 +70,8 @@ const Shareholders = () => {
       ],
     },
   });
-
+  const IDFileRef = form.register("idProof", { required: true });
+  const AddressFileRef = form.register("addressProof", { required: false });
   const control = form.control;
   const { fields, append, remove } = useFieldArray({
     name: "shareDetails",
@@ -110,7 +111,8 @@ const Shareholders = () => {
 
   // Submit Handler.
   function onSubmit(values: z.infer<typeof ShareholdersFormSchema>) {
-    console.log("Backend is yet to be initialized");
+    console.log(values);
+    setDisableDirectors(false);
     setTabValue("D");
   }
 
@@ -246,7 +248,7 @@ const Shareholders = () => {
                             <Input
                               type="File"
                               placeholder="Upload a Copy"
-                              {...form.register("idProof")}
+                              {...IDFileRef}
                             />
                           </FormControl>
                           <FormMessage />
@@ -306,7 +308,7 @@ const Shareholders = () => {
                               <Input
                                 type="File"
                                 placeholder="Upload a Copy"
-                                {...form.register("addressProof")}
+                                {...AddressFileRef}
                               />
                             </FormControl>
                             <FormMessage />

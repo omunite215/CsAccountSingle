@@ -2,7 +2,6 @@
 
 import { CompanySecretaryFormSchema } from "@/app/validationSchemas";
 import { TooltipComponent } from "@/components/Tooltip";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -32,6 +31,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -46,12 +46,12 @@ const CompanySecretary = () => {
       tcspLicenseNo: undefined,
       tcspReason: undefined,
       type: "person",
-      surname: null,
-      name: undefined,
-      idNo: undefined,
-      address: undefined,
-      email: undefined,
-      phone: undefined,
+      surname: "",
+      name: "",
+      idNo: "",
+      address: "",
+      email: "",
+      phone: "",
       idProof: undefined,
       addressProof: undefined,
     },
@@ -71,7 +71,9 @@ const CompanySecretary = () => {
       for: "name",
     },
     {
-      label: disable ? "Company No. / Upload a Copy" : "ID/Passport No. / Upload a Copy",
+      label: disable
+        ? "Company No. / Upload a Copy"
+        : "ID/Passport No. / Upload a Copy",
       for: "idNo",
     },
     {
@@ -91,7 +93,7 @@ const CompanySecretary = () => {
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanySecretaryFormSchema>) {
     console.log("Backend is yet to be initialized");
-    router.push('/summary');
+    router.push("/summary");
   }
 
   useEffect(() => {

@@ -1,9 +1,6 @@
 "use client";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { InviteGuestUsers, Shareholders } from "@/components/Forms";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,10 +13,15 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { buttonVariants } from "../ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDataContext } from "@/context/ContextProvider";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import ShareholdersData from "../Forms/Data/ShareholdersData";
 
 const ShareHoldersMain = () => {
+  const { setTabValue } = useDataContext();
   const [value, setValue] = useState<"self" | "invite">("self");
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -68,9 +70,14 @@ const ShareHoldersMain = () => {
                 id="r2"
                 checked={value === "invite"}
               />
-              <Label htmlFor="r2" className="text-2xl">
-                Invite a Shareholder to fill in the details.
-              </Label>
+              <div className="flex justify-between items-center w-full">
+                <Label htmlFor="r2" className="text-2xl">
+                  Invite a Shareholder to fill in the details.
+                </Label>
+                <Button variant="destructive" onClick={() => setTabValue("D")}>
+                  Save & Next
+                </Button>
+              </div>
             </div>
             <div
               className={cn({
