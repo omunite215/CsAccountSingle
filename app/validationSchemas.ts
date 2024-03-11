@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 export const GuestUserFormSchema = z.object({
   type: z.enum(["person", "company"], { required_error: "*required" }),
@@ -13,30 +14,22 @@ export const CompanyInfoFormSchema = z.object({
   name: z.string().min(2, "min. 2 characters").max(255).trim(),
   chiname: z.string().max(255).trim().optional(),
   type: z.enum(["public", "private"]),
-  nature: z
-    .string()
-    .min(5, { message: "*required | need min. 5 characters" })
-    .trim(),
+  code: z.string().length(3, { message: "*required" }),
+  nature: z.string().min(5, { message: "*required" }).trim(),
   house: z.string().min(5, "*required | need min. 5 characters").max(65).trim(),
   building: z.string().max(65).trim().optional(),
   street: z.string().max(65).trim().optional(),
   district: z.string().max(65).trim().optional(),
   country: z
     .string()
-    .min(3, "*required | need min. 5 characters")
+    .min(3, "*required | need min. 3 characters")
     .max(20)
     .trim(),
   email: z.string().max(255).trim().optional(),
   companyTel: z
-    .string()
-    .max(12, { message: "*required | max. 12 characters" })
-    .trim()
-    .optional(),
+    .string(),
   companyfax: z
-    .string()
-    .max(12, { message: "*required | max. 5 characters" })
-    .trim()
-    .optional(),
+    .string(),
   time: z.enum(["1 year", "3 years"]),
   presentorName: z.string().min(2, "min. 2 characters").max(255).trim(),
   presentorChiName: z.string().max(255).trim().optional(),
@@ -45,10 +38,10 @@ export const CompanyInfoFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535)
     .trim(),
-  presentorTel: z.string().regex(/^\+?\d{8,15}$/, {
-    message: "*required | Invalid Phone Number Format",
-  }),
-  presentorFax: z.string().optional(),
+  presentorTel: z
+    .string(),
+  presentorFax: z
+    .string(),
   presentorEmail: z.string().max(255).trim().optional(),
   presentorReferance: z.string().max(255).trim(),
 });
@@ -102,9 +95,7 @@ export const ShareholdersFormSchema = z.object({
     .max(65535)
     .trim(),
   phone: z
-    .string()
-    .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
-    .optional(),
+    .string(),
   email: z.string().max(255).email().trim().optional(),
   shareDetails: z.array(shareDetailsSchema).default([]),
   idProof: z
@@ -134,9 +125,7 @@ export const DirectorsFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535),
   phone: z
-    .string()
-    .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
-    .optional(),
+    .string(),
   email: z.string().max(255).email().optional(),
   idProof: z
     .any()
@@ -172,9 +161,7 @@ export const CompanySecretaryFormSchema = z.object({
     .max(65535)
     .trim(),
   phone: z
-    .string()
-    .regex(/^\+?\d{8,15}$/, { message: "Invalid phone number format" })
-    .optional(),
+    .string(),
   email: z.string().max(255).email().trim(),
   idProof: z
     .any()

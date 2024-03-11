@@ -1,6 +1,22 @@
 "use client";
 
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { PhoneInput } from "@/components/ui/phone-input";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { HoverCardComponent } from "@/components/HoverCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,10 +37,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useDataContext } from "@/context/ContextProvider";
-import { CompanyInfoHoverContent } from "@/lib/constants";
+import {
+  CompanyInfoHoverContent,
+  NatureOfBusinessContent,
+} from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 const CompanyInfo = () => {
   const { setTabValue, setDisableSI } = useDataContext();
@@ -33,6 +53,7 @@ const CompanyInfo = () => {
     defaultValues: {
       name: "",
       chiname: "",
+      code: "",
       nature: "",
       type: "private",
       house: "",
@@ -132,13 +153,13 @@ const CompanyInfo = () => {
                         defaultValue={field.value}
                         className="flex justify-start items-center gap-10"
                       >
-                        <FormItem className="flex items-center space-x-3">
+                        <FormItem className="flex items-end space-x-3">
                           <FormControl>
                             <RadioGroupItem value="private" />
                           </FormControl>
                           <FormLabel className="font-normal">Private</FormLabel>
                         </FormItem>
-                        <FormItem className="flex items-center space-x-3">
+                        <FormItem className="flex items-end space-x-3">
                           <FormControl>
                             <RadioGroupItem value="public" disabled />
                           </FormControl>
@@ -152,22 +173,92 @@ const CompanyInfo = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                name="nature"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nature of Business:</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Description about Nature..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex gap-2 items-center">
+                <FormField
+                  name="code"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Code:</FormLabel>
+                      <FormControl>
+                        <Input placeholder="XXX" {...field} readOnly />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="nature"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nature of Business</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-[450px] justify-between",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? field.value
+                                : "Select a Nature of Business"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[450px]">
+                          <Command>
+                            <CommandInput placeholder="Search Nature of Business..." />
+                            <CommandList>
+                              <CommandEmpty>No results found.</CommandEmpty>
+                              {NatureOfBusinessContent.map((item) => (
+                                <div key={item.categoryName}>
+                                  <CommandGroup
+                                    heading={item.categoryName}
+                                    key={item.categoryName}
+                                  >
+                                    {item.content.map((subItem) => (
+                                      <CommandItem
+                                        value={subItem.value}
+                                        key={subItem.code}
+                                        className="text-left"
+                                        onSelect={() => {
+                                          form.setValue(
+                                            "nature",
+                                            subItem.value
+                                          );
+                                          form.setValue("code", subItem.code);
+                                        }}
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4",
+                                            subItem.value === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        {subItem.value}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                  <CommandSeparator />
+                                </div>
+                              ))}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
             <div className="space-y-3">
               <FormField
@@ -267,9 +358,9 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Company Telephone:</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="+852-1234-5678"
-                        type="number"
+                      <PhoneInput
+                        placeholder="Enter a phone number"
+                        defaultCountry="HK"
                         {...field}
                       />
                     </FormControl>
@@ -284,9 +375,9 @@ const CompanyInfo = () => {
                   <FormItem>
                     <FormLabel>Company Fax No:</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="+852-1234-5678"
-                        type="number"
+                      <PhoneInput
+                        placeholder="Enter a phone number"
+                        defaultCountry="HK"
                         {...field}
                       />
                     </FormControl>
@@ -407,9 +498,9 @@ const CompanyInfo = () => {
                       <FormItem>
                         <FormLabel>Telephone:</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="+852-1234-5678"
-                            type="number"
+                          <PhoneInput
+                            placeholder="Enter a phone number"
+                            defaultCountry="HK"
                             {...field}
                           />
                         </FormControl>
@@ -424,9 +515,9 @@ const CompanyInfo = () => {
                       <FormItem>
                         <FormLabel>Fax No:</FormLabel>
                         <FormControl>
-                          <Input
-                            placeholder="+852-1234-5678"
-                            type="number"
+                          <PhoneInput
+                            placeholder="Enter a phone number"
+                            defaultCountry="HK"
                             {...field}
                           />
                         </FormControl>

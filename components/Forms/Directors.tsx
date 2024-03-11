@@ -35,10 +35,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PhoneInput } from "../ui/phone-input";
 
 const Directors = () => {
   const [disable, setDisable] = useState(false);
-  const {setTabValue, setDisableCS} = useDataContext();
+  const { setTabValue, setDisableCS } = useDataContext();
   const form = useForm<z.infer<typeof DirectorsFormSchema>>({
     resolver: zodResolver(DirectorsFormSchema),
     defaultValues: {
@@ -50,7 +51,7 @@ const Directors = () => {
       email: "",
       phone: "",
       idProof: undefined,
-      addressProof: undefined
+      addressProof: undefined,
     },
   });
 
@@ -68,7 +69,9 @@ const Directors = () => {
       for: "name",
     },
     {
-      label: disable ? "Company No. / Upload a Copy" : "ID/Passport No. / Upload a Copy",
+      label: disable
+        ? "Company No. / Upload a Copy"
+        : "ID/Passport No. / Upload a Copy",
       for: "idNo",
     },
     {
@@ -316,8 +319,9 @@ const Directors = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input
-                              placeholder="Eg: +86 XXX XXXX XXXX"
+                            <PhoneInput
+                              placeholder="Enter a phone number"
+                              defaultCountry="HK"
                               {...field}
                             />
                           </FormControl>

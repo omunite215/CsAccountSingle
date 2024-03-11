@@ -1,13 +1,489 @@
 export const CompanyInfoHoverContent = {
   name: {
-    first: "A company name may be in English or in Chinese. A company may also adopt both an English name and a Chinese name. Please refer to the 'Guideline on Registration of Company Names for Hong Kong Companies' for the points to note when choosing a company name.",
-    second: "The company name(s) stated in this Section should be identical to the name(s) stated in the Name Clause of the articles of the company as required under section 81 of the Companies Ordinance. An application for incorporation with errors in the proposed company name(s) may be rejected by the Companies Registry and the lodgement fee paid will not be refunded."
+    first:
+      "A company name may be in English or in Chinese. A company may also adopt both an English name and a Chinese name. Please refer to the 'Guideline on Registration of Company Names for Hong Kong Companies' for the points to note when choosing a company name.",
+    second:
+      "The company name(s) stated in this Section should be identical to the name(s) stated in the Name Clause of the articles of the company as required under section 81 of the Companies Ordinance. An application for incorporation with errors in the proposed company name(s) may be rejected by the Companies Registry and the lodgement fee paid will not be refunded.",
   },
   type: "A company is a 'private company' if its articles restrict a member's right to transfer shares, limit the number of members to 50, and prohibit any invitation to the public to subscribe for any shares or debentures of the company; and it is not a company limited by guarantee. A company is a 'public company' if it is not a private company and not a company limited by guarantee. Please seek independent legal advice on the choice of an appropriate type of company, if necessary.",
-  address: " Please provide the code and description of the nature of proposed business of the company in accordance with the categories of business nature which are available from the Companies Registry's website (www.cr.gov.hk). If the company proposes to carry on more than one category of business, please provide the major category.",
+  address:
+    " Please provide the code and description of the nature of proposed business of the company in accordance with the categories of business nature which are available from the Companies Registry's website (www.cr.gov.hk). If the company proposes to carry on more than one category of business, please provide the major category.",
   time: "According to sections 5A(1) and 5D(2) of the Business Registration Ordinance (Cap. 310), an applicant for company incorporation must deliver a Notice to Business Registration Office (IRBR1) and the prescribed business registration fee and levy together with this form. Otherwise, the application will be rejected by the Companies Registry",
-  presentor: "Please complete the Presentor's Reference. Unless the presentor needs to raise a specific issue for the attention of the Companies Registry, no covering letter is required. The Companies Registry will notify the presentor by email or fax to collect the Certificate of Incorporation and Business Registration Certificate in person. A written authorization will be required if the presentor sends a representative to collect the certificates."
-}
+  presentor:
+    "Please complete the Presentor's Reference. Unless the presentor needs to raise a specific issue for the attention of the Companies Registry, no covering letter is required. The Companies Registry will notify the presentor by email or fax to collect the Certificate of Incorporation and Business Registration Certificate in person. A written authorization will be required if the presentor sends a representative to collect the certificates.",
+};
+
+export const NatureOfBusinessContent = [
+  {
+    categoryName: "Agriculture Forestry and Fishing",
+    content: [
+      {
+        label: "001 Crop and animal production, hunting.",
+        value: "Crop and animal production, hunting.",
+        code: "001",
+      },
+      {
+        label: "002 Forestry activities",
+        value: "Forestry activities",
+        code: "002",
+      },
+      {
+        label: "003 Fishing and aquaculture",
+        value: "Fishing and aquaculture",
+        code: "003",
+      },
+    ],
+  },
+  {
+    categoryName: "Mining and quarrying",
+    content: [
+      {
+        label: "005 Mining of coal and lignite",
+        value: "Mining of coal and lignite",
+        code: "005",
+      },
+      {
+        label: "006 Extraction of crude petroleum and natural gas",
+        value: "Extraction of crude petroleum and natural gas",
+        code: "006",
+      },
+      {
+        label: "007 Mining of metal ores",
+        value: "Mining of metal ores",
+        code: "007",
+      },
+      {
+        label: "008 Quarrying and other mining of non-metal ores",
+        value: "Quarrying and other mining of non-metal ores",
+        code: "008",
+      },
+      {
+        label: "009 Mining support service activities",
+        value: "Mining support service activities",
+        code: "009",
+      },
+    ],
+  },
+  {
+    categoryName: "Manufacturing",
+    content: [
+      {
+        value: "Manufacture of food products",
+        code: "010",
+      },
+      {
+        value: "Manufacture of beverages",
+        code: "011",
+      },
+      {
+        value: "Manufacture of tobacco products",
+        code: "012",
+      },
+      {
+        value: "Manufacture of textiles",
+        code: "013",
+      },
+      {
+        value: "Manufacture of wearing apparel",
+        code: "014",
+      },
+      {
+        value: "Manufacture of leather and related products",
+        code: "015",
+      },
+      {
+        value:
+          "Manufacture of wood and of products of wood and cork, articles of straw and plaiting materials (except furniture and toys)",
+        code: "016",
+      },
+      {
+        value: "Manufacture of paper and paper products",
+        code: "017",
+      },
+      {
+        value: "Printing and reproduction of recorded media",
+        code: "018",
+      },
+      {
+        value: "Manufacture of coke and refined petroleum products",
+        code: "019",
+      },
+      {
+        value: "Manufacture of chemicals and chemical products",
+        code: "020",
+      },
+      {
+        value:
+          "Manufacture of pharmaceuticals, medicinal chemical and botanical products",
+        code: "021",
+      },
+      {
+        value:
+          "Manufacture of rubber and plastics products (except furniture, toys, sports goods and stationery)",
+        code: "022",
+      },
+      {
+        value: "Manufacture of other non-metallic mineral products",
+        code: "023",
+      },
+      {
+        value: "Manufacture of basic metals",
+        code: "024",
+      },
+      {
+        value:
+          "Manufacture of fabricated metal products (except machinery and equipment)",
+        code: "025",
+      },
+      {
+        value: "Manufacture of computer, electronic and optical products",
+        code: "026",
+      },
+      {
+        value: "Manufacture of electrical equipment",
+        code: "027",
+      },
+      {
+        value: "Manufacture of machinery and equipment n.e.c.",
+        code: "028",
+      },
+      {
+        value: "Body assembly of motor vehicles",
+        code: "029",
+      },
+      {
+        value: "Manufacture of other transport equipment",
+        code: "030",
+      },
+      {
+        value: "Manufacture of furniture",
+        code: "031",
+      },
+      {
+        value: "Other manufacturing",
+        code: "032",
+      },
+      {
+        value: "Repair and installation of machinery and equipment",
+        code: "033",
+      },
+    ],
+  },
+  {
+    categoryName: "Electricity and Gas Supply",
+    content: [
+      {
+        value: "Electrcity and Gas Supply",
+        code: "035",
+      },
+    ],
+  },
+  {
+    categoryName:
+      "Water supply; sewerage, waste management & remediation activities",
+    content: [
+      {
+        value: "Water collection, treatment and supply",
+        code: "036",
+      },
+      {
+        value: "Sewerage",
+        code: "037",
+      },
+      {
+        value:
+          "Waste collection, treatment and disposal activities; materials recovery",
+        code: "038",
+      },
+      {
+        value: "Remediation activities and other waste management services",
+        code: "039",
+      },
+    ],
+  },
+  {
+    categoryName: "Construction",
+    content: [
+      {
+        value: "Construction of buildings",
+        code: "041",
+      },
+      {
+        value: "Civil engineering",
+        code: "042",
+      },
+      {
+        value: "Specialised Construction Activities",
+        code: "043",
+      },
+    ],
+  },
+  {
+    categoryName: "Import/export, wholesale and retail trades",
+    content: [
+      {
+        value: "Import and export trade ",
+        code: "045",
+      },
+      {
+        value: "Wholesale",
+        code: "046",
+      },
+      {
+        value: "Retail Trade",
+        code: "047",
+      },
+    ],
+  },
+  {
+    categoryName: "Transportation, storage, postal and courier services",
+    content: [
+      {
+        value: "Land Transport",
+        code: "049",
+      },
+      {
+        value: "Water Transport",
+        code: "050",
+      },
+      {
+        value: "Air Transport",
+        code: "051",
+      },
+      {
+        value: "Warehousing and support activities for transportation",
+        code: "052",
+      },
+      {
+        value: "Postal and courier activities",
+        code: "053",
+      },
+    ],
+  },
+  {
+    categoryName: "Accommodation and food service activities",
+    content: [
+      {
+        value: "Short term accommodation activities",
+        code: "055",
+      },
+      {
+        value: "Food and beverage service activities",
+        code: "056",
+      },
+    ],
+  },
+  {
+    categoryName: "Information and communications",
+    content: [
+      {
+        value: "Publishing activities",
+        code: "058",
+      },
+      {
+        value:
+          "Motion picture, video and television programme production, sound recording and music publishing activities",
+        code: "059",
+      },
+      {
+        value: "Programming and broadcasting activities",
+        code: "060",
+      },
+      {
+        value: "Telecommunications",
+        code: "061",
+      },
+      {
+        value: "Information technology service activities",
+        code: "062",
+      },
+      {
+        value: "Information service activities",
+        code: "063",
+      },
+    ],
+  },
+  {
+    categoryName: "Financial and Insurance Activities",
+    content: [
+      {
+        value:
+          "Financial service activities, including investment and holding companies, and the activities of trusts, funds and similar financial entities.",
+        code: "064",
+      },
+      {
+        value: "Insurance (including pension funding) ",
+        code: "065",
+      },
+      {
+        value:
+          "Activities auxiliary to financial service and insurance activities",
+        code: "066",
+      },
+    ],
+  },
+  {
+    categoryName: "Real Estate Activities",
+    content: [
+      {
+        value: "Real estate activities",
+        code: "068",
+      },
+    ],
+  },
+  {
+    categoryName: "Professional, scientific and technical activities",
+    content: [
+      {
+        value: "Legal and accounting activities",
+        code: "069",
+      },
+      {
+        value:
+          "Activities of head offices; management and management consultancy activities",
+        code: "070",
+      },
+      {
+        value:
+          "Architecture and engineering activities, technical testing and analysis",
+        code: "071",
+      },
+      {
+        value: "Scientific research and development",
+        code: "072",
+      },
+      {
+        value: "Veterinary activities",
+        code: "073",
+      },
+      {
+        value: "Advertising and market research",
+        code: "074",
+      },
+      {
+        value: "Other professional, scientific and technical activities",
+        code: "075",
+      },
+    ],
+  },
+  {
+    categoryName: "Administrative and support service activities",
+    content: [
+      {
+        value: "Rental and leasing activities",
+        code: "077",
+      },
+      {
+        value: "Employment activities",
+        code: "078",
+      },
+      {
+        value: "Travel agency, reservation service and related activities",
+        code: "079",
+      },
+      {
+        value: "Security and investigation activities ",
+        code: "080",
+      },
+      {
+        value: "Services to buildings and landscape care activities",
+        code: "081",
+      },
+      {
+        value:
+          "Office administrative, office support and other business support activities",
+        code: "082",
+      },
+      {
+        value: "Public administration",
+        code: "084",
+      },
+    ],
+  },
+  {
+    categoryName: "Education",
+    content: [
+      {
+        value: "Education",
+        code: "085",
+      },
+    ],
+  },
+  {
+    categoryName: "Human health and social work activities",
+    content: [
+      {
+        value: "Human health activities",
+        code: "086",
+      },
+      {
+        value: "Residential care activities",
+        code: "087",
+      },
+      {
+        value: "Social work activities without accommodation",
+        code: "088",
+      },
+    ],
+  },
+  {
+    categoryName: "Arts, entertainment and recreation",
+    content: [
+      {
+        value: "Creative and performing arts activities",
+        code: "090",
+      },
+      {
+        value: "Libraries, archives, museums and other cultural activities",
+        code: "091",
+      },
+      {
+        value: "Activities of amusement parks and theme parks",
+        code: "092",
+      },
+      {
+        value: "Sports and other entertainment activities",
+        code: "093",
+      },
+    ],
+  },
+  {
+    categoryName: "Other service activities",
+    content: [
+      {
+        value: "Activities of membership organisations",
+        code: "094",
+      },
+      {
+        value:
+          "Repair of motor vehicles, motorcycles, computers, personal and household goods",
+        code: "095",
+      },
+      {
+        value: "Other personal service activities",
+        code: "096",
+      },
+    ],
+  },
+  {
+    categoryName: "Work activities within domestic households",
+    content: [
+      {
+        value: "Activities of households as employers of domestic personnel",
+        code: "097",
+      },
+      {
+        value:
+          "Goods- and services-producing activities of private households for own use ",
+        code: "098",
+      },
+      {
+        value: "Activities of extraterritorial organisations and bodies",
+        code: "099",
+      },
+    ],
+  },
+] as const;
 
 export const notificationContent = [
   {

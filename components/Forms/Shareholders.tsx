@@ -45,6 +45,7 @@ import { PlusCircle, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { PhoneInput } from "../ui/phone-input";
 
 const Shareholders = () => {
   const [disable, setDisable] = useState(false);
@@ -342,10 +343,11 @@ const Shareholders = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input
-                              placeholder="Eg: +86 XXX XXXX XXXX"
-                              {...field}
-                            />
+                          <PhoneInput
+                            placeholder="Enter a phone number"
+                            defaultCountry="HK"
+                            {...field}
+                          />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

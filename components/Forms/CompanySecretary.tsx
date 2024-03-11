@@ -35,6 +35,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { PhoneInput } from "../ui/phone-input";
 
 const CompanySecretary = () => {
   const router = useRouter();
@@ -355,8 +356,9 @@ const CompanySecretary = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input
-                              placeholder="Eg: +86 XXX XXXX XXXX"
+                            <PhoneInput
+                              placeholder="Enter a phone number"
+                              defaultCountry="HK"
                               {...field}
                             />
                           </FormControl>
@@ -368,8 +370,8 @@ const CompanySecretary = () => {
                 </TableRow>
               </TableBody>
             </Table>
-            <div>
-              <Button type="submit" className="my-4">
+            <div className="flex items-center justify-end">
+              <Button type="submit" variant="destructive" className="my-4">
                 Submit
               </Button>
             </div>

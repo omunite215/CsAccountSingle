@@ -29,13 +29,24 @@ const page = () => {
           <ShareCapitalCard />
           <ShareholderCard />
           <DirectorsCard />
-          <CompanySecretaryCard/>
+          <CompanySecretaryCard />
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Link className={buttonVariants({ variant: "outline" })} href="/">
+          <Link
+            className={buttonVariants({ className: "cursor-pointer" })}
+            href="/"
+          >
             Edit
           </Link>
-          <Button>Confirm</Button>
+          <Link
+            className={buttonVariants({
+              variant: "destructive",
+              className: "cursor-pointer",
+            })}
+            href="/done"
+          >
+            Confirm
+          </Link>
         </CardFooter>
       </Card>
     </div>
