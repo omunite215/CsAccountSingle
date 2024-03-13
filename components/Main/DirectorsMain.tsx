@@ -1,6 +1,6 @@
 "use client";
 import { Directors, InviteGuestUsers } from "@/components/Forms";
-import ShareholdersData from "@/components/Forms/Data/ShareholdersData";
+import DirectorsData from "@/components/Forms/Data//DirectorsData";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -40,7 +40,7 @@ const DirectorsMain = () => {
         </div>
         <CardContent className="space-y-6">
           <CollapsibleContent className="CollapsibleContent">
-            <ShareholdersData />
+            <DirectorsData />
           </CollapsibleContent>
           <RadioGroup defaultValue="self">
             <div

@@ -78,7 +78,7 @@ const CompanySecretary = () => {
       for: "idNo",
     },
     {
-      label: "Address / Upload a Copy",
+      label: disable ? "Address" : "Address / Upload a Copy",
       for: "address",
     },
     {

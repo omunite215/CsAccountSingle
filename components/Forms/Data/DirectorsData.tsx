@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,15 +10,10 @@ import {
 import { shareholdersContent, shareholdersRows } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Pencil, Trash2 } from "lucide-react";
-import ShareDetailsPopup from "./ShareDetailsPopup";
 
 const DirectorsData = () => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Directors List</CardTitle>
-      </CardHeader>
-      <Table className="w-full">
+      <Table>
         <TableHeader>
           <TableRow>
             {shareholdersRows.map((row) => (
@@ -46,7 +40,6 @@ const DirectorsData = () => {
               <TableCell>{item.address}</TableCell>
               <TableCell>{item.email}</TableCell>
               <TableCell>{item.phone}</TableCell>
-              <TableCell><ShareDetailsPopup name={item.name} surname={item.surname} /></TableCell>
               <TableCell>
                 <Button variant="outline">
                   <Pencil />
@@ -61,7 +54,7 @@ const DirectorsData = () => {
           ))}
         </TableBody>
       </Table>
-    </Card>
+    
   );
 };
 
