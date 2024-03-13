@@ -43,7 +43,7 @@ const page = () => {
               variant: "destructive",
               className: "cursor-pointer",
             })}
-            href="/done"
+            href="https://cs-account-multiple.vercel.app/"
           >
             Confirm
           </Link>
