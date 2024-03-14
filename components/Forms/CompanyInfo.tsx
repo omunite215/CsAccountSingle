@@ -45,9 +45,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-
+import { useState } from "react";
 const CompanyInfo = () => {
   const { setTabValue, setDisableSI } = useDataContext();
+  const [open, setOpen] = useState(false)
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
@@ -191,7 +192,7 @@ const CompanyInfo = () => {
                   name="nature"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="">
                       <FormLabel>Nature of Business</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
@@ -200,18 +201,18 @@ const CompanyInfo = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "w-[450px] justify-between",
+                                "md:w-[450px] w-auto justify-between",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
                               {field.value
                                 ? field.value
-                                : "Select a Nature of Business"}
+                                : " Select Nature of Business"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[450px]">
+                        <PopoverContent className="md:w-[450px] w-auto">
                           <Command>
                             <CommandInput placeholder="Search Nature of Business..." />
                             <CommandList>

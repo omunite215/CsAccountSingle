@@ -28,13 +28,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const InviteGuestUsers = ({text}:{text: string;}) => {
+const InviteGuestUsers = ({ text }: { text: string }) => {
+  const {setTabValue} = useDataContext();
   const [disable, setDisable] = useState(false);
 
   const form = useForm<z.infer<typeof GuestUserFormSchema>>({
@@ -84,7 +86,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
       <CardHeader>
         <CardTitle>Invite {text}</CardTitle>
         <CardDescription>
-          Please enter information to invite {text} to fill the form. 
+          Please enter information to invite {text} to fill the form.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -142,7 +144,7 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                   </TableCell>
                   <TableCell
                     className={cn({
-                      "hidden": disable,
+                      hidden: disable,
                     })}
                   >
                     <FormField
@@ -183,9 +185,11 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                         <FormItem>
                           <FormControl>
                             <Input
-                            type="email"
+                              type="email"
                               placeholder={`Eg: ${
-                                disable ? "Company1@gmail.com" : "person@gmail.com"
+                                disable
+                                  ? "Company1@gmail.com"
+                                  : "person@gmail.com"
                               }`}
                               {...field}
                             />
@@ -198,9 +202,14 @@ const InviteGuestUsers = ({text}:{text: string;}) => {
                 </TableRow>
               </TableBody>
             </Table>
-            <Button type="submit" className="my-4">
-              Invite
-            </Button>
+            <div className="flex justify-between items-center">
+              <Button type="submit" className="my-4">
+                Invite
+              </Button>
+              <Button variant="destructive" onClick={() => setTabValue(text === "Shareholder" ? "D" : "CS")}>
+                Save & Next
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

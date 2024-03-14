@@ -22,7 +22,7 @@ import ShareholdersData from "../Forms/Data/ShareholdersData";
 
 const ShareHoldersMain = () => {
   const { setTabValue } = useDataContext();
-  const [value, setValue] = useState<"self" | "invite">("self");
+  const [value, setValue] = useState<"self" | "invite" | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
@@ -44,19 +44,19 @@ const ShareHoldersMain = () => {
           <CollapsibleContent className="CollapsibleContent">
             <ShareholdersData />
           </CollapsibleContent>
-          <RadioGroup defaultValue="self">
+          <RadioGroup>
             <div
               className="flex items-center space-x-2 py-6"
               onClick={() => setValue("self")}
             >
               <RadioGroupItem value="self" id="r1" checked={value === "self"} />
-              <Label htmlFor="r1" className=" text-2xl">
+              <Label htmlFor="r1" className="text-2xl">
                 Fill in all the information for this Shareholder
               </Label>
             </div>
             <div
               className={cn({
-                hidden: value === "invite",
+                hidden: value === "invite" || value === null,
               })}
             >
               <Shareholders />
@@ -70,18 +70,13 @@ const ShareHoldersMain = () => {
                 id="r2"
                 checked={value === "invite"}
               />
-              <div className="flex justify-between items-center w-full">
-                <Label htmlFor="r2" className="text-2xl">
-                  Invite a Shareholder to fill in the details.
-                </Label>
-                <Button variant="destructive" onClick={() => setTabValue("D")}>
-                  Save & Next
-                </Button>
-              </div>
+              <Label htmlFor="r2" className="text-2xl">
+                Invite a Shareholder to fill in the details.
+              </Label>
             </div>
             <div
               className={cn({
-                hidden: value === "self",
+                hidden: value === "self" || value === null,
               })}
             >
               <InviteGuestUsers text="Shareholder" />

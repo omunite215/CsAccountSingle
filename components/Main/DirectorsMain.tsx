@@ -1,7 +1,7 @@
 "use client";
 import { Directors, InviteGuestUsers } from "@/components/Forms";
 import DirectorsData from "@/components/Forms/Data//DirectorsData";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,13 +16,11 @@ import {
 } from "@/components/ui/collapsible";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const DirectorsMain = () => {
-  const { setTabValue } = useDataContext();
-  const [value, setValue] = useState<"self" | "invite">("self");
+  const [value, setValue] = useState<"self" | "invite" | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
@@ -42,7 +40,7 @@ const DirectorsMain = () => {
           <CollapsibleContent className="CollapsibleContent">
             <DirectorsData />
           </CollapsibleContent>
-          <RadioGroup defaultValue="self">
+          <RadioGroup>
             <div
               className="flex items-center space-x-2 py-6"
               onClick={() => setValue("self")}
@@ -54,7 +52,7 @@ const DirectorsMain = () => {
             </div>
             <div
               className={cn({
-                hidden: value === "invite",
+                hidden: value === "invite" || value === null,
               })}
             >
               <Directors />
@@ -68,18 +66,14 @@ const DirectorsMain = () => {
                 id="r2"
                 checked={value === "invite"}
               />
-              <div className="flex justify-between items-center w-full">
-                <Label htmlFor="r2" className="text-2xl">
-                  Invite a Director to fill in the details.
-                </Label>
-                <Button variant="destructive" onClick={() => setTabValue("CS")}>
-                  Save & Next
-                </Button>
-              </div>
+
+              <Label htmlFor="r2" className="text-2xl">
+                Invite a Director to fill in the details.
+              </Label>
             </div>
             <div
               className={cn({
-                hidden: value === "self",
+                hidden: value === "self" || value === null,
               })}
             >
               <InviteGuestUsers text="Director" />

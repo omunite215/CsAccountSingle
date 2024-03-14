@@ -18,17 +18,14 @@ export const NatureOfBusinessContent = [
     categoryName: "Agriculture Forestry and Fishing",
     content: [
       {
-        label: "001 Crop and animal production, hunting.",
         value: "Crop and animal production, hunting.",
         code: "001",
       },
       {
-        label: "002 Forestry activities",
         value: "Forestry activities",
         code: "002",
       },
       {
-        label: "003 Fishing and aquaculture",
         value: "Fishing and aquaculture",
         code: "003",
       },
@@ -38,27 +35,22 @@ export const NatureOfBusinessContent = [
     categoryName: "Mining and quarrying",
     content: [
       {
-        label: "005 Mining of coal and lignite",
         value: "Mining of coal and lignite",
         code: "005",
       },
       {
-        label: "006 Extraction of crude petroleum and natural gas",
         value: "Extraction of crude petroleum and natural gas",
         code: "006",
       },
       {
-        label: "007 Mining of metal ores",
         value: "Mining of metal ores",
         code: "007",
       },
       {
-        label: "008 Quarrying and other mining of non-metal ores",
         value: "Quarrying and other mining of non-metal ores",
         code: "008",
       },
       {
-        label: "009 Mining support service activities",
         value: "Mining support service activities",
         code: "009",
       },
@@ -483,7 +475,7 @@ export const NatureOfBusinessContent = [
       },
     ],
   },
-] as const;
+] ;
 
 export const notificationContent = [
   {
