@@ -48,7 +48,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 const CompanyInfo = () => {
   const { setTabValue, setDisableSI } = useDataContext();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
@@ -92,7 +92,7 @@ const CompanyInfo = () => {
       <CardContent>
         <Form {...form}>
           <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
               <FormField
                 name="name"
                 control={form.control}
@@ -131,7 +131,7 @@ const CompanyInfo = () => {
                 )}
               />
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
               <FormField
                 name="type"
                 control={form.control}
@@ -351,7 +351,7 @@ const CompanyInfo = () => {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-3">
               <FormField
                 name="companyTel"
                 control={form.control}
@@ -431,7 +431,7 @@ const CompanyInfo = () => {
             />
             <Card>
               <CardHeader>
-                <CardTitle className=" inline-flex items-center gap-2">
+                <CardTitle className="inline-flex items-center gap-2">
                   <span>Presentor&lsquo;s Referance</span>
                   <HoverCardComponent
                     content={

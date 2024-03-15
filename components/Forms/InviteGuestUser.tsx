@@ -28,7 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -36,7 +35,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const InviteGuestUsers = ({ text }: { text: string }) => {
-  const {setTabValue} = useDataContext();
   const [disable, setDisable] = useState(false);
 
   const form = useForm<z.infer<typeof GuestUserFormSchema>>({
@@ -202,12 +200,9 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
                 </TableRow>
               </TableBody>
             </Table>
-            <div className="flex justify-between items-center">
+            <div>
               <Button type="submit" className="my-4">
                 Invite
-              </Button>
-              <Button variant="destructive" onClick={() => setTabValue(text === "Shareholder" ? "D" : "CS")}>
-                Save & Next
               </Button>
             </div>
           </form>

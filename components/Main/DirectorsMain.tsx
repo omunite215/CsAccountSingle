@@ -1,11 +1,12 @@
 "use client";
 import { Directors, InviteGuestUsers } from "@/components/Forms";
 import DirectorsData from "@/components/Forms/Data//DirectorsData";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,10 +17,12 @@ import {
 } from "@/components/ui/collapsible";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDataContext } from "@/context/ContextProvider";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const DirectorsMain = () => {
+  const { setTabValue } = useDataContext();
   const [value, setValue] = useState<"self" | "invite" | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -80,6 +83,14 @@ const DirectorsMain = () => {
             </div>
           </RadioGroup>
         </CardContent>
+        <CardFooter className="flex justify-end items-center">
+          <Button
+            variant="destructive"
+            onClick={() => setTabValue("CS")}
+          >
+            Save & Next
+          </Button>
+        </CardFooter>
       </Card>
     </Collapsible>
   );

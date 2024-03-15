@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -83,6 +84,11 @@ const ShareHoldersMain = () => {
             </div>
           </RadioGroup>
         </CardContent>
+        <CardFooter className="flex justify-end items-center">
+          <Button variant="destructive" onClick={() => setTabValue("D")}>
+            Save & Next
+          </Button>
+        </CardFooter>
       </Card>
     </Collapsible>
   );

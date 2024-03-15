@@ -39,9 +39,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex justify-center items-center flex-col">
+            <main className="relative">
               <SiteHeader />
-              {children}
+              <div className="container">{children}</div>
             </main>
             <Toaster />
           </ThemeProvider>
