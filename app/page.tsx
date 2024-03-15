@@ -30,7 +30,7 @@ export default function Home() {
   }, [setTabValue, tabValue]);
 
   return (
-    <main className="md:container w-full py-6 md:px-0 px-6">
+    <main className="py-6">
       <Popup />
       <Tabs defaultValue="CI" value={tabValue}>
         <TabsList className="grid w-full md:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:mb-0 mb-40">

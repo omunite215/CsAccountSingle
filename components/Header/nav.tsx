@@ -11,23 +11,19 @@ const SiteHeader = () => {
   return (
     <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <div className="flex items-center justify-start">
-          <Link
-            className={cn(
-              buttonVariants({ variant: "ghost" }),
-              "text-2xl font-bold text-primary"
-            )}
-            href="/"
-          >
+        <div className="flex items-center justify-center gap-3">
+          <Link className={cn(buttonVariants({ variant: "ghost" }))} href="/">
             <Image
               src="/logo/logo.png"
               width={28}
               height={28}
-              priority
               alt="logo"
-              className="object-contain w-auto h-auto"
+              className=" object-fill"
             />
-            &nbsp;ComSec360
+            &nbsp;
+            <span className="text-2xl font-bold text-primary sm:block hidden">
+              ComSec360
+            </span>
           </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
