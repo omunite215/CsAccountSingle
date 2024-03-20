@@ -235,6 +235,7 @@ const CompanyInfo = () => {
                                           );
                                           form.setValue("code", subItem.code);
                                         }}
+                                        
                                       >
                                         <Check
                                           className={cn(

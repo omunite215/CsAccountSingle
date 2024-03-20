@@ -152,7 +152,7 @@ export const CompanySecretaryFormSchema = z.object({
     .trim()
     .optional(),
   type: z.enum(["person", "company"], { required_error: "*required" }),
-  surname: z.string().min(2, "min. 2 char(s)").max(255).trim(),
+  surname: z.string().max(255).trim().optional(),
   name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
   idNo: z.string().max(100),
   address: z
@@ -171,9 +171,5 @@ export const CompanySecretaryFormSchema = z.object({
       `Max file size is 3MB.`
     ),
   addressProof: z
-    .any()
-    .refine(
-      (file: { size: number }[]) => file[0]?.size <= 3000000,
-      `Max file size is 3MB.`
-    ),
+    .any(),
 });
