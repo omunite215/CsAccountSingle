@@ -201,7 +201,7 @@ const CompanyInfo = () => {
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "md:w-[450px] w-auto justify-between",
+                                "md:w-[450px] w-auto h-auto justify-between text-wrap",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -222,6 +222,7 @@ const CompanyInfo = () => {
                                   <CommandGroup
                                     heading={item.categoryName}
                                     key={item.categoryName}
+                                  
                                   >
                                     {item.content.map((subItem) => (
                                       <CommandItem
@@ -235,11 +236,10 @@ const CompanyInfo = () => {
                                           );
                                           form.setValue("code", subItem.code);
                                         }}
-                                        
                                       >
                                         <Check
                                           className={cn(
-                                            "mr-2 h-4",
+                                            "mr-2 w-4 h-4",
                                             subItem.value === field.value
                                               ? "opacity-100"
                                               : "opacity-0"
