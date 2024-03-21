@@ -16,7 +16,7 @@ export const CompanyInfoFormSchema = z.object({
   type: z.enum(["public", "private"]),
   code: z.string().length(3, { message: "*required" }),
   nature: z.string().min(5, { message: "*required" }).trim(),
-  house: z.string().min(5, "*required | need min. 5 characters").max(65).trim(),
+  house: z.string().max(65).trim().optional(),
   building: z.string().max(65).trim().optional(),
   street: z.string().max(65).trim().optional(),
   district: z.string().max(65).trim().optional(),
@@ -26,10 +26,8 @@ export const CompanyInfoFormSchema = z.object({
     .max(20)
     .trim(),
   email: z.string().max(255).trim().optional(),
-  companyTel: z
-    .string(),
-  companyfax: z
-    .string(),
+  companyTel: z.string(),
+  companyfax: z.string(),
   time: z.enum(["1 year", "3 years"]),
   presentorName: z.string().min(2, "min. 2 characters").max(255).trim(),
   presentorChiName: z.string().max(255).trim().optional(),
@@ -38,10 +36,8 @@ export const CompanyInfoFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535)
     .trim(),
-  presentorTel: z
-    .string(),
-  presentorFax: z
-    .string(),
+  presentorTel: z.string(),
+  presentorFax: z.string(),
   presentorEmail: z.string().max(255).trim().optional(),
   presentorReferance: z.string().max(255).trim(),
 });
@@ -94,8 +90,7 @@ export const ShareholdersFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535)
     .trim(),
-  phone: z
-    .string(),
+  phone: z.string(),
   email: z.string().max(255).email().trim().optional(),
   shareDetails: z.array(shareDetailsSchema).default([]),
   idProof: z
@@ -124,8 +119,7 @@ export const DirectorsFormSchema = z.object({
     .string({ required_error: "*required" })
     .min(10, "*required | need min. 10 characters")
     .max(65535),
-  phone: z
-    .string(),
+  phone: z.string(),
   email: z.string().max(255).email().optional(),
   idProof: z
     .any()
@@ -160,8 +154,7 @@ export const CompanySecretaryFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535)
     .trim(),
-  phone: z
-    .string(),
+  phone: z.string(),
   email: z.string().max(255).email().trim(),
   idProof: z
     .any()
@@ -170,6 +163,5 @@ export const CompanySecretaryFormSchema = z.object({
       (file: { size: number }[]) => file[0]?.size <= 3000000,
       `Max file size is 3MB.`
     ),
-  addressProof: z
-    .any(),
+  addressProof: z.any(),
 });

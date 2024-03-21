@@ -15,467 +15,370 @@ export const CompanyInfoHoverContent = {
 
 export const NatureOfBusinessContent = [
   {
-    categoryName: "Agriculture Forestry and Fishing",
-    content: [
-      {
-        value: "Crop and animal production, hunting.",
-        code: "001",
-      },
-      {
-        value: "Forestry activities",
-        code: "002",
-      },
-      {
-        value: "Fishing and aquaculture",
-        code: "003",
-      },
-    ],
+    value: "Crop and animal production, hunting.",
+    code: "001",
   },
   {
-    categoryName: "Mining and quarrying",
-    content: [
-      {
-        value: "Mining of coal and lignite",
-        code: "005",
-      },
-      {
-        value: "Extraction of crude petroleum and natural gas",
-        code: "006",
-      },
-      {
-        value: "Mining of metal ores",
-        code: "007",
-      },
-      {
-        value: "Quarrying and other mining of non-metal ores",
-        code: "008",
-      },
-      {
-        value: "Mining support service activities",
-        code: "009",
-      },
-    ],
+    value: "Forestry activities",
+    code: "002",
   },
   {
-    categoryName: "Manufacturing",
-    content: [
-      {
-        value: "Manufacture of food products",
-        code: "010",
-      },
-      {
-        value: "Manufacture of beverages",
-        code: "011",
-      },
-      {
-        value: "Manufacture of tobacco products",
-        code: "012",
-      },
-      {
-        value: "Manufacture of textiles",
-        code: "013",
-      },
-      {
-        value: "Manufacture of wearing apparel",
-        code: "014",
-      },
-      {
-        value: "Manufacture of leather and related products",
-        code: "015",
-      },
-      {
-        value:
-          "Manufacture of wood and of products of wood and cork, articles of straw and plaiting materials (except furniture and toys)",
-        code: "016",
-      },
-      {
-        value: "Manufacture of paper and paper products",
-        code: "017",
-      },
-      {
-        value: "Printing and reproduction of recorded media",
-        code: "018",
-      },
-      {
-        value: "Manufacture of coke and refined petroleum products",
-        code: "019",
-      },
-      {
-        value: "Manufacture of chemicals and chemical products",
-        code: "020",
-      },
-      {
-        value:
-          "Manufacture of pharmaceuticals, medicinal chemical and botanical products",
-        code: "021",
-      },
-      {
-        value:
-          "Manufacture of rubber and plastics products (except furniture, toys, sports goods and stationery)",
-        code: "022",
-      },
-      {
-        value: "Manufacture of other non-metallic mineral products",
-        code: "023",
-      },
-      {
-        value: "Manufacture of basic metals",
-        code: "024",
-      },
-      {
-        value:
-          "Manufacture of fabricated metal products (except machinery and equipment)",
-        code: "025",
-      },
-      {
-        value: "Manufacture of computer, electronic and optical products",
-        code: "026",
-      },
-      {
-        value: "Manufacture of electrical equipment",
-        code: "027",
-      },
-      {
-        value: "Manufacture of machinery and equipment n.e.c.",
-        code: "028",
-      },
-      {
-        value: "Body assembly of motor vehicles",
-        code: "029",
-      },
-      {
-        value: "Manufacture of other transport equipment",
-        code: "030",
-      },
-      {
-        value: "Manufacture of furniture",
-        code: "031",
-      },
-      {
-        value: "Other manufacturing",
-        code: "032",
-      },
-      {
-        value: "Repair and installation of machinery and equipment",
-        code: "033",
-      },
-    ],
+    value: "Fishing and aquaculture",
+    code: "003",
   },
   {
-    categoryName: "Electricity and Gas Supply",
-    content: [
-      {
-        value: "Electrcity and Gas Supply",
-        code: "035",
-      },
-    ],
+    value: "Mining of coal and lignite",
+    code: "005",
   },
   {
-    categoryName:
-      "Water supply; sewerage, waste management & remediation activities",
-    content: [
-      {
-        value: "Water collection, treatment and supply",
-        code: "036",
-      },
-      {
-        value: "Sewerage",
-        code: "037",
-      },
-      {
-        value:
-          "Waste collection, treatment and disposal activities; materials recovery",
-        code: "038",
-      },
-      {
-        value: "Remediation activities and other waste management services",
-        code: "039",
-      },
-    ],
+    value: "Extraction of crude petroleum and natural gas",
+    code: "006",
   },
   {
-    categoryName: "Construction",
-    content: [
-      {
-        value: "Construction of buildings",
-        code: "041",
-      },
-      {
-        value: "Civil engineering",
-        code: "042",
-      },
-      {
-        value: "Specialised Construction Activities",
-        code: "043",
-      },
-    ],
+    value: "Mining of metal ores",
+    code: "007",
   },
   {
-    categoryName: "Import/export, wholesale and retail trades",
-    content: [
-      {
-        value: "Import and export trade ",
-        code: "045",
-      },
-      {
-        value: "Wholesale",
-        code: "046",
-      },
-      {
-        value: "Retail Trade",
-        code: "047",
-      },
-    ],
+    value: "Quarrying and other mining of non-metal ores",
+    code: "008",
   },
   {
-    categoryName: "Transportation, storage, postal and courier services",
-    content: [
-      {
-        value: "Land Transport",
-        code: "049",
-      },
-      {
-        value: "Water Transport",
-        code: "050",
-      },
-      {
-        value: "Air Transport",
-        code: "051",
-      },
-      {
-        value: "Warehousing and support activities for transportation",
-        code: "052",
-      },
-      {
-        value: "Postal and courier activities",
-        code: "053",
-      },
-    ],
+    value: "Mining support service activities",
+    code: "009",
   },
   {
-    categoryName: "Accommodation and food service activities",
-    content: [
-      {
-        value: "Short term accommodation activities",
-        code: "055",
-      },
-      {
-        value: "Food and beverage service activities",
-        code: "056",
-      },
-    ],
+    value: "Manufacture of food products",
+    code: "010",
   },
   {
-    categoryName: "Information and communications",
-    content: [
-      {
-        value: "Publishing activities",
-        code: "058",
-      },
-      {
-        value:
-          "Motion picture, video and television programme production, sound recording and music publishing activities",
-        code: "059",
-      },
-      {
-        value: "Programming and broadcasting activities",
-        code: "060",
-      },
-      {
-        value: "Telecommunications",
-        code: "061",
-      },
-      {
-        value: "Information technology service activities",
-        code: "062",
-      },
-      {
-        value: "Information service activities",
-        code: "063",
-      },
-    ],
+    value: "Manufacture of beverages",
+    code: "011",
   },
   {
-    categoryName: "Financial and Insurance Activities",
-    content: [
-      {
-        value:
-          "Financial service activities, including investment and holding companies, and the activities of trusts, funds and similar financial entities.",
-        code: "064",
-      },
-      {
-        value: "Insurance (including pension funding) ",
-        code: "065",
-      },
-      {
-        value:
-          "Activities auxiliary to financial service and insurance activities",
-        code: "066",
-      },
-    ],
+    value: "Manufacture of tobacco products",
+    code: "012",
   },
   {
-    categoryName: "Real Estate Activities",
-    content: [
-      {
-        value: "Real estate activities",
-        code: "068",
-      },
-    ],
+    value: "Manufacture of textiles",
+    code: "013",
   },
   {
-    categoryName: "Professional, scientific and technical activities",
-    content: [
-      {
-        value: "Legal and accounting activities",
-        code: "069",
-      },
-      {
-        value:
-          "Activities of head offices; management and management consultancy activities",
-        code: "070",
-      },
-      {
-        value:
-          "Architecture and engineering activities, technical testing and analysis",
-        code: "071",
-      },
-      {
-        value: "Scientific research and development",
-        code: "072",
-      },
-      {
-        value: "Veterinary activities",
-        code: "073",
-      },
-      {
-        value: "Advertising and market research",
-        code: "074",
-      },
-      {
-        value: "Other professional, scientific and technical activities",
-        code: "075",
-      },
-    ],
+    value: "Manufacture of wearing apparel",
+    code: "014",
   },
   {
-    categoryName: "Administrative and support service activities",
-    content: [
-      {
-        value: "Rental and leasing activities",
-        code: "077",
-      },
-      {
-        value: "Employment activities",
-        code: "078",
-      },
-      {
-        value: "Travel agency, reservation service and related activities",
-        code: "079",
-      },
-      {
-        value: "Security and investigation activities ",
-        code: "080",
-      },
-      {
-        value: "Services to buildings and landscape care activities",
-        code: "081",
-      },
-      {
-        value:
-          "Office administrative, office support and other business support activities",
-        code: "082",
-      },
-      {
-        value: "Public administration",
-        code: "084",
-      },
-    ],
+    value: "Manufacture of leather and related products",
+    code: "015",
   },
   {
-    categoryName: "Education",
-    content: [
-      {
-        value: "Education",
-        code: "085",
-      },
-    ],
+    value:
+      "Manufacture of wood and of products of wood and cork, articles of straw and plaiting materials (except furniture and toys)",
+    code: "016",
   },
   {
-    categoryName: "Human health and social work activities",
-    content: [
-      {
-        value: "Human health activities",
-        code: "086",
-      },
-      {
-        value: "Residential care activities",
-        code: "087",
-      },
-      {
-        value: "Social work activities without accommodation",
-        code: "088",
-      },
-    ],
+    value: "Manufacture of paper and paper products",
+    code: "017",
   },
   {
-    categoryName: "Arts, entertainment and recreation",
-    content: [
-      {
-        value: "Creative and performing arts activities",
-        code: "090",
-      },
-      {
-        value: "Libraries, archives, museums and other cultural activities",
-        code: "091",
-      },
-      {
-        value: "Activities of amusement parks and theme parks",
-        code: "092",
-      },
-      {
-        value: "Sports and other entertainment activities",
-        code: "093",
-      },
-    ],
+    value: "Printing and reproduction of recorded media",
+    code: "018",
   },
   {
-    categoryName: "Other service activities",
-    content: [
-      {
-        value: "Activities of membership organisations",
-        code: "094",
-      },
-      {
-        value:
-          "Repair of motor vehicles, motorcycles, computers, personal and household goods",
-        code: "095",
-      },
-      {
-        value: "Other personal service activities",
-        code: "096",
-      },
-    ],
+    value: "Manufacture of coke and refined petroleum products",
+    code: "019",
   },
   {
-    categoryName: "Work activities within domestic households",
-    content: [
-      {
-        value: "Activities of households as employers of domestic personnel",
-        code: "097",
-      },
-      {
-        value:
-          "Goods- and services-producing activities of private households for own use ",
-        code: "098",
-      },
-      {
-        value: "Activities of extraterritorial organisations and bodies",
-        code: "099",
-      },
-    ],
+    value: "Manufacture of chemicals and chemical products",
+    code: "020",
   },
-] ;
+  {
+    value:
+      "Manufacture of pharmaceuticals, medicinal chemical and botanical products",
+    code: "021",
+  },
+  {
+    value:
+      "Manufacture of rubber and plastics products (except furniture, toys, sports goods and stationery)",
+    code: "022",
+  },
+  {
+    value: "Manufacture of other non-metallic mineral products",
+    code: "023",
+  },
+  {
+    value: "Manufacture of basic metals",
+    code: "024",
+  },
+  {
+    value:
+      "Manufacture of fabricated metal products (except machinery and equipment)",
+    code: "025",
+  },
+  {
+    value: "Manufacture of computer, electronic and optical products",
+    code: "026",
+  },
+  {
+    value: "Manufacture of electrical equipment",
+    code: "027",
+  },
+  {
+    value: "Manufacture of machinery and equipment n.e.c.",
+    code: "028",
+  },
+  {
+    value: "Body assembly of motor vehicles",
+    code: "029",
+  },
+  {
+    value: "Manufacture of other transport equipment",
+    code: "030",
+  },
+  {
+    value: "Manufacture of furniture",
+    code: "031",
+  },
+  {
+    value: "Other manufacturing",
+    code: "032",
+  },
+  {
+    value: "Repair and installation of machinery and equipment",
+    code: "033",
+  },
+  {
+    value: "Electrcity and Gas Supply",
+    code: "035",
+  },
+  {
+    value: "Water collection, treatment and supply",
+    code: "036",
+  },
+  {
+    value: "Sewerage",
+    code: "037",
+  },
+  {
+    value:
+      "Waste collection, treatment and disposal activities; materials recovery",
+    code: "038",
+  },
+  {
+    value: "Remediation activities and other waste management services",
+    code: "039",
+  },
+  {
+    value: "Construction of buildings",
+    code: "041",
+  },
+  {
+    value: "Civil engineering",
+    code: "042",
+  },
+  {
+    value: "Specialised Construction Activities",
+    code: "043",
+  },
+  {
+    value: "Import and export trade ",
+    code: "045",
+  },
+  {
+    value: "Wholesale",
+    code: "046",
+  },
+  {
+    value: "Retail Trade",
+    code: "047",
+  },
+  {
+    value: "Land Transport",
+    code: "049",
+  },
+  {
+    value: "Water Transport",
+    code: "050",
+  },
+  {
+    value: "Air Transport",
+    code: "051",
+  },
+  {
+    value: "Warehousing and support activities for transportation",
+    code: "052",
+  },
+  {
+    value: "Postal and courier activities",
+    code: "053",
+  },
+  {
+    value: "Short term accommodation activities",
+    code: "055",
+  },
+  {
+    value: "Food and beverage service activities",
+    code: "056",
+  },
+  {
+    value: "Publishing activities",
+    code: "058",
+  },
+  {
+    value:
+      "Motion picture, video and television programme production, sound recording and music publishing activities",
+    code: "059",
+  },
+  {
+    value: "Programming and broadcasting activities",
+    code: "060",
+  },
+  {
+    value: "Telecommunications",
+    code: "061",
+  },
+  {
+    value: "Information technology service activities",
+    code: "062",
+  },
+  {
+    value: "Information service activities",
+    code: "063",
+  },
+  {
+    value:
+      "Financial service activities, including investment and holding companies, and the activities of trusts, funds and similar financial entities.",
+    code: "064",
+  },
+  {
+    value: "Insurance (including pension funding) ",
+    code: "065",
+  },
+  {
+    value: "Activities auxiliary to financial service and insurance activities",
+    code: "066",
+  },
+  {
+    value: "Real estate activities",
+    code: "068",
+  },
+  {
+    value: "Legal and accounting activities",
+    code: "069",
+  },
+  {
+    value:
+      "Activities of head offices; management and management consultancy activities",
+    code: "070",
+  },
+  {
+    value:
+      "Architecture and engineering activities, technical testing and analysis",
+    code: "071",
+  },
+  {
+    value: "Scientific research and development",
+    code: "072",
+  },
+  {
+    value: "Veterinary activities",
+    code: "073",
+  },
+  {
+    value: "Advertising and market research",
+    code: "074",
+  },
+  {
+    value: "Other professional, scientific and technical activities",
+    code: "075",
+  },
+  {
+    value: "Rental and leasing activities",
+    code: "077",
+  },
+  {
+    value: "Employment activities",
+    code: "078",
+  },
+  {
+    value: "Travel agency, reservation service and related activities",
+    code: "079",
+  },
+  {
+    value: "Security and investigation activities ",
+    code: "080",
+  },
+  {
+    value: "Services to buildings and landscape care activities",
+    code: "081",
+  },
+  {
+    value:
+      "Office administrative, office support and other business support activities",
+    code: "082",
+  },
+  {
+    value: "Public administration",
+    code: "084",
+  },
+  {
+    value: "Education",
+    code: "085",
+  },
+  {
+    value: "Human health activities",
+    code: "086",
+  },
+  {
+    value: "Residential care activities",
+    code: "087",
+  },
+  {
+    value: "Social work activities without accommodation",
+    code: "088",
+  },
+  {
+    value: "Creative and performing arts activities",
+    code: "090",
+  },
+  {
+    value: "Libraries, archives, museums and other cultural activities",
+    code: "091",
+  },
+  {
+    value: "Activities of amusement parks and theme parks",
+    code: "092",
+  },
+  {
+    value: "Sports and other entertainment activities",
+    code: "093",
+  },
+  {
+    value: "Activities of membership organisations",
+    code: "094",
+  },
+  {
+    value:
+      "Repair of motor vehicles, motorcycles, computers, personal and household goods",
+    code: "095",
+  },
+  {
+    value: "Other personal service activities",
+    code: "096",
+  },
+  {
+    value: "Activities of households as employers of domestic personnel",
+    code: "097",
+  },
+  {
+    value:
+      "Goods and services producing activities of private households for own use ",
+    code: "098",
+  },
+  {
+    value: "Activities of extraterritorial organisations and bodies",
+    code: "099",
+  },
+];
 
 export const notificationContent = [
   {

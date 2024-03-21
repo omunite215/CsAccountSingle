@@ -3,6 +3,7 @@
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Command,
   CommandEmpty,
@@ -10,7 +11,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -46,9 +46,16 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+
 const CompanyInfo = () => {
   const { setTabValue, setDisableSI } = useDataContext();
+  const [disable, setDisable] = useState(false);
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [filteredContent, setFilteredContent] = useState(
+    NatureOfBusinessContent
+  );
+
   const form = useForm<z.infer<typeof CompanyInfoFormSchema>>({
     resolver: zodResolver(CompanyInfoFormSchema),
     defaultValues: {
@@ -76,6 +83,26 @@ const CompanyInfo = () => {
     },
   });
 
+  const checkDisable = () => {
+    if (
+      form.getValues("house")?.length === 0 &&
+      form.getValues("building")?.length === 0 &&
+      form.getValues("street")?.length === 0 &&
+      form.getValues("district")?.length === 0
+    ) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  };
+
+  const onCommandInputChange = (event: string) => {
+    const value = event.toLowerCase();
+    const filtered = NatureOfBusinessContent.filter((item) =>
+      item.value.toLowerCase().includes(value)
+    );
+    setFilteredContent(filtered);
+  };
   // Submit Handler.
   function onSubmit(values: z.infer<typeof CompanyInfoFormSchema>) {
     console.log(values);
@@ -192,16 +219,16 @@ const CompanyInfo = () => {
                   name="nature"
                   control={form.control}
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem>
                       <FormLabel>Nature of Business</FormLabel>
-                      <Popover>
+                      <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant="outline"
                               role="combobox"
                               className={cn(
-                                "md:w-[450px] w-auto h-auto justify-between text-wrap",
+                                "md:w-[450px] w-auto h-auto justify-between text-pretty",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -214,44 +241,42 @@ const CompanyInfo = () => {
                         </PopoverTrigger>
                         <PopoverContent className="md:w-[450px] w-auto">
                           <Command>
-                            <CommandInput placeholder="Search Nature of Business..." />
+                            <CommandInput
+                              placeholder="Search Nature of Business..."
+                              onValueChange={(currentValue) =>
+                                onCommandInputChange(currentValue)
+                              }
+                            />
                             <CommandList>
                               <CommandEmpty>No results found.</CommandEmpty>
-                              {NatureOfBusinessContent.map((item) => (
-                                <div key={item.categoryName}>
-                                  <CommandGroup
-                                    heading={item.categoryName}
-                                    key={item.categoryName}
-                                  
+                              <CommandGroup>
+                                {filteredContent.map((item) => (
+                                  <CommandItem
+                                    key={item.value}
+                                    value={item.value}
+                                    onSelect={(currentValue) => {
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
+                                      form.setValue("nature", item.value);
+                                      form.setValue("code", item.code);
+                                      setOpen(false);
+                                    }}
                                   >
-                                    {item.content.map((subItem) => (
-                                      <CommandItem
-                                        value={subItem.value}
-                                        key={subItem.code}
-                                        className="text-left"
-                                        onSelect={() => {
-                                          form.setValue(
-                                            "nature",
-                                            subItem.value
-                                          );
-                                          form.setValue("code", subItem.code);
-                                        }}
-                                      >
-                                        <Check
-                                          className={cn(
-                                            "mr-2 w-4 h-4",
-                                            subItem.value === field.value
-                                              ? "opacity-100"
-                                              : "opacity-0"
-                                          )}
-                                        />
-                                        {subItem.value}
-                                      </CommandItem>
-                                    ))}
-                                  </CommandGroup>
-                                  <CommandSeparator />
-                                </div>
-                              ))}
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        value === item.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {item.value}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
                             </CommandList>
                           </Command>
                         </PopoverContent>
@@ -278,9 +303,20 @@ const CompanyInfo = () => {
                         }
                         size={20}
                       />
+                      {disable && (
+                        <span className="text-destructive">
+                          You need to enter atleast one address field.
+                        </span>
+                      )}
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Flat / Floor / Block" {...field} />
+                      <Input
+                        placeholder="Flat / Floor / Block"
+                        onChange={(e) => {
+                          form.setValue("house", e.target.value);
+                          checkDisable();
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -292,7 +328,13 @@ const CompanyInfo = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Building" {...field} />
+                      <Input
+                        placeholder="Building"
+                        onChange={(e) => {
+                          form.setValue("building", e.target.value);
+                          checkDisable();
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -304,7 +346,13 @@ const CompanyInfo = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Street" {...field} />
+                      <Input
+                        placeholder="Street"
+                        onChange={(e) => {
+                          form.setValue("street", e.target.value);
+                          checkDisable();
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -316,7 +364,14 @@ const CompanyInfo = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="District" {...field} />
+                      <Input
+                        placeholder="District"
+                        {...field}
+                        onChange={(e) => {
+                          form.setValue("district", e.target.value);
+                          checkDisable();
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -565,7 +620,7 @@ const CompanyInfo = () => {
               </CardContent>
             </Card>
             <div className="flex justify-end items-center">
-              <Button type="submit" variant="destructive">
+              <Button type="submit" variant="destructive" disabled={disable}>
                 Save & Next
               </Button>
             </div>
