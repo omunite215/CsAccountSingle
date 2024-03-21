@@ -26,8 +26,14 @@ export const CompanyInfoFormSchema = z.object({
     .max(20)
     .trim(),
   email: z.string().max(255).trim().optional(),
-  companyTel: z.string(),
-  companyfax: z.string(),
+  companyTel: z
+    .string()
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .or(z.literal("")),
+  companyfax: z
+    .string()
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .or(z.literal("")),
   time: z.enum(["1 year", "3 years"]),
   presentorName: z.string().min(2, "min. 2 characters").max(255).trim(),
   presentorChiName: z.string().max(255).trim().optional(),
@@ -36,8 +42,14 @@ export const CompanyInfoFormSchema = z.object({
     .min(10, "*required | need min. 10 characters")
     .max(65535)
     .trim(),
-  presentorTel: z.string(),
-  presentorFax: z.string(),
+  presentorTel: z
+    .string()
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .or(z.literal("")),
+  presentorFax: z
+    .string()
+    .refine(isValidPhoneNumber, { message: "Invalid phone number" })
+    .or(z.literal("")),
   presentorEmail: z.string().max(255).trim().optional(),
   presentorReferance: z.string().max(255).trim(),
 });

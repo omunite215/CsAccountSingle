@@ -95,14 +95,14 @@ const Directors = () => {
     setTabValue("CS");
   }
 
+  const type = form.getValues("type");
   useEffect(() => {
-    const type = form.getValues("type");
     if (type === "company") {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [form.getValues("type")]);
+  }, [type]);
 
   return (
     <Card>

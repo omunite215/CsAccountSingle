@@ -27,7 +27,16 @@ export default function Home() {
     setDisableSI(disableSI);
     setDisableDirectors(disableDirectors);
     setDisableCS(disableCS);
-  }, [setTabValue, tabValue]);
+  }, [
+    tabValue,
+    setTabValue,
+    disableCS,
+    setDisableCS,
+    disableDirectors,
+    setDisableDirectors,
+    disableSI,
+    setDisableSI,
+  ]);
 
   return (
     <main className="py-6">

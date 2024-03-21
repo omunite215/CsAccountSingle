@@ -70,14 +70,15 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
   function onSubmit(values: z.infer<typeof GuestUserFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
+
+  const type = form.getValues("type");
   useEffect(() => {
-    const type = form.getValues("type");
     if (type === "company") {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [form.getValues("type")]);
+  }, [type]);
 
   return (
     <Card>

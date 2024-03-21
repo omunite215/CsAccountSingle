@@ -3,7 +3,7 @@
 import { CompanyInfoFormSchema } from "@/app/validationSchemas";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { PhoneInput } from "@/components/ui/phone-input";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Command,
   CommandEmpty,

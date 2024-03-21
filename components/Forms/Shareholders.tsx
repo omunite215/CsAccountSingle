@@ -49,7 +49,8 @@ import { PhoneInput } from "../ui/phone-input";
 
 const Shareholders = () => {
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData, setTabValue, setDisableDirectors } = useDataContext();
+  const { shareCapitalData, setTabValue, setDisableDirectors } =
+    useDataContext();
 
   const form = useForm<z.infer<typeof ShareholdersFormSchema>>({
     resolver: zodResolver(ShareholdersFormSchema),
@@ -93,7 +94,9 @@ const Shareholders = () => {
       for: "name",
     },
     {
-      label: disable ? "Company No. / Upload a Copy" : "ID/Passport No. / Upload a Copy",
+      label: disable
+        ? "Company No. / Upload a Copy"
+        : "ID/Passport No. / Upload a Copy",
       for: "idNo",
     },
     {
@@ -117,14 +120,14 @@ const Shareholders = () => {
     setTabValue("D");
   }
 
+  const type = form.getValues("type");
   useEffect(() => {
-    const type = form.getValues("type");
     if (type === "company") {
       setDisable(true);
     } else {
       setDisable(false);
     }
-  }, [form.getValues("type")]);
+  }, [type]);
 
   return (
     <Card>
@@ -343,11 +346,11 @@ const Shareholders = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                          <PhoneInput
-                            placeholder="Enter a phone number"
-                            defaultCountry="HK"
-                            {...field}
-                          />
+                            <PhoneInput
+                              placeholder="Enter a phone number"
+                              defaultCountry="HK"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -373,7 +376,7 @@ const Shareholders = () => {
                         })
                       }
                     >
-                      <PlusCircle/>
+                      <PlusCircle />
                     </span>
                   </TableHead>
                 </TableRow>
@@ -424,7 +427,7 @@ const Shareholders = () => {
                         variant="destructive"
                         onClick={() => remove(index)}
                       >
-                        <Trash2/>
+                        <Trash2 />
                       </Button>
                     </TableCell>
                   </TableRow>
