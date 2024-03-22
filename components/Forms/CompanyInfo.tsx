@@ -263,6 +263,7 @@ const CompanyInfo = () => {
                                       form.setValue("nature", item.value);
                                       form.setValue("code", item.code);
                                       setOpen(false);
+                                      checkDisable();
                                     }}
                                   >
                                     <Check
