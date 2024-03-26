@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const DirectorsMain = () => {
-  const { setTabValue } = useDataContext();
+  const { setTabValue, setDisableCS } = useDataContext();
   const [value, setValue] = useState<"self" | "invite" | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -86,7 +86,10 @@ const DirectorsMain = () => {
         <CardFooter className="flex justify-end items-center">
           <Button
             variant="destructive"
-            onClick={() => setTabValue("CS")}
+            onClick={() => {
+              setDisableCS(false);
+              setTabValue("CS");
+            }}
           >
             Save & Next
           </Button>

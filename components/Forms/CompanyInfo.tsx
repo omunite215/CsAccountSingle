@@ -298,7 +298,7 @@ const CompanyInfo = () => {
                       <span>Address: </span>
                       <HoverCardComponent
                         content={
-                          <span className=" leading-relaxed">
+                          <span className="leading-relaxed">
                             {CompanyInfoHoverContent.address}
                           </span>
                         }

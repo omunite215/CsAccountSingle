@@ -22,7 +22,7 @@ import { useState } from "react";
 import ShareholdersData from "../Forms/Data/ShareholdersData";
 
 const ShareHoldersMain = () => {
-  const { setTabValue } = useDataContext();
+  const { setTabValue, setDisableDirectors } = useDataContext();
   const [value, setValue] = useState<"self" | "invite" | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   return (
@@ -85,7 +85,13 @@ const ShareHoldersMain = () => {
           </RadioGroup>
         </CardContent>
         <CardFooter className="flex justify-end items-center">
-          <Button variant="destructive" onClick={() => setTabValue("D")}>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              setDisableDirectors(false);
+              setTabValue("D");
+            }}
+          >
             Save & Next
           </Button>
         </CardFooter>

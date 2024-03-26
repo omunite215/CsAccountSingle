@@ -53,7 +53,7 @@ export default function Home() {
               {tabValue === "CI" ? (
                 <SquarePen size={20} />
               ) : (
-                <CheckCircle2 size={20} />
+                <CheckCircle2 size={20} color="green" />
               )}
             </span>
           </TabsTrigger>
@@ -68,7 +68,7 @@ export default function Home() {
               {tabValue === "D" ||
               tabValue === "CS" ||
               (disableDirectors === false && tabValue === "CI") ? (
-                <CheckCircle2 size={20} />
+                <CheckCircle2 size={20} color="green" />
               ) : (
                 <SquarePen size={20} />
               )}
@@ -78,14 +78,17 @@ export default function Home() {
             value="D"
             disabled={disableDirectors}
             onClick={() =>
-              disableDirectors ? setTabValue("SI") : setTabValue("D")
+              disableDirectors === false
+                ? setTabValue("D")
+                : setTabValue(tabValue)
             }
             className="space-x-2"
           >
             <span>Directors</span>
             <span>
-              {tabValue === "CS" || disableCS === false ? (
-                <CheckCircle2 size={20} />
+              {tabValue === "CS" ||
+              (disableDirectors === false && tabValue === "CI") ? (
+                <CheckCircle2 size={20} color="green" />
               ) : (
                 <SquarePen size={20} />
               )}
@@ -94,7 +97,9 @@ export default function Home() {
           <TabsTrigger
             value="CS"
             disabled={disableCS}
-            onClick={() => (disableCS ? setTabValue("D") : setTabValue("CS"))}
+            onClick={() =>
+              disableCS ? setTabValue(tabValue) : setTabValue("CS")
+            }
           >
             Company Secretary
           </TabsTrigger>
