@@ -40,22 +40,12 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
   const form = useForm<z.infer<typeof GuestUserFormSchema>>({
     resolver: zodResolver(GuestUserFormSchema),
     defaultValues: {
-      type: "person",
-      surname: null,
       name: undefined,
       email: undefined,
     },
   });
 
   const inviteGuestUserRows = [
-    {
-      label: "Person/Company",
-      for: "type",
-    },
-    {
-      label: "Surname",
-      for: "surname",
-    },
     {
       label: "Name",
       for: "name",
@@ -71,14 +61,6 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
     console.log("Backend is yet to be initialized");
   }
 
-  const type = form.getValues("type");
-  useEffect(() => {
-    if (type === "company") {
-      setDisable(true);
-    } else {
-      setDisable(false);
-    }
-  }, [type]);
 
   return (
     <Card>
@@ -110,60 +92,6 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
                 <TableRow>
                   <TableCell>
                     <FormField
-                      name="type"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                              className="flex justify-start items-center gap-10"
-                            >
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="person" />
-                                </FormControl>
-                                <FormLabel className="font-normal">
-                                  Person
-                                </FormLabel>
-                              </FormItem>
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <RadioGroupItem value="company" />
-                                </FormControl>
-                                <Label className="font-normal">Company</Label>
-                              </FormItem>
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell
-                    className={cn({
-                      hidden: disable,
-                    })}
-                  >
-                    <FormField
-                      name="surname"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input
-                              placeholder="Surname Eg: Bond"
-                              {...form.register("surname")}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
                       name="name"
                       control={form.control}
                       render={({ field }) => (
@@ -185,11 +113,7 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
                           <FormControl>
                             <Input
                               type="email"
-                              placeholder={`Eg: ${
-                                disable
-                                  ? "Company1@gmail.com"
-                                  : "person@gmail.com"
-                              }`}
+                              placeholder="Eg: xyz@email.com"
                               {...field}
                             />
                           </FormControl>

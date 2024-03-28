@@ -2,8 +2,6 @@ import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
 export const GuestUserFormSchema = z.object({
-  type: z.enum(["person", "company"], { required_error: "*required" }),
-  surname: z.string().min(2, "min. 2 char(s)").max(255).trim().nullable(),
   name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
   email: z.string().max(255).email().trim(),
 });
