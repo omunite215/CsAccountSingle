@@ -1,10 +1,7 @@
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
-export const GuestUserFormSchema = z.object({
-  name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
-  email: z.string().max(255).email().trim(),
-});
+
 
 // CompanyInfo
 
@@ -88,6 +85,12 @@ const shareDetailsSchema = z.object({
     .number()
     .nonnegative({ message: "This field can't be negative" })
     .min(1),
+});
+
+export const GuestUserFormSchema = z.object({
+  name: z.string().min(2, "min. 2 char(s)").max(255).trim(),
+  email: z.string().max(255).email().trim(),
+  shareDetails: z.array(shareDetailsSchema).default([]).optional(),
 });
 
 export const ShareholdersFormSchema = z.object({

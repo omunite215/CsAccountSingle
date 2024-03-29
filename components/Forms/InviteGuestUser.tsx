@@ -1,7 +1,7 @@
 "use client";
 
 import { GuestUserFormSchema } from "@/app/validationSchemas";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,8 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Table,
   TableBody,
@@ -30,21 +28,43 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { PlusCircle, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useDataContext } from "@/context/ContextProvider";
 
 const InviteGuestUsers = ({ text }: { text: string }) => {
   const [disable, setDisable] = useState(false);
+  const { shareCapitalData } = useDataContext();
 
   const form = useForm<z.infer<typeof GuestUserFormSchema>>({
     resolver: zodResolver(GuestUserFormSchema),
     defaultValues: {
       name: undefined,
       email: undefined,
+      shareDetails: [
+        {
+          classOfShares: "Ordinary",
+          noOfShares: 800,
+        },
+      ],
     },
   });
-
+  const control = form.control;
+  const { fields, append, remove } = useFieldArray({
+    name: "shareDetails",
+    control,
+  });
   const inviteGuestUserRows = [
     {
       label: "Name",
@@ -60,7 +80,6 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
   function onSubmit(values: z.infer<typeof GuestUserFormSchema>) {
     console.log("Backend is yet to be initialized");
   }
-
 
   return (
     <Card>
@@ -123,6 +142,82 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
                     />
                   </TableCell>
                 </TableRow>
+              </TableBody>
+            </Table>
+            <Table className={cn({
+              hidden: text === "Director"
+            })}>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Class of Shares</TableHead>
+                  <TableHead>No. of Shares</TableHead>
+                  <TableHead>Action</TableHead>
+                  <TableHead>
+                    <span
+                      className={buttonVariants()}
+                      onClick={() =>
+                        append({
+                          classOfShares: "",
+                          noOfShares: 0,
+                        })
+                      }
+                    >
+                      <PlusCircle />
+                    </span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {fields.map((item, index) => (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <FormItem>
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Class of Shares" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Class of Shares</SelectLabel>
+                                {shareCapitalData.map((item) => (
+                                  <SelectItem key={item.id} value={item.class}>
+                                    <div className="flex gap-3">
+                                      <span className="font-medium">
+                                        {item.class}
+                                      </span>
+                                      <span className="font-light">
+                                        {item.unpaid}
+                                      </span>
+                                    </div>
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </TableCell>
+                    <Controller
+                      render={({ field }) => (
+                        <TableCell>
+                          <Input {...field} type="number" />
+                        </TableCell>
+                      )}
+                      name={`shareDetails.${index}.noOfShares`}
+                    />
+                    <TableCell>
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={() => remove(index)}
+                      >
+                        <Trash2 />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
             <div>
