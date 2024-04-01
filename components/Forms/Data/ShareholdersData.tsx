@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -22,7 +21,7 @@ const ShareholdersData = () => {
               <TableHead
                 key={row.for}
                 className={cn({
-                  "hidden": row.for === "classOfShares" || row.for === "totalShares",
+                  hidden: row.for === "classOfShares" || row.for === "totalShares",
                 })}
               >
                 {row.label}

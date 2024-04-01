@@ -1,12 +1,11 @@
 "use client";
 
-import { shareCapitalContent } from "@/lib/constants";
 import { createContext, useContext, useState } from "react";
-import { ContextProps, ShareCapitalProps } from "./Declarations";
+import type { ContextProps } from "./Declarations";
+
 
 const defaultValues = {
-  shareCapitalData: shareCapitalContent,
-  setShareCapitalData: () => {},
+  
   tabValue: "CI" as "CI" | "SI" | "D" | "CS",
   setTabValue: () => {},
   disableSI: true,
@@ -24,9 +23,6 @@ export const DataContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [shareCapitalData, setShareCapitalData] =
-    useState<ShareCapitalProps>(shareCapitalContent);
-
   const [tabValue, setTabValue] = useState<"CI" | "SI" | "D" | "CS">("CI");
   const [disableSI, setDisableSI] = useState(true);
   const [disableDirectors, setDisableDirectors] = useState(true);
@@ -35,8 +31,6 @@ export const DataContextProvider = ({
   return (
     <DataContext.Provider
       value={{
-        shareCapitalData: shareCapitalData,
-        setShareCapitalData: setShareCapitalData,
         tabValue: tabValue,
         setTabValue: setTabValue,
         disableSI: disableSI,

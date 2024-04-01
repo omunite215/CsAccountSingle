@@ -31,7 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import {
   Select,
   SelectContent,
@@ -42,10 +42,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useDataContext } from "@/context/ContextProvider";
+import { useShareCapitalStore } from "@/store/shareCapitalDataStore";
 
 const InviteGuestUsers = ({ text }: { text: string }) => {
   const [disable, setDisable] = useState(false);
-  const { shareCapitalData } = useDataContext();
+  const shareCapitalData = useShareCapitalStore(
+		(state) => state.shareCapitalData,
+	);
 
   const form = useForm<z.infer<typeof GuestUserFormSchema>>({
     resolver: zodResolver(GuestUserFormSchema),
@@ -153,6 +156,7 @@ const InviteGuestUsers = ({ text }: { text: string }) => {
                   <TableHead>No. of Shares</TableHead>
                   <TableHead>Action</TableHead>
                   <TableHead>
+                    {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                     <span
                       className={buttonVariants()}
                       onClick={() =>

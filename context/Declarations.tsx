@@ -1,26 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
-
-export type ShareCapitalProps = {
-    
-    class: string;
-    totalProposed: number;
-    currency: string;
-    unitPrice: number;
-    total: number;
-    paid: number;
-    unpaid: number;
-    id: number;
-    rightsAttached?: string | undefined;
-}[];
-
-export type ShareholdersProps = {
-
-}
 
 export type ContextProps = {
-    shareCapitalData: ShareCapitalProps;
-    setShareCapitalData: Dispatch<SetStateAction<ShareCapitalProps>>;
     tabValue: "CI" | "SI" | "D" | "CS";
     setTabValue: Dispatch<SetStateAction<"CI" | "SI" | "D" | "CS">>;
     disableSI: boolean;

@@ -41,19 +41,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
-import { useDataContext } from "@/context/ContextProvider";
 import { currencyContent, shareCapitalRows } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useShareCapitalStore } from "@/store/shareCapitalDataStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 
 const ShareCapital = () => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(true);
 
-  const { shareCapitalData, setShareCapitalData } = useDataContext();
+  const shareCapitalData = useShareCapitalStore(state => state.shareCapitalData);
+  const addShareCapitalData = useShareCapitalStore(state => state.addShareCapitalData);
 
   const form = useForm<z.infer<typeof ShareCapitalFormSchema>>({
     resolver: zodResolver(ShareCapitalFormSchema),
@@ -94,8 +95,7 @@ const ShareCapital = () => {
       id: newId,
       ...values,
     };
-    shareCapitalData.push(newValues);
-    setShareCapitalData(shareCapitalData);
+    addShareCapitalData(newValues);
     toast({
       title: "Success!!",
       description: "Field has been Added Successfully!!",
