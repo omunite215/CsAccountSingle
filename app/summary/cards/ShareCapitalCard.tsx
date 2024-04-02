@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   CardContent,
@@ -14,11 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDataContext } from "@/context/ContextProvider";
 import { shareCapitalRows } from "@/lib/constants";
+import { useShareCapitalStore } from "@/store/shareCapitalDataStore";
 
 const ShareCapitalCard = () => {
-  const { shareCapitalData } = useDataContext();
+  const shareCapitalData = useShareCapitalStore(
+    (state) => state.shareCapitalData
+  );
   return (
     <Card>
       <CardHeader>

@@ -93,7 +93,7 @@ const EditShareCapital = ({ id }: { id: number }) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">
+				<Button variant="outline" size="icon">
 					<Pencil />
 				</Button>
 			</DialogTrigger>

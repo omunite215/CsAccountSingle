@@ -25,7 +25,7 @@ export const useShareCapitalStore = create<State & Actions>()((set) => ({
   updateShareCapitalData: (shareData: ShareCapitalProps) =>
     set((state) => ({
       shareCapitalData: state.shareCapitalData.map((data) =>
-        data.id === shareData.id ? { ...data } : shareData
+        data.id === shareData.id ? { ...data, ...shareData } : data
       ),
     })),
 }));
