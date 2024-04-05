@@ -80,9 +80,10 @@ const CompanyInfo = () => {
       presentorFax: "",
       presentorEmail: "",
       presentorReferance: "CompanyName-NNC1-06-03-2024",
+      companyLogo: undefined,
     },
   });
-
+  const LogoFileRef = form.register("companyLogo", { required: true });
   const checkDisable = () => {
     if (
       form.getValues("house")?.length === 0 &&
@@ -612,6 +613,23 @@ const CompanyInfo = () => {
                           placeholder="Eg: CompanyName-NNC1-06-03-2024"
                           {...field}
                           readOnly
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="companyLogo"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Company Logo:</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="File"
+                          placeholder="Upload a Copy"
+                          {...LogoFileRef}
                         />
                       </FormControl>
                       <FormMessage />
