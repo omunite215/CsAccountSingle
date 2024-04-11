@@ -49,11 +49,6 @@ export const CompanyInfoFormSchema = z.object({
   presentorReferance: z.string().max(255).trim(),
   companyLogo: z
     .any()
-    .refine((file: string | any[]) => file?.length == 1, "File is required.")
-    .refine(
-      (file: { size: number }[]) => file[0]?.size <= 3000000,
-      `Max file size is 3MB.`
-    ),
 });
 
 // Share-Capital
