@@ -624,7 +624,7 @@ const CompanyInfo = () => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Company Logo:</FormLabel>
+                      <FormLabel>Company Logo:</FormLabel>
                       <FormControl>
                         <Input
                           type="File"
