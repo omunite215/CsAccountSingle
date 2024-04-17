@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { shareCapitalRows } from "@/lib/constants";
 import { useShareCapitalStore } from "@/store/shareCapitalDataStore";
+import SharesPopup from "../Popup";
 
 const ShareCapitalCard = () => {
   const shareCapitalData = useShareCapitalStore(
@@ -44,8 +45,15 @@ const ShareCapitalCard = () => {
                 <TableCell>{item.totalProposed}</TableCell>
                 <TableCell>{item.currency}</TableCell>
                 <TableCell>{item.unitPrice}</TableCell>
-                <TableCell>{item.total}</TableCell>
-                <TableCell>{item.paid}</TableCell>
+                <TableCell>
+                  {item.total}
+                </TableCell>
+                <TableCell>
+                <SharesPopup
+                    numberOfShares={item.paid}
+                    classOfShares={item.class}
+                  />
+                </TableCell>
                 <TableCell>{item.unpaid}</TableCell>
                 <TableCell>{item.rightsAttached}</TableCell>
               </TableRow>
