@@ -2,18 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/components/ui/use-toast";
 import { shareCapitalRows } from "@/lib/constants";
 import { useShareCapitalStore } from "@/store/shareCapitalDataStore";
 import { Trash2 } from "lucide-react";
 import EditShareCapital from "./EditShareCapital";
+import SharesPopup from "@/app/summary/Popup";
 
 const ShareCapitalData = () => {
   const shareCapitalData = useShareCapitalStore(
@@ -57,7 +58,12 @@ const ShareCapitalData = () => {
                 <TableCell>{item.currency}</TableCell>
                 <TableCell>{item.unitPrice}</TableCell>
                 <TableCell>{item.total}</TableCell>
-                <TableCell>{item.paid}</TableCell>
+                <TableCell>
+                  <SharesPopup
+                    numberOfShares={item.paid}
+                    classOfShares={item.class}
+                  />
+                </TableCell>
                 <TableCell>{item.unpaid}</TableCell>
                 <TableCell>{item.rightsAttached}</TableCell>
                 <TableCell>
@@ -67,7 +73,7 @@ const ShareCapitalData = () => {
                   <Button
                     variant="destructive"
                     onClick={() => deleteObjectById(item.id)}
-					size="icon"
+                    size="icon"
                   >
                     <Trash2 />
                   </Button>
