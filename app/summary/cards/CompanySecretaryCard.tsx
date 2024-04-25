@@ -2,12 +2,14 @@ import {
   Card,
   CardDescription,
   CardHeader,
+  CardContent,
   CardTitle,
 } from "@/components/ui/card";
 import {
   Table,
   TableBody,
   TableCell,
+  TableCaption,
   TableHead,
   TableHeader,
   TableRow,
@@ -24,6 +26,23 @@ const CompanySecretaryCard = () => {
           Here are the details on Company Secretary
         </CardDescription>
       </CardHeader>
+      <CardContent className="my-6">
+        <Table>
+          <TableCaption>TCSP License Details</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>TCSP License No.</TableHead>
+              <TableHead>Reason</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>S313612</TableCell>
+              <TableCell>-</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </CardContent>
       <Table className="w-full">
         <TableHeader>
           <TableRow>
