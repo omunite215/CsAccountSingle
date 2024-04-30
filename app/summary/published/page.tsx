@@ -44,7 +44,7 @@ const page = () => {
               variant: "destructive",
               className: "cursor-pointer",
             })}
-            href="https://cs-account-multiple.vercel.app/document_status/m5gr84i9"
+            href="https://cs-multiple.netlify.app/document_status/m5gr84i9"
           >
             Confirm
           </Link>
