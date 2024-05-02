@@ -26,23 +26,6 @@ const CompanySecretaryCard = () => {
           Here are the details on Company Secretary
         </CardDescription>
       </CardHeader>
-      <CardContent className="my-6">
-        <Table>
-          <TableCaption>TCSP License Details</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>TCSP License No.</TableHead>
-              <TableHead>Reason</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>S313612</TableCell>
-              <TableCell>-</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </CardContent>
       <Table className="w-full">
         <TableHeader>
           <TableRow>
@@ -57,6 +40,8 @@ const CompanySecretaryCard = () => {
                 {row.label}
               </TableHead>
             ))}
+            <TableHead>TCSP License No.</TableHead>
+            <TableHead>TCSP License Reason</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -68,6 +53,8 @@ const CompanySecretaryCard = () => {
             <TableCell>{shareholdersContent[0].address}</TableCell>
             <TableCell>{shareholdersContent[0].email}</TableCell>
             <TableCell>{shareholdersContent[0].phone}</TableCell>
+            <TableCell>S313612</TableCell>
+            <TableCell>-</TableCell>
           </TableRow>
         </TableBody>
       </Table>
