@@ -41,11 +41,6 @@ const SettingsPage = () => {
             </SelectContent>
           </Select>
         </CardContent>
-        <CardFooter>
-          <CardDescription>
-            Copyright © 2012 - 2024 ComSec360®. All rights reserved.
-          </CardDescription>
-        </CardFooter>
       </Card>
       <Card className="mt-5">
         <CardHeader>
@@ -58,12 +53,10 @@ const SettingsPage = () => {
           <CardDescription>Email: example@gmail.com</CardDescription>
           <Button>Change Password</Button>
         </CardContent>
-        <CardFooter>
-          <CardDescription>
+      </Card>
+              <CardDescription className="mt-5">
             Copyright © 2012 - 2024 ComSec360®. All rights reserved.
           </CardDescription>
-        </CardFooter>
-      </Card>
     </div>
   );
 };
