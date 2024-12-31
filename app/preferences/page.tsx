@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {Button} from "@/components/ui/button";
 const SettingsPage = () => {
   return (
     <div className="md:container w-full py-6 md:px-0 px-6">
@@ -39,6 +40,23 @@ const SettingsPage = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </CardContent>
+        <CardFooter>
+          <CardDescription>
+            Copyright © 2012 - 2024 ComSec360®. All rights reserved.
+          </CardDescription>
+        </CardFooter>
+      </Card>
+      <Card className="mt-5">
+        <CardHeader>
+          <CardTitle>Account Details</CardTitle>
+          <CardDescription>
+            You can change your password from here.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="mt-5">
+          <CardDescription>Email: example@gmail.com</CardDescription>
+          <Button>Change Password</Button>
         </CardContent>
         <CardFooter>
           <CardDescription>
